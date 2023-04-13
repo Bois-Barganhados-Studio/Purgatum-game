@@ -44,7 +44,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 ReadIni(style +"/"+style.ToLower());
             }
         }
-        if (BuildTerrain(0, 0, 0, 0, 1))
+        if (BuildTerrain(0, 0, 0, 0, 2))
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
         }

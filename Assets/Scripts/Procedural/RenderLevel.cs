@@ -36,7 +36,6 @@ public class RenderLevel
         Debug.Log("Rendering chunks in the level");
         foreach ((GameObject, Vector3) tuple in chunks)
         {
-            Debug.Log(tuple.Item1);
             level.Add(GenGameTileMap(tuple.Item1, tuple.Item2));
         }
     }

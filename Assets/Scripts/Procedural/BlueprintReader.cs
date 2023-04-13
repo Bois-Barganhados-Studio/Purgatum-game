@@ -7,10 +7,13 @@ public class BluePrintReader
 {
 
     private const string FOLDER = "Blueprints/";
-    private static readonly int[] BPS = {0};
+    private static readonly int[] BPS = { 0 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     private List<string> blueprint = new List<string>();
-    private List<(string, Vector3)> decodedRoom; 
+    private List<(string, Vector3)> decodedRoom;
+    public const int SIZE_OF_CHUNK = 10;
+    public const double W_PIXELS = 3.2;
+    public const double H_PIXELS = 3.2;
 
     public enum TileType
     {
@@ -29,7 +32,7 @@ public class BluePrintReader
     }
 
     public BluePrintReader()
-    {}
+    { }
 
     /**
      * Define um blueprint para gerar a sala
@@ -44,6 +47,14 @@ public class BluePrintReader
             }
             blueprint.Clear();
             string[] lines = BPS_DATA[bp].text.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                lines[i] = lines[i].TrimEnd('\r', '\n');
+            }
+            foreach (string l in lines)
+            {
+                Debug.Log(l);
+            }
             blueprint.AddRange(lines);
             DecodeBp();
         }
@@ -74,18 +85,25 @@ public class BluePrintReader
     bool DecodeBp()
     {
         bool status = false;
-        try { 
-            decodedRoom =  new List<(string, Vector3)>();
-            foreach (string line in blueprint)
+        try
+        {
+            decodedRoom = new List<(string, Vector3)>();
+            for (int lineIndex = 0; lineIndex < blueprint.Count; lineIndex++)
             {
-                for (int index = 0; index < line.ToCharArray().Length; index++)
+                string line = blueprint[lineIndex];
+                for (int colIndex = 0; colIndex < line.ToCharArray().Length; colIndex++)
                 {
-                    decodedRoom.Add((Enum.GetName(typeof(TileType), (int)char.GetNumericValue(line[index])),
-                        SetGlobalPosition(blueprint.IndexOf(line),index)));
+                    char letter = line[colIndex];
+                    if (letter != ' ') { 
+                    decodedRoom.Add((Enum.GetName(typeof(TileType), (int)char.GetNumericValue(letter)),
+                        SetGlobalPosition(lineIndex*-1, colIndex * -1)));
+                    }
                 }
             }
             status = true;
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             status = false;
             Debug.LogException(e);
         }
@@ -97,13 +115,27 @@ public class BluePrintReader
      */
     Vector3 SetGlobalPosition(int indexOfLine, int indexOfCol)
     {
+        Debug.Log("LINE: " + indexOfLine);
         //fazer calculos de posicionamento e indice dentro do mapa
-        return new Vector3(indexOfLine,indexOfCol, 0);
+        Debug.Log(indexOfLine + " : " + indexOfCol);
+        (double, double) tuple = ToIsometric(indexOfLine, indexOfCol);
+        Debug.Log(tuple.Item1 + " : " + tuple.Item2);
+        return new Vector3((float)tuple.Item1, (float)tuple.Item2, 0);
     }
 
-    public List<(string,Vector3)> RoomReaded()
+    public List<(string, Vector3)> RoomReaded()
     {
         return decodedRoom;
+    }
+
+    /**
+     * Convertendo Coordenadas
+     */
+    private (double, double) ToIsometric(double x, double y)
+    {
+        double nx = (x * 0.5 * (W_PIXELS)) + (y * -0.5 * (W_PIXELS));
+        double ny = (x * 0.25 * (H_PIXELS)) + (y * 0.25 * (H_PIXELS));
+        return (nx, ny);
     }
 
 }
