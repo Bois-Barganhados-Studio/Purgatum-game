@@ -6,10 +6,10 @@ using System;
 public class BluePrintReader
 {
 
-    private const string FILETYPE = ".bp";
-    private const string FOLDER = "Blueprints";
-    private static readonly List<int> BPS = new List<int>(){0,1,2,3};
-    private List<string> blueprint;
+    private const string FOLDER = "Blueprints/";
+    private static readonly int[] BPS = {0};
+    private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
+    private List<string> blueprint = new List<string>();
     private List<(string, Vector3)> decodedRoom; 
 
     public enum TileType
@@ -36,9 +36,15 @@ public class BluePrintReader
      */
     public void defineBp(int bp)
     {
-        if (BPS.Contains(bp))
+        if (bp < BPS.Length)
         {
-            ReadBp(Enum.GetName(typeof(BlueprintIndex), bp));
+            if (BPS_DATA.Count == 0)
+            {
+                ReadBpFromDisk();
+            }
+            blueprint.Clear();
+            string[] lines = BPS_DATA[bp].text.Split('\n');
+            blueprint.AddRange(lines);
             DecodeBp();
         }
         else
@@ -51,12 +57,14 @@ public class BluePrintReader
     /**
     * Ler iniciadores para os tilemaps
     */
-    void ReadBp(string path)
+    void ReadBpFromDisk()
     {
-        TextAsset bpFile = Resources.Load<TextAsset>(FOLDER + path + FILETYPE);
-        string[] lines = bpFile.text.Split('\n');
-        blueprint = new List<String>();
-        blueprint.AddRange(lines);
+        foreach (int bp in BPS)
+        {
+            string path = Enum.GetName(typeof(BlueprintIndex), bp);
+            TextAsset bpFile = Resources.Load<TextAsset>(FOLDER + path);
+            BPS_DATA.Add(bpFile);
+        }
     }
 
     /**
@@ -90,7 +98,7 @@ public class BluePrintReader
     Vector3 SetGlobalPosition(int indexOfLine, int indexOfCol)
     {
         //fazer calculos de posicionamento e indice dentro do mapa
-        return new Vector3(indexOfLine, indexOfCol, 0);
+        return new Vector3(indexOfLine,indexOfCol, 0);
     }
 
     public List<(string,Vector3)> RoomReaded()

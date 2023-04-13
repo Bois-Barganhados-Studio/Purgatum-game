@@ -10,6 +10,7 @@ public class ProceduralMapBuilder : MonoBehaviour
 {
 
     private RenderLevel levelRenderer = null;
+    private const string DIVIDER = "_";
     private const string FOLDER = "Maps/";
     private static readonly string[] styles = { "STONE" };
     private static List<string> stylesIni = new List<string>();
@@ -25,9 +26,12 @@ public class ProceduralMapBuilder : MonoBehaviour
      */
     void ReadIni(string path)
     {
-        Debug.Log(FOLDER+path);
         TextAsset iniFile = Resources.Load<TextAsset>(FOLDER + path);
         string[] lines = iniFile.text.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+        {
+            lines[i] = lines[i].TrimEnd('\r', '\n');
+        }
         stylesIni.AddRange(lines);
     }
 
@@ -37,7 +41,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         if (stylesIni.Count == 0) { 
             foreach (string style in styles)
             {
-                ReadIni(style +"/"+style+ ".ini");
+                ReadIni(style +"/"+style.ToLower());
             }
         }
         if (BuildTerrain(0, 0, 0, 0, 1))
@@ -60,7 +64,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     bool BuildTerrain(int roomStyle, int randFactor, int numRooms, int blueprint, int folderNum)
     {
         bool status = false;
-        try { 
+        try {
             levelRenderer = new RenderLevel();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
@@ -69,10 +73,10 @@ public class ProceduralMapBuilder : MonoBehaviour
             for (int i = 0;i < structures.Count; i++){
                 string structure = structures[i].Item1;
                 Vector3 position = structures[i].Item2;
-                string path = styles[roomStyle] + structure + folderNum;
+                string path = structure+ DIVIDER+ styles[roomStyle] + DIVIDER+ folderNum;
                 if (stylesIni.Contains(path))
                 {
-                    chunkPaths.Add(FOLDER + path);
+                    chunkPaths.Add(FOLDER+ styles[roomStyle] +"/"+ path);
                     chunkPositions.Add(position);
                 }
             }

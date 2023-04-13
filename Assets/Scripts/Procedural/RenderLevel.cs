@@ -23,6 +23,7 @@ public class RenderLevel
     {
         for (int i = 0; i < chunkPaths.Count; i++)
         {
+            Debug.Log(chunkPaths[i]);
             chunks.Add((Resources.Load<GameObject>(chunkPaths[i]), chunkPositions[i]));
         }
     }
@@ -33,13 +34,9 @@ public class RenderLevel
     public void RenderElements()
     {
         Debug.Log("Rendering chunks in the level");
-        // Remove all existing children of renderLevels
-        foreach (Transform child in renderLevels.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
         foreach ((GameObject, Vector3) tuple in chunks)
         {
+            Debug.Log(tuple.Item1);
             level.Add(GenGameTileMap(tuple.Item1, tuple.Item2));
         }
     }
@@ -47,7 +44,7 @@ public class RenderLevel
     /**
      * Renderização do tilemap no object de renderLevels
      */
-    private GameObject GenGameTileMap(GameObject obj, Vector3 pos)
+    GameObject GenGameTileMap(GameObject obj, Vector3 pos)
     {
         GameObject tilemap = GameObject.Instantiate(obj, pos, Quaternion.identity, renderLevels.transform);
         tilemap.transform.parent = renderLevels.transform;
