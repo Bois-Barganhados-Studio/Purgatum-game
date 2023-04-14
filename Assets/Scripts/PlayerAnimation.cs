@@ -9,6 +9,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public string[] staticDirections = { "Idle N", "Idle NW", "Idle W", "Idle SW", "Idle S", "Idle SE", "Idle E", "Idle NE" };
     public string[] runDirections = { "Running N", "Running NW", "Running W", "Running SW", "Running S", "Running SE", "Running E", "Running NE" };
+    //public string[] dodgeDirections = ;
+    public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
 
     int lastDirection;
 
@@ -16,19 +18,19 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        float result1 = Vector2.SignedAngle(Vector2.up, Vector2.right);
-        Debug.Log("R1 " + result1);
+        //float result1 = Vector2.SignedAngle(Vector2.up, Vector2.right);
+        //Debug.Log("R1 " + result1);
 
-        float result2 = Vector2.SignedAngle(Vector2.up, Vector2.left);
-        Debug.Log("R2 " + result2);
+        //float result2 = Vector2.SignedAngle(Vector2.up, Vector2.left);
+        //Debug.Log("R2 " + result2);
 
-        float result3 = Vector2.SignedAngle(Vector2.up, Vector2.down);
-        Debug.Log("R3 " + result3);
+        //float result3 = Vector2.SignedAngle(Vector2.up, Vector2.down);
+        //Debug.Log("R3 " + result3);
     }
 
     //MARKER each direction will match with one string element
     //MARKER We used direction to determine their animation
-    public void SetDirection(Vector2 _direction)
+    public void SetMoveDirection(Vector2 _direction)
     {
         string[] directionArray = null;
 
@@ -46,9 +48,33 @@ public class PlayerAnimation : MonoBehaviour
         anim.Play(directionArray[lastDirection]);
     }
 
+    public void SetDodgeDirection(Vector2 _direction)
+    { 
+        string[] animDirection = { "Rolling N", "Rolling NW", "Rolling W", "Rolling SW", "Rolling S", "Rolling SE", "Rolling E", "Rolling NE" };
+        anim.Play(animDirection[DirectionToIndex(_direction)]);
+    }
+
+    public void SetAttackDirection(Vector2 _direction)
+    {
+        string[] directionArray = null;
+
+        if (_direction.magnitude < 0.01)//MARKER Character is static. And his velocity is close to zero
+        {
+            directionArray = staticDirections;
+        }
+        else
+        {
+            directionArray = AttackDirections;
+
+            lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
+           
+        }
+        anim.Play(directionArray[lastDirection]);
+    }
+
     //MARKER Converts a Vector2 direction to an index to a slcie around a circle
     //CORE this goes in a counter-clock direction
-    private int DirectionToIndex(Vector2 _direction)
+    public int DirectionToIndex(Vector2 _direction)
     {
         Vector2 norDir = _direction.normalized;//MARKER return this vector with a magnitude of 1 and get the normalized to an index
 
