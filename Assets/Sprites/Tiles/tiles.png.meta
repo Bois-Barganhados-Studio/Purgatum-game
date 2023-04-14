@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b33c9841762d8a749a236fb9586b4450
+guid: c789104051b90d147986ca6286027e19
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,8 +45,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.25}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -117,946 +117,904 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PurgatumBaseTiles_0
+      name: tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c324a91fe544e4f46b19948ecf278abb
+      internalID: -135004656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 448
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1dc6aaa9161d1344a96b8a22c967741
+      internalID: -647573101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb7148d9a253d94418e60126e089d8de
+      internalID: -53411209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 448
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c356d91e48adca4e8172215bad266f8
+      internalID: -859214745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b025b482cd59f0b42a8f3fcd1865da08
+      internalID: -1083548016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 416
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3094f5097bbcee346b86367eb3c9c455
+      internalID: -1852916715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 416
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1aea4304655a56418a120f2b8a6c159
+      internalID: 1500163593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 416
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cac0f0e3f063cd4b8c37b980c1d2c53
+      internalID: 431438380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_8
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 416
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7c3ef2ad14e269419b72010cdd38ced
+      internalID: -1238749418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 416
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2ebc5240ab635446b40635d167ee118
+      internalID: -1225533859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b73ca27d05a1a274b884b584f0e39157
+      internalID: 1683454215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adb32be445a9a024898c46e77cb69638
+      internalID: 1616843481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1bb0583891338742981303553a1441c
+      internalID: -1532518074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_13
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9e53fb5e239d264cb06466a1a3b56d8
+      internalID: -864045435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3bcd77a2c25788498b341ef4d1137f0
+      internalID: -19270070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 352
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02228ccd635c24d4f86f04e80298c319
+      internalID: -514798723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 352
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 722be94316dfe3f418bbbb4c7028cc51
+      internalID: -191844048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 352
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edad62fbf30bb6b4db054d621311134e
+      internalID: -1927114999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 352
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a282200b529d70e46bb7be3d10916378
+      internalID: 831442696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_19
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 352
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50c23fc9d42717a42a73670f486d6624
+      internalID: -1724857054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 32
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcef2b10650b8864fb988579669557f1
+      internalID: -1622573840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_21
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 320
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a97303297e29d724e97bd068399e78aa
+      internalID: 697443568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b32c6616d69d38e4cbd3b6763dbf2185
+      internalID: -1518838643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_23
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445daa43b9eefee4f9253344ea5a8c29
+      internalID: 904811682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5323a1b1d6772564fadee821979a2cfc
+      internalID: 1242217950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_25
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7db02ef4fcc328246bbcdd0f61908098
+      internalID: 951576172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_26
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 288
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff153e0ae5fe75d40a20557e6ed3d34f
+      internalID: 1219371315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9bd3aec6088a64468448f477c028991
+      internalID: 260435869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_28
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e82e1131b05c8f4992ee10ee7566b72
+      internalID: -1394232800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_29
       rect:
         serializedVersion: 2
         x: 0
         y: 224
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a71de83f15bcdb541a87c929ba8a4ddc
-      internalID: 178640965
+      spriteID: 7b42003c32b837c4e8f978d4ac814085
+      internalID: 1725569092
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_1
+      name: tiles_30
       rect:
         serializedVersion: 2
         x: 32
         y: 224
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 227caf9d15eb1724e91539f6eae59b66
-      internalID: -1449962733
+      spriteID: 4fd5ed339d3a58542a12302fe1de035e
+      internalID: -21427999
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_2
+      name: tiles_31
       rect:
         serializedVersion: 2
         x: 64
         y: 224
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65db0c72117d7f64895f18698946fa06
-      internalID: 1664278343
+      spriteID: d2aa34056afe21042b02de02ddd6c755
+      internalID: -477501184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_3
+      name: tiles_32
       rect:
         serializedVersion: 2
         x: 96
         y: 224
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ef16bc25c686c74ab29e1ad8be7e8a4
-      internalID: -2075108844
+      spriteID: 7dcbe7552cd9b73419a69c83e48d457f
+      internalID: 444286202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_4
+      name: tiles_33
       rect:
         serializedVersion: 2
         x: 128
         y: 224
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12a32b0c49af18e4ea846eebf9c31432
-      internalID: -2529840
+      spriteID: aee8bd354a7994a49bca6d869740ef4d
+      internalID: -742117326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_5
+      name: tiles_34
       rect:
         serializedVersion: 2
-        x: 160
-        y: 224
+        x: 0
+        y: 192
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 145e4950c070e1d41a060d50198d42d0
-      internalID: -1030711699
+      spriteID: 5b6946c80b69ef74a9ea6f915dca1b21
+      internalID: 48024190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_6
+      name: tiles_35
       rect:
         serializedVersion: 2
-        x: 192
-        y: 224
+        x: 32
+        y: 192
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90910194fb45f4b43ab9d3f283db5909
-      internalID: -1096185771
+      spriteID: e38f742e81e168a45ac369d24f93d3b3
+      internalID: 357264595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 224
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f183e8b4d43af604688adec7cbe72918
-      internalID: -1264200196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 224
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1b0bd5142f1f47e48992e94d60be82cc
-      internalID: -2083066599
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_9
+      name: tiles_36
       rect:
         serializedVersion: 2
         x: 64
         y: 192
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ed0228cf417cd7479f08a20243f8c5b
-      internalID: -1228003540
+      spriteID: 780c5cb1f631fd44b82f63bd1c427cb9
+      internalID: 759407650
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_10
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 192
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a9b40ebd78ee79a4b90eac3e66559d8a
-      internalID: 1654804900
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_11
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 192
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c35bcb83529aa6e44b63140fe51ab2ec
-      internalID: 872836723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_12
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 192
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac52aafe214933c4ca10f0b0725f6de1
-      internalID: -682045525
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_13
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c714a0e885bfd54a90ad490699a7399
-      internalID: 1369455718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_14
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e72d32ab67e1fb44a3725a18f5682bc
-      internalID: 1620481939
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_15
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a444f618d924f5d4ea51a497222b1467
-      internalID: 1630167163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_16
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab6404e556014a9408032a088b29d969
-      internalID: -704973545
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_17
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c1fb0bc5c7fabb47add568ae039a34f
-      internalID: -1399354055
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_18
+      name: tiles_37
       rect:
         serializedVersion: 2
         x: 0
         y: 128
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2dcd625523ba6c0438c0a6c7609d5cca
-      internalID: -125714055
+      spriteID: 6debd2484030a6349923a826da3f361e
+      internalID: 346906146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_19
+      name: tiles_38
       rect:
         serializedVersion: 2
         x: 32
         y: 128
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f5ad5b56dea6a144b216e9d473dbfe3
-      internalID: -1737648008
+      spriteID: c282971b90171c94aab9061abbff4e7a
+      internalID: 1445093348
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_20
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 980423763cdacd642a5ece9d075a34cf
-      internalID: 409593500
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_21
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7638e0f9468ffa941ae18cd262b29c1a
-      internalID: 1715681004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04f2ae2d32545d845a9e0669887acfcf
-      internalID: -529928654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_23
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3b50f656fc5146e4b9ab32ac7889e249
-      internalID: 1052879232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_24
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e3a1d1f703d55694a96e7b1472f86e81
-      internalID: -80569197
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_25
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05c93fe7bed6eda47980d80db54c0a3a
-      internalID: 1333673683
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_26
+      name: tiles_47
       rect:
         serializedVersion: 2
         x: 64
         y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2efb445a71ad29d40bd75693bc2ed84e
-      internalID: 385137966
+      spriteID: cb92f3a0e46693647acb35ca17d674c9
+      internalID: -1641063768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_27
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc0b0bcba557229489d7fbf8f777108d
-      internalID: -586453754
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_28
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 760aeea4fb64cce4691bd245c3f42b5b
-      internalID: -509705722
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_29
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 96
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02c3e0dc68e728f4a997a646345b9740
-      internalID: -32137561
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_30
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 381647c136703584fb1b576f86405b87
-      internalID: -1718253657
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_31
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 873d8c3db3e0c0247b7bbb84c5272600
-      internalID: -1725527956
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_32
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96f3ded9772898e458fa41f78bd5fe4b
-      internalID: 319520907
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_33
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 64
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc64eee14ce90694692a6bbffeef9a36
-      internalID: -619099716
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_34
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f568473e60435b4ba8a3feecd517b28
-      internalID: 371068720
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_35
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 114dd6855331f184989bf5c87fac0ce8
-      internalID: 956270778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_36
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f24d54fd6e8ead4b8f4537492b598d9
-      internalID: 1033483803
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_37
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 498593ffc966b5345b77a956610dbebc
-      internalID: 906871231
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_38
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 32
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1953ea7c30245f746948a6f38182f022
-      internalID: 1455683976
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_39
+      name: tiles_48
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa434c2c249fb2c47a28b41641c2148a
-      internalID: -1610341489
+      spriteID: 2103ce4bc40f53b40bfcd65aedad18b9
+      internalID: -1403633256
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_40
+      name: tiles_49
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92d7e1227ec70c84992423614910d347
-      internalID: -982495453
+      spriteID: fa72301791c6aba4fa69281261561d6a
+      internalID: -2008077969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurgatumBaseTiles_41
+      name: tiles_50
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 995373d35d8cb224bb2880f534d8468e
-      internalID: -1775201748
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_42
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 846625c6cfc3961478ca3032b8948d0e
-      internalID: 1660427500
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_43
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d6f03055423bcc468b5f1f1c1c1411f
-      internalID: -935947892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurgatumBaseTiles_44
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6753c8be1452947438af5f6a393587d5
-      internalID: 592837475
+      spriteID: ba977dbb12c511a408578bf97045b284
+      internalID: 1975591353
       vertices: []
       indices: 
       edges: []
@@ -1065,60 +1023,71 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: cd2f027203df0b64c944c3e3cce73830, type: 3}
-      name: _NormalMap
+    secondaryTextures: []
     nameFileIdTable:
-      PurgatumBaseTiles_15: 1630167163
-      PurgatumBaseTiles_16: -704973545
-      PurgatumBaseTiles_21: 1715681004
-      PurgatumBaseTiles_6: -1096185771
-      PurgatumBaseTiles_39: -1610341489
-      PurgatumBaseTiles_40: -982495453
-      PurgatumBaseTiles_26: 385137966
-      PurgatumBaseTiles_18: -125714055
-      PurgatumBaseTiles_12: -682045525
-      PurgatumBaseTiles_19: -1737648008
-      PurgatumBaseTiles_42: 1660427500
-      PurgatumBaseTiles_28: -509705722
-      PurgatumBaseTiles_5: -1030711699
-      PurgatumBaseTiles_24: -80569197
-      PurgatumBaseTiles_41: -1775201748
-      PurgatumBaseTiles_1: -1449962733
-      PurgatumBaseTiles_29: -32137561
-      PurgatumBaseTiles_13: 1369455718
-      PurgatumBaseTiles_32: 319520907
-      PurgatumBaseTiles_30: -1718253657
-      PurgatumBaseTiles_20: 409593500
-      PurgatumBaseTiles_43: -935947892
-      PurgatumBaseTiles_3: -2075108844
-      PurgatumBaseTiles_36: 1033483803
-      PurgatumBaseTiles_31: -1725527956
-      PurgatumBaseTiles_9: -1228003540
-      PurgatumBaseTiles_11: 872836723
-      PurgatumBaseTiles_17: -1399354055
-      PurgatumBaseTiles_4: -2529840
-      PurgatumBaseTiles_10: 1654804900
-      PurgatumBaseTiles_0: 178640965
-      PurgatumBaseTiles_33: -619099716
-      PurgatumBaseTiles_27: -586453754
-      PurgatumBaseTiles_2: 1664278343
-      PurgatumBaseTiles_37: 906871231
-      PurgatumBaseTiles_25: 1333673683
-      PurgatumBaseTiles_7: -1264200196
-      PurgatumBaseTiles_38: 1455683976
-      PurgatumBaseTiles_22: -529928654
-      PurgatumBaseTiles_23: 1052879232
-      PurgatumBaseTiles_35: 956270778
-      PurgatumBaseTiles_44: 592837475
-      PurgatumBaseTiles_8: -2083066599
-      PurgatumBaseTiles_34: 371068720
-      PurgatumBaseTiles_14: 1620481939
+      tiles_47: -1641063768
+      tiles_45: 2104115596
+      tiles_44: -1910531680
+      tiles_33: -742117326
+      tiles_28: -1394232800
+      tiles_40: -1046718794
+      tiles_51: 1251252625
+      tiles_5: -1852916715
+      tiles_14: -19270070
+      tiles_19: -1724857054
+      tiles_56: 111822870
+      tiles_27: 260435869
+      tiles_53: 1317286863
+      tiles_41: -124899187
+      tiles_6: 1500163593
+      tiles_35: 357264595
+      tiles_46: 1778319165
+      tiles_43: -408781967
+      tiles_16: -191844048
+      tiles_4: -1083548016
+      tiles_21: 697443568
+      tiles_52: -593122327
+      tiles_42: 1173001198
+      tiles_48: -1403633256
+      tiles_8: -1238749418
+      tiles_54: 1110242761
+      tiles_57: 1647704957
+      tiles_36: 759407650
+      tiles_24: 1242217950
+      tiles_13: -864045435
+      tiles_2: -53411209
+      tiles_29: 1725569092
+      tiles_17: -1927114999
+      tiles_7: 431438380
+      tiles_9: -1225533859
+      tiles_38: 1445093348
+      tiles_34: 48024190
+      tiles_55: -1155264383
+      tiles_32: 444286202
+      tiles_22: -1518838643
+      tiles_11: 1616843481
+      tiles_49: -2008077969
+      tiles_18: 831442696
+      tiles_1: -647573101
+      tiles_20: -1622573840
+      tiles_50: 1975591353
+      tiles_3: -859214745
+      tiles_26: 1219371315
+      tiles_39: -463443760
+      tiles_31: -477501184
+      tiles_15: -514798723
+      tiles_0: -135004656
+      tiles_37: 346906146
+      tiles_10: 1683454215
+      tiles_23: 904811682
+      tiles_12: -1532518074
+      tiles_30: -21427999
+      tiles_25: 951576172
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
