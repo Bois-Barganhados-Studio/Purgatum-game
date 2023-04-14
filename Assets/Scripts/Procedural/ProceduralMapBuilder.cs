@@ -114,7 +114,8 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
-            GameObject.Find("Character").transform.position = spawnPoint;
+            GameObject.Find("Player").transform.position = spawnPoint;
+            GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f,1.0f,0);
             levelRenderer.RenderElements();
             status = true;
         }
