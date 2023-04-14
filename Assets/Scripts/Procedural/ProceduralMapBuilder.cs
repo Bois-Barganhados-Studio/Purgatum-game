@@ -15,10 +15,12 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly string[] styles = { "STONE" };
     private static List<string> stylesIni = new List<string>();
     private BluePrintReader bpReader = null;
+    public int tileNumber;
+    public int bp;
 
     public ProceduralMapBuilder()
     {
-       bpReader = new BluePrintReader();
+        bpReader = new BluePrintReader();
     }
 
     /**
@@ -38,13 +40,31 @@ public class ProceduralMapBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (stylesIni.Count == 0) { 
+        if (stylesIni.Count == 0)
+        {
             foreach (string style in styles)
             {
-                ReadIni(style +"/"+style.ToLower());
+                ReadIni(style + "/" + style.ToLower());
             }
         }
-        if (BuildTerrain(0, 0, 0, 0, 2))
+        if (BuildTerrain(0, 0, 0, bp, UnityEngine.Random.Range(1, 4)))
+        {
+            Debug.Log("MAPA GERADO COM SUCESSO: "+bp);
+        }
+        else
+        {
+            Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+        }
+    }
+
+    /**
+     * Iniciar o novo nivel e limpar renderizador
+     */
+    void NewLevel()
+    {
+        levelRenderer.UnloadMemory();
+        levelRenderer.ClearGameObject();
+        if (BuildTerrain(0, 0, 0, 0, 1))
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
         }
@@ -64,23 +84,37 @@ public class ProceduralMapBuilder : MonoBehaviour
     bool BuildTerrain(int roomStyle, int randFactor, int numRooms, int blueprint, int folderNum)
     {
         bool status = false;
-        try {
+        try
+        {
             levelRenderer = new RenderLevel();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
             bpReader.defineBp(blueprint);
-            List<(string,Vector3)>structures = bpReader.RoomReaded();
-            for (int i = 0;i < structures.Count; i++){
+            List<(string, Vector3)> structures = bpReader.RoomReaded();
+            Vector3 spawnPoint = new Vector3(0,0,0);
+            for (int i = 0; i < structures.Count; i++)
+            {
                 string structure = structures[i].Item1;
                 Vector3 position = structures[i].Item2;
-                string path = structure+ DIVIDER+ styles[roomStyle] + DIVIDER+ folderNum;
+                string path = "";
+                folderNum = folderNum<3? folderNum+1 : 1;
+                if (structure.Equals("SPAWN"))
+                {
+                    path = structure + DIVIDER + styles[roomStyle];
+                    spawnPoint = position;
+                }
+                else
+                {
+                    path = structure + DIVIDER + styles[roomStyle] + DIVIDER + folderNum;
+                }
                 if (stylesIni.Contains(path))
                 {
-                    chunkPaths.Add(FOLDER+ styles[roomStyle] +"/"+ path);
+                    chunkPaths.Add(FOLDER + styles[roomStyle] + "/" + path);
                     chunkPositions.Add(position);
                 }
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
+            GameObject.Find("Character").transform.position = spawnPoint;
             levelRenderer.RenderElements();
             status = true;
         }

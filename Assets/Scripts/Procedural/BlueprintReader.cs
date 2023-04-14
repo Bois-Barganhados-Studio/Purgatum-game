@@ -7,7 +7,7 @@ public class BluePrintReader
 {
 
     private const string FOLDER = "Blueprints/";
-    private static readonly int[] BPS = { 0 };
+    private static readonly int[] BPS = { 0,1 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     private List<string> blueprint = new List<string>();
     private List<(string, Vector3)> decodedRoom;
@@ -17,18 +17,20 @@ public class BluePrintReader
 
     public enum TileType
     {
-        WALL = 0,
-        GROUND = 1,
-        DOOR = 2,
-        CHEST = 3,
+        WALL = 'w',
+        GROUND = 'g',
+        DOOR = 'd',
+        CHEST = 'c',
+        SPAWN = 's'
     }
 
     public enum BlueprintIndex
     {
         RECT = 0,
-        ESPHERE = 1,
+        CIRCLE = 1,
         HEXA = 2,
         CRAZY = 3,
+        CRUX = 4,
     }
 
     public BluePrintReader()
@@ -50,10 +52,6 @@ public class BluePrintReader
             for (int i = 0; i < lines.Length; i++)
             {
                 lines[i] = lines[i].TrimEnd('\r', '\n');
-            }
-            foreach (string l in lines)
-            {
-                Debug.Log(l);
             }
             blueprint.AddRange(lines);
             DecodeBp();
@@ -95,8 +93,8 @@ public class BluePrintReader
                 {
                     char letter = line[colIndex];
                     if (letter != ' ') { 
-                    decodedRoom.Add((Enum.GetName(typeof(TileType), (int)char.GetNumericValue(letter)),
-                        SetGlobalPosition(lineIndex*-1, colIndex * -1)));
+                        decodedRoom.Add((Enum.GetName(typeof(TileType), letter),
+                            SetGlobalPosition(lineIndex, colIndex)));
                     }
                 }
             }
@@ -115,11 +113,7 @@ public class BluePrintReader
      */
     Vector3 SetGlobalPosition(int indexOfLine, int indexOfCol)
     {
-        Debug.Log("LINE: " + indexOfLine);
-        //fazer calculos de posicionamento e indice dentro do mapa
-        Debug.Log(indexOfLine + " : " + indexOfCol);
-        (double, double) tuple = ToIsometric(indexOfLine, indexOfCol);
-        Debug.Log(tuple.Item1 + " : " + tuple.Item2);
+        (double, double) tuple = ToIsometric(indexOfLine *-1, indexOfCol *-1);
         return new Vector3((float)tuple.Item1, (float)tuple.Item2, 0);
     }
 

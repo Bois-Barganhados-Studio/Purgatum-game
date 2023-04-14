@@ -7,13 +7,37 @@ using System.Collections.Generic;
 public class RenderLevel
 {
     private List<GameObject> level = new List<GameObject>();
-    private List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
+    private static List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
+    private static Dictionary<string, GameObject> loadedTiles = new Dictionary<string, GameObject>();
+    
     private GameObject renderLevels = null;
-
 
     public RenderLevel()
     {
         renderLevels = GameObject.Find("renderLevels");
+    }
+
+    /**
+     * Limpa os chunks salvos na memoria
+     */
+    public void UnloadMemory()
+    {
+        chunks.Clear();
+        loadedTiles.Clear();
+    }
+
+    /**
+     * Limpa o gameobject de renderLevels
+     */
+    public void ClearGameObject()
+    {
+        if (renderLevels != null)
+        {
+            for (int i = renderLevels.transform.childCount - 1; i >= 0; i--)
+            {
+                GameObject.DestroyImmediate(renderLevels.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     /**
@@ -23,8 +47,11 @@ public class RenderLevel
     {
         for (int i = 0; i < chunkPaths.Count; i++)
         {
-            Debug.Log(chunkPaths[i]);
-            chunks.Add((Resources.Load<GameObject>(chunkPaths[i]), chunkPositions[i]));
+            if (!loadedTiles.ContainsKey(chunkPaths[i]))
+            {
+                loadedTiles.Add(chunkPaths[i], Resources.Load<GameObject>(chunkPaths[i]));
+            }
+            chunks.Add((loadedTiles[chunkPaths[i]], chunkPositions[i]));
         }
     }
 
@@ -33,7 +60,6 @@ public class RenderLevel
      */
     public void RenderElements()
     {
-        Debug.Log("Rendering chunks in the level");
         foreach ((GameObject, Vector3) tuple in chunks)
         {
             level.Add(GenGameTileMap(tuple.Item1, tuple.Item2));
