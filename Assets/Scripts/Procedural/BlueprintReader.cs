@@ -7,7 +7,7 @@ public class BluePrintReader
 {
 
     private const string FOLDER = "Blueprints/";
-    private static readonly int[] BPS = { 0,1 };
+    private static readonly int[] BPS = { 0,1,2,3,4 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     private List<string> blueprint = new List<string>();
     private List<(string, Vector3)> decodedRoom;
