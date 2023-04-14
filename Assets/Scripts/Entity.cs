@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -101,12 +102,16 @@ public abstract class Entity
         moveState = tmp;
     }
 
-    public void takeAttack(int dmg)
+    public bool takeAttack(int dmg)
     {
         Hp = Hp - dmg;
         Debug.Log(Hp);
-        if (isDead) {
-            Debug.Log("died");
-        }
+        return true;
+    }
+
+    public IEnumerator coolDown(Action func, float time)
+    {
+        yield return new WaitForSeconds(time);
+        func();
     }
 }

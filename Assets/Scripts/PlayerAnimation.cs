@@ -18,13 +18,13 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        float result1 = Vector2.SignedAngle(Vector2.up, Vector2.right);
+        //float result1 = Vector2.SignedAngle(Vector2.up, Vector2.right);
         //Debug.Log("R1 " + result1);
 
-        float result2 = Vector2.SignedAngle(Vector2.up, Vector2.left);
+        //float result2 = Vector2.SignedAngle(Vector2.up, Vector2.left);
         //Debug.Log("R2 " + result2);
 
-        float result3 = Vector2.SignedAngle(Vector2.up, Vector2.down);
+        //float result3 = Vector2.SignedAngle(Vector2.up, Vector2.down);
         //Debug.Log("R3 " + result3);
     }
 
@@ -50,10 +50,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetDodgeDirection(Vector2 _direction)
     { 
-        string[] dodge = { "Rolling N", "Rolling NW", "Rolling W", "Rolling SW", "Rolling S", "Rolling SE", "Rolling E", "Rolling NE" };
-        
-        lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
-        anim.Play(dodge[lastDirection]);
+        string[] animDirection = { "Rolling N", "Rolling NW", "Rolling W", "Rolling SW", "Rolling S", "Rolling SE", "Rolling E", "Rolling NE" };
+        anim.Play(animDirection[DirectionToIndex(_direction)]);
     }
 
     public void SetAttackDirection(Vector2 _direction)

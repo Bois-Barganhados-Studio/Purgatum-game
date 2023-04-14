@@ -21,9 +21,17 @@ public class Player : Entity
         return FacingDir * DodgeSpeed;
     }
 
+    private bool dodgingCD;
+    public bool DodgingCD
+    {
+        set { dodgingCD = value; }
+        get { return dodgingCD; }
+    }
+
+
     public bool CanDodge() 
     {
-        return (!IsAttaking && Move_State != Entity.MoveState.DODGING);
+        return (!dodgingCD && !IsAttaking && Move_State != Entity.MoveState.DODGING);
     }
 
     public bool CanAttack()

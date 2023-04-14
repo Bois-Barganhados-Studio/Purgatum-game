@@ -12,15 +12,6 @@ public class PlayerObject : MonoBehaviour
     {
         player = new Player();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
-        /*attackPoints = new GameObject[8];
-        attackPoints[0] = GameObject.Find("AttackPointN");
-        attackPoints[1] = GameObject.Find("AttackPointNW");
-        attackPoints[2] = GameObject.Find("AttackPointW");
-        attackPoints[3] = GameObject.Find("AttackPointSW");
-        attackPoints[4] = GameObject.Find("AttackPointS");
-        attackPoints[5] = GameObject.Find("AttackPointSE");
-        attackPoints[6] = GameObject.Find("AttackPointE");
-        attackPoints[7] = GameObject.Find("AttackPointNE");*/
     }
 
     // Start is called before the first frame update
@@ -87,13 +78,16 @@ public class PlayerObject : MonoBehaviour
         if (player.CanDodge()) {
             Debug.Log("can dodge");
             player.Move_State = Entity.MoveState.DODGING;
+            player.DodgingCD = true;
         }
     }
 
     public void EndDodge()
     {
         player.toLastState();
-        Debug.Log("end dodge - ms: " + player.Move_State);
+        StartCoroutine(player.coolDown(() => {
+            player.DodgingCD = false;
+        }, 0.2f));
     }
 
     public void Attack()
@@ -102,11 +96,15 @@ public class PlayerObject : MonoBehaviour
             player.IsAttaking = true;
             int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
             Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, 0.1f, enemyLayer);
-            foreach (var e in enemies) {
-                e.GetComponent<EnemyObject>().takeAttack(5);
+            foreach (var it in attackPoints) {
+                Debug.Log(it);
             }
-            player.Attack();
-            EndAttack();
+            foreach (var e in enemies) {
+                e.GetComponent<EnemyObject>().takeAttack(Random.Range(4, 7));
+            }
+            StartCoroutine(player.coolDown(() => {
+                EndAttack();
+            }, 0.2f));
         }
     }
 
