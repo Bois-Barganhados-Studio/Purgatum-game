@@ -227,7 +227,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: 72734
+  m_InstanceId: -1362
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 4928372900053999982}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -521,6 +521,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 256
   attackPoints:
   - {fileID: 4928372899879651448}
   - {fileID: 4928372898166009846}
@@ -542,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc3b3128f4110d49a264640686ef158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 4928372900053999968}
 --- !u!114 &4928372900053999982
 MonoBehaviour:
   m_ObjectHideFlags: 0

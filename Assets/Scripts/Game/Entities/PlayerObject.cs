@@ -6,12 +6,18 @@ public class PlayerObject : MonoBehaviour
 {
     private Player player;
     public LayerMask enemyLayer;
+    public LayerMask itemLayer;
     public GameObject[] attackPoints;
+    private Vector2 idleDir;
+    private List<ItemObject> items;
+
     // Initializing
     void Awake()
     {
         player = new Player();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
+        idleDir = new Vector2(0, 0);
+        items = new List<ItemObject>();
     }
 
     // Start is called before the first frame update
@@ -55,9 +61,9 @@ public class PlayerObject : MonoBehaviour
         player.Move_State = state;
     }
 
-    public bool isAttaking()
+    public bool isAttacking()
     {
-        return player.IsAttaking;
+        return player.IsAttacking;
     }
 
     public void toLastState()
@@ -73,10 +79,19 @@ public class PlayerObject : MonoBehaviour
         }
     }
 
+    public void EndMove()
+    {
+        if (player.LastState == Entity.MoveState.MOVING) {
+            player.LastState = Entity.MoveState.IDLE;
+        } else if (player.Move_State == Entity.MoveState.MOVING) {
+            player.toLastState();
+        }
+        player.Direction = idleDir; 
+    }
+
     public void Dodge()
     {
         if (player.CanDodge()) {
-            Debug.Log("can dodge");
             player.Move_State = Entity.MoveState.DODGING;
             player.DodgingCD = true;
         }
@@ -87,24 +102,21 @@ public class PlayerObject : MonoBehaviour
         player.toLastState();
         StartCoroutine(player.coolDown(() => {
             player.DodgingCD = false;
-        }, 0.2f));
+        }, Player.BASE_COOLDOWN));
     }
 
     public void Attack()
     {
         if (player.CanAttack()) {
-            player.IsAttaking = true;
+            player.IsAttacking = true;
             int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, 0.1f, enemyLayer);
-            foreach (var it in attackPoints) {
-                Debug.Log(it);
-            }
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
             foreach (var e in enemies) {
-                e.GetComponent<EnemyObject>().takeAttack(Random.Range(4, 7));
+                e.GetComponent<EnemyObject>().takeAttack(player.MainWeapon);
             }
             StartCoroutine(player.coolDown(() => {
                 EndAttack();
-            }, 0.2f));
+            }, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
         }
     }
 
@@ -118,7 +130,50 @@ public class PlayerObject : MonoBehaviour
 
     public void EndAttack()
     {
-        //Debug.Log("end atk");
-        player.IsAttaking = false;
+        player.IsAttacking = false;
+    }
+
+    public void takeAttack(Weapon eWeapon)
+    {
+        if (player.Move_State == Entity.MoveState.DODGING)
+            return;
+        int dmg = player.takeAttack(eWeapon);
+        if (dmg > 0)
+        {
+            // TODO - Update Health Bar
+            if (player.IsDead)
+            {
+                // TODO - Make player die
+            } else
+            {
+                StartCoroutine(blinkSprite());
+            }
+        }
+    }
+
+    public IEnumerator blinkSprite()
+    {
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        Color lastColor = sr.color;
+        sr.color = new Color(255, 255, 255, 0.5f);
+        yield return new WaitForSeconds(.15f);
+        sr.color = lastColor;
+    }
+
+    public void Collect()
+    {
+        if (player.CanCollect())
+        {
+            int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
+            Collider2D[] itemsReached = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, 0.05f, itemLayer);
+            foreach (var i in itemsReached)
+            {
+                if (items.Count < player.ItemCap)
+                {
+                    items.Add(i.GetComponent<ItemObject>());
+                }
+                Destroy(i);
+            }
+        }
     }
 }   

@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public static readonly float BASE_COOLDOWN = 0.2f;
+
     public const int LAYER = 6;
+
+    private int itemCap;
+    public int ItemCap
+    {
+        get { return itemCap; }
+        set { itemCap = value; }
+    }
 
     public Player()
         : base(100)
     {
+        MainWeapon = new DefaultWeapon();
+        // SubWeapon = new DefaultWeapon();
+        ItemCap = 5;
     }
 
     public Vector2 MoveVelocity()
@@ -28,20 +40,48 @@ public class Player : Entity
         get { return dodgingCD; }
     }
 
+    private Weapon mainWeapon;
+    public Weapon MainWeapon 
+    {   
+        get { return mainWeapon; }
+        set { mainWeapon = value; }
+    }
+
+    //private Weapon subWeapon;
+    //public Weapon SubWeapon 
+    //{   
+    //    get { return subWeapon; }
+    //    set { subWeapon = value; }
+    //}
 
     public bool CanDodge() 
     {
-        return (!dodgingCD && !IsAttaking && Move_State != Entity.MoveState.DODGING);
+        return (!dodgingCD && !IsAttacking && Move_State != Entity.MoveState.DODGING);
     }
 
     public bool CanAttack()
     {
-        return (!IsAttaking && Move_State != Entity.MoveState.DODGING);
+        return (!IsAttacking && Move_State != Entity.MoveState.DODGING);
     }
 
-    public void Attack()
+    public bool CanCollect()
     {
-        
+        return (!IsAttacking && Move_State != Entity.MoveState.DODGING);
+    }
+
+    //public void Attack()
+    //{
+
+    //}
+
+    public int takeAttack(Weapon eWeapon)
+    {
+        int dmg = Random.Range((int)(eWeapon.BaseDmg - eWeapon.BaseDmg * 0.2f), (int)(eWeapon.BaseDmg + eWeapon.BaseDmg * 0.2f));
+        if (dmg > 0)
+        {
+            takeDamage(dmg);
+        }
+        return dmg;
     }
 
 }

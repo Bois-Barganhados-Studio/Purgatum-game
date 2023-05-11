@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     private void FixedUpdate()
@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity = player.DodgeVelocity();
             FindObjectOfType<PlayerAnimation>().SetDodgeDirection(player.getFacingDir());
         }
-        if (player.isAttaking()) {
-            //FindObjectOfType<PlayerAnimation>().SetAttackDirection(player.getDirection());
-        }
+        //if (player.isAttacking()) {
+        //    //FindObjectOfType<PlayerAnimation>().SetAttackDirection(player.getDirection());
+        //}
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
         if (player.getMoveState() != Entity.MoveState.DODGING)
         {
             player.Move(ctx.ReadValue<Vector2>().normalized);
+        }
+        if (ctx.canceled) {
+            player.EndMove();
         }
     }
 
@@ -66,5 +69,13 @@ public class PlayerController : MonoBehaviour
     public void EndAttack()
     {
         player.EndAttack();
+    }
+
+    public void OnCollect(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            player.Collect();
+        }
     }
 }

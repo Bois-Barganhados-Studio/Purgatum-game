@@ -6,22 +6,43 @@ public class EnemyObject : MonoBehaviour
 {
     private Enemy enemy;
     public GameObject DamageIndicator;
+    public GameObject attackPoint;
+    public LayerMask playerLayer;
 
     public void Awake()
     {
         enemy = new Enemy(50);
     }
 
-
-    public void takeAttack(int dmg)
+    public void FixedUpdate()
     {
-        if (enemy.takeAttack(dmg)) {
+        Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
+        PlayerObject p = null;
+        if (col != null)
+            p = col.GetComponent<PlayerObject>();
+        if (p != null && !enemy.IsAttacking)
+        {
+            // TODO - make enemy look at player
+            enemy.IsAttacking = true;
+            StartCoroutine(enemy.coolDown(() => {
+                enemy.IsAttacking = false;
+            }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
+            p.takeAttack(enemy.MainWeapon);
+        }
+    }
+
+
+    public void takeAttack(Weapon pWeapon)
+    {
+        int dmg = enemy.takeAttack(pWeapon);
+        if (dmg != 0) {
             StartCoroutine(blinkSprite());
             DamageIndicator.GetComponentInChildren<TextMesh>().text = dmg.ToString();
             Instantiate(DamageIndicator, transform.position, Quaternion.identity);
             if (enemy.IsDead) {
-                Destroy(GetComponent<BoxCollider2D>());
                 FindObjectOfType<EnemyAnimation>().die(enemy.FacingDir);
+                Destroy(this);
+                // TODO - Destroy whole game object
             }
         }
     }

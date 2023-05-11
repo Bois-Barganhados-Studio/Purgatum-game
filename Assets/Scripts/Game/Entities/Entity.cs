@@ -51,6 +51,11 @@ public abstract class Entity
     }
 
     private MoveState lastState;
+    public MoveState LastState
+    {
+        get { return lastState; }
+        set { lastState = value; }
+    }
     private MoveState moveState;
     public MoveState Move_State
     {
@@ -76,11 +81,11 @@ public abstract class Entity
         set { dodgeSpeed = value; }
     }
 
-    private bool isAttaking;
-    public bool IsAttaking
+    private bool isAttacking;
+    public bool IsAttacking
     {
-        get { return isAttaking; }
-        set { isAttaking = value; }
+        get { return isAttacking; }
+        set { isAttacking = value; }
     }
 
     public Entity(int hp)
@@ -90,7 +95,7 @@ public abstract class Entity
         moveState = MoveState.IDLE;
         moveSpeed = 1.0f;
         dodgeSpeed = 1.0f;
-        isAttaking = false;
+        isAttacking = false;
         isDead = false;
         facingDir = new Vector2(0, 1);
     }
@@ -102,10 +107,9 @@ public abstract class Entity
         moveState = tmp;
     }
 
-    public bool takeAttack(int dmg)
+    public bool takeDamage(int dmg)
     {
         Hp = Hp - dmg;
-        Debug.Log(Hp);
         return true;
     }
 
