@@ -2167,12 +2167,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1648454435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd99451ddca1d40acf1dc4df302632, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b63a7deb42d33e41aa6dd893ed34f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nomeCenaJogo: Jogo
-  painelMenuInicial: {fileID: 761848188}
-  painelOpcoes: {fileID: 2139937162}
+  nomeCenaJogo: 
+  painelMenuInicial: {fileID: 0}
+  painelOpcoes: {fileID: 0}
 --- !u!4 &1648454437
 Transform:
   m_ObjectHideFlags: 0
