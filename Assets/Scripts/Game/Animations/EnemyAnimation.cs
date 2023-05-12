@@ -58,7 +58,7 @@ public class EnemyAnimation : MonoBehaviour
         
         
         index = (int)Mathf.Round(angulo / 45) % 8;
-        UnityEngine.Debug.Log("x: " + (target.position.x - transform.position.x) + " Y: " + (target.position.y - transform.position.y) + " angulo: " + angulo + " index: " + index);
+        //UnityEngine.Debug.Log("x: " + (target.position.x - transform.position.x) + " Y: " + (target.position.y - transform.position.y) + " angulo: " + angulo + " index: " + index);
         return index;
         
     }

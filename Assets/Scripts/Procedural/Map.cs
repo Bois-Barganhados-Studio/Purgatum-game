@@ -38,12 +38,11 @@ public class Map
     //codigo para buscar dados da matriz vezes a constante de tamanho
     private void newRoomsPositions()
     {
-        Debug.Log("NEW ROOMS POSITIONS");
         for (int i = 0; i < rooms.Count; i++)
         {
             List<Vector3> roomsLocations = new List<Vector3>();
             int matrixIndex = matrixRooms[i];
-            Debug.Log("MATRIX: " + matrixIndex);
+            //Debug.Log("MATRIX: " + matrixIndex);
             Room room = rooms[i];
             foreach (Vector3 pos in room.GetPositions())
             {

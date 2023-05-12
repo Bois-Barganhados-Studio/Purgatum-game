@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /**
  * @author Leon Jr
  */
 public class ProceduralMapBuilder : MonoBehaviour
 {
-
+    private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 6, 12 };
+    private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
     private RenderLevel levelRenderer = null;
     private const string DIVIDER = "_";
     private const string FOLDER = "Maps/";
@@ -17,11 +17,15 @@ public class ProceduralMapBuilder : MonoBehaviour
     private BluePrintReader bpReader = null;
     public int tileNumber;
     public int[] bp;
-    public int numOfRooms = 5;
-    public int roomStyle = 0;
+    private int groundCounter = 1, wallCounter = 1;
+    public int roomStyle = 0, randFactor = 6, numOfRooms = 5;
+    private static readonly string GROUND = "GROUND";
+    private static readonly string WALL = "WALL";
+    private int GROUNDS_SZ = 0, WALLS_SZ = 0;
 
     public ProceduralMapBuilder()
     {
+        Debug.Log("INICIANDO GERAÇÂO DE MUNDO");
         bpReader = new BluePrintReader();
     }
 
@@ -35,21 +39,27 @@ public class ProceduralMapBuilder : MonoBehaviour
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i] = lines[i].TrimEnd('\r', '\n');
+            if (lines[i].Contains("GROUND"))
+            {
+                GROUNDS_SZ++;
+            }
+            else if (lines[i].Contains("WALL"))
+            {
+                WALLS_SZ++;
+            }
         }
         stylesIni.AddRange(lines);
     }
 
     void Start()
     {
+        //criar func so para isso e gerar bps
         bp = new int[numOfRooms];
-        bp[0] = 0;
-        bp[1] = 4;
-        bp[2] = 4;
-        bp[3] = 0;
+        bp[0] = 2;
+        bp[1] = 0;
+        bp[2] = 1;
+        bp[3] = 3;
         bp[4] = 4;
-        Debug.Log(bp.ToString());
-        Debug.Log(bpReader);
-        //bp[0] = 3;
         if (stylesIni.Count == 0)
         {
             foreach (string style in styles)
@@ -57,7 +67,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 ReadIni(style + "/" + style.ToLower());
             }
         }
-        if (BuildTerrain(roomStyle, 0, numOfRooms, bp, UnityEngine.Random.Range(1, 4)))
+        if (BuildTerrain(roomStyle, randFactor, numOfRooms, bp))
         {
             Debug.Log("MAPA GERADO COM SUCESSO: " + bp);
         }
@@ -73,11 +83,14 @@ public class ProceduralMapBuilder : MonoBehaviour
     void NewLevel()
     {
         bp = new int[numOfRooms];
-        bp[0] = 1;
-        bp[1] = 2;
+        bp[0] = 0;
+        bp[1] = 4;
+        bp[2] = 3;
+        bp[3] = 2;
+        bp[4] = 1;
         levelRenderer.UnloadMemory();
         levelRenderer.ClearGameObject();
-        if (BuildTerrain(roomStyle, 0, numOfRooms, bp, UnityEngine.Random.Range(1, 4)))
+        if (BuildTerrain(roomStyle, randFactor, numOfRooms, bp))
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
         }
@@ -92,9 +105,8 @@ public class ProceduralMapBuilder : MonoBehaviour
      * @args roomStyle estilo da sala (STONE, GRASS, FIRE etc)
      * @args randFactor fator de aleatoriedade da construção do mapa (SEED)
      * @args numRooms número de salas que vão ser geradas nesse nivel
-     * @args folderNum qual numeração na pasta de prefabs escolher para a blueprint
      */
-    bool BuildTerrain(int roomStyle, int randFactor, int numRooms, int[] blueprint, int folderNum)
+    bool BuildTerrain(int roomStyle, int randFactor, int numRooms, int[] blueprint)
     {
         bool status = false;
         Vector3 spawnPoint = new Vector3(0, 0, 0);
@@ -106,7 +118,6 @@ public class ProceduralMapBuilder : MonoBehaviour
             levelRenderer = new RenderLevel();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
-            Debug.Log(bpReader);
             bpReader.SetNumOfRooms(numRooms);
             bpReader.defineBp(blueprint);
             //List<Room> structures = bpReader.RoomsLoaded();
@@ -124,16 +135,32 @@ public class ProceduralMapBuilder : MonoBehaviour
                     {
                         Vector3 position = room.GetPosition(i);
                         string path = "";
-                        folderNum = folderNum < 3 ? folderNum + 1 : 1;
                         if (structure.Equals("SPAWN"))
                         {
-                            path = structure + DIVIDER + styles[roomStyle];
-                            spawnPoint = position;
+                            if (spawnPoint.x == 0 && spawnPoint.y == 0)
+                            {
+                                path = structure + DIVIDER + styles[roomStyle];
+                                spawnPoint = position;
+                            }
+                            else
+                            {
+                                //DEFAULT GROUND
+                                path = GROUND + DIVIDER + styles[roomStyle] + DIVIDER + NextGroundEnumerate();
+                            }
                         }
                         else
                         {
-                            path = structure + DIVIDER + styles[roomStyle] + DIVIDER + folderNum;
+                            path = structure + DIVIDER + styles[roomStyle];
+                            if (structure.Equals(GROUND))
+                            {
+                                path += DIVIDER + NextGroundEnumerate();
+                            }
+                            else if (structure.Equals(WALL))
+                            {
+                                path += DIVIDER + NextWallEnumerate();
+                            }
                         }
+                        Debug.Log(path);
                         if (stylesIni.Contains(path))
                         {
                             chunkPaths.Add(FOLDER + styles[roomStyle] + "/" + path);
@@ -145,14 +172,52 @@ public class ProceduralMapBuilder : MonoBehaviour
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
             GameObject.Find("Player").transform.position = spawnPoint;
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
+            GameObject.Find("Pathfinding").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
             levelRenderer.RenderElements();
             status = true;
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Debug.LogException(e);
         }
         return status;
+    }
+
+    int NextGroundEnumerate()
+    {
+        if (groundCounter == randFactor)
+        {
+            groundCounter++;
+            int gd = Random.Range(1, GROUNDS_SZ);
+            return (gd == 8 || gd == 10) ? 1 : gd;
+        }
+        if (groundCounter < GROUNDS_SZ)
+        {
+            groundCounter++;
+        }
+        else
+        {
+            groundCounter = 1;
+        }
+        return 1;
+    }
+
+    int NextWallEnumerate()
+    {
+        if (wallCounter == randFactor)
+        {
+            wallCounter = 1;
+            return Random.Range(wallCounter, WALLS_SZ);
+        }
+        if (wallCounter < WALLS_SZ)
+        {
+            wallCounter++;
+        }
+        else
+        {
+            wallCounter = 1;
+        }
+        return wallCounter;
     }
 
     /**
@@ -171,13 +236,43 @@ public class ProceduralMapBuilder : MonoBehaviour
         int conjElement = conj[0], op = 0;
         do
         {
-            op = escolhas[UnityEngine.Random.Range(0, escolhas.Count - 1)];
-            selected = op == 0 ? conjElement - 1 : op == 1 ? conjElement + 1 : op == 2 ? conjElement + 4 : conjElement - 4;
-            if ((selected >= 0 && selected <= 15) && !Array.Exists(matrix, element => element == selected))
+            op = escolhas[Random.Range(0, escolhas.Count)];
+            // Debug.Log("op: " + op);
+            if (op == 0)
+            {
+                if (!MATRIX_LEFT_ELEMENTS.Contains(op))
+                {
+                    selected = conjElement - 1;
+                }
+                else
+                {
+                    escolhas.Remove(op);
+                }
+            }
+            else if (op == 1)
+            {
+                if (!MATRIX_RIGHT_ELEMENTS.Contains(op))
+                {
+                    selected = conjElement + 1;
+                }
+                else
+                {
+                    escolhas.Remove(op);
+                }
+            }
+            else if (op == 2)
+            {
+                selected = conjElement + 4;
+            }
+            else
+            {
+                selected = conjElement - 4;
+            }
+            if (index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
             {
                 matrix[index] = selected;
                 conj.Add(selected);
-                conjElement = conj[UnityEngine.Random.Range(0, conj.Count - 1)];
+                conjElement = conj[Random.Range(0, conj.Count)];
                 if (conjElement == matrix[index] && escolhas.Count == 1)
                 {
                     conjElement = selected;
@@ -193,6 +288,21 @@ public class ProceduralMapBuilder : MonoBehaviour
                 if (escolhas.Count > 0)
                 {
                     escolhas.Remove(op);
+                    //   Debug.Log("removed: " + escolhas.Count + " - " + op);
+                    if (escolhas.Count == 0)
+                    {
+                        conj.Remove(conjElement);
+                        if (conj.Count > 0)
+                        {
+                            conjElement = conj[Random.Range(0, conj.Count)];
+                            escolhas = new List<int> { 0, 1, 2, 3 };
+                            index++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -200,9 +310,6 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
             }
         } while (index < numOfRooms);
-        conj.Clear();
-        escolhas.Clear();
-        Debug.Log("MATRIX CREATED " + matrix.Length);
         return matrix;
     }
 }
