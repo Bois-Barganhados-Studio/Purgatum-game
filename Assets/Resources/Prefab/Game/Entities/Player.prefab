@@ -227,7 +227,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1302
+  m_InstanceId: -3110
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
