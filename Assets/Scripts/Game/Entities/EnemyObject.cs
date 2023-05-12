@@ -1,6 +1,13 @@
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.IO;
+using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+
 
 public class EnemyObject : MonoBehaviour
 {
@@ -8,28 +15,83 @@ public class EnemyObject : MonoBehaviour
     public GameObject DamageIndicator;
     public GameObject attackPoint;
     public LayerMask playerLayer;
+    private IAstarAI pathfinder;
+    public Transform target;
+
+    
 
     public void Awake()
     {
-        enemy = new Enemy(50);
+
+        enemy = new Enemy(50,0.8f);
+        pathfinder = GetComponent<IAstarAI>();
+        pathfinder.maxSpeed = enemy.MoveSpeed;
+
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void FixedUpdate()
     {
-        Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
-        PlayerObject p = null;
-        if (col != null)
-            p = col.GetComponent<PlayerObject>();
-        if (p != null && !enemy.IsAttacking)
+        if(enemy.State == Enemy.MachineState.DYING)
         {
-            // TODO - make enemy look at player
-            enemy.IsAttacking = true;
-            StartCoroutine(enemy.coolDown(() => {
-                enemy.IsAttacking = false;
-            }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
-            p.takeAttack(enemy.MainWeapon);
+            return;
+        }
+
+        double distance = Math.Sqrt(Math.Pow(transform.position.x - target.position.x, 2) + Math.Pow(transform.position.y - target.position.y, 2));
+        //UnityEngine.Debug.Log(distance);
+
+        //Atualiza a máquina de estados
+        updateMachineState(distance);
+        //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
+        //UnityEngine.Debug.Log(enemy.State);
+
+        
+
+        switch (enemy.State)
+        {
+            case Enemy.MachineState.IDLE:
+                pathfinder.canSearch = false;
+                pathfinder.canMove = false;
+                FindObjectOfType<EnemyAnimation>().idle(target);
+                break;
+
+            case Enemy.MachineState.CHASING:
+                pathfinder.canSearch = true;
+                pathfinder.canMove = true;
+                pathfinder.destination = target.position;
+                FindObjectOfType<EnemyAnimation>().moving(target);
+                break;
+
+            case Enemy.MachineState.ATTACKING:
+                FindObjectOfType<EnemyAnimation>().attacking(target);
+                
+                Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
+                PlayerObject p = null;
+                if (col != null)
+                    p = col.GetComponent<PlayerObject>();
+                if (p != null && !enemy.IsAttacking)
+                {
+                    // TODO - make enemy look at player
+                    enemy.IsAttacking = true;
+                    StartCoroutine(enemy.coolDown(() => {
+                        enemy.IsAttacking = false;
+                    }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
+                    p.takeAttack(enemy.MainWeapon);
+                    
+                }
+                break;
+
+            case Enemy.MachineState.DYING:
+                FindObjectOfType<EnemyAnimation>().die(target);
+                pathfinder.canSearch = false;
+                pathfinder.canMove = false;
+
+                break;
+
         }
     }
+
+
 
 
     public void takeAttack(Weapon pWeapon)
@@ -39,11 +101,36 @@ public class EnemyObject : MonoBehaviour
             StartCoroutine(blinkSprite());
             DamageIndicator.GetComponentInChildren<TextMesh>().text = dmg.ToString();
             Instantiate(DamageIndicator, transform.position, Quaternion.identity);
-            if (enemy.IsDead) {
-                FindObjectOfType<EnemyAnimation>().die(enemy.FacingDir);
-                Destroy(this);
-                // TODO - Destroy whole game object
-            }
+            // if (enemy.IsDead) {
+            //     FindObjectOfType<EnemyAnimation>().die(enemy.FacingDir);
+            //     //Destroy(this);
+            //     // TODO - Destroy whole game object
+            // }
+        }
+    }
+
+    
+    public void updateMachineState(double distance)
+    {
+        if(enemy.State == Enemy.MachineState.DYING)
+        {
+            return;
+        }
+        if(enemy.IsDead)
+        {
+            enemy.State = Enemy.MachineState.DYING;
+        }
+        else if(distance > 2)
+        {
+            enemy.State = Enemy.MachineState.IDLE;
+        }
+        else if(distance <= 2 && distance > 0.2)
+        {
+            enemy.State = Enemy.MachineState.CHASING;
+        }
+        else if(distance <= 2 * enemy.MainWeapon.Range)
+        {
+            enemy.State = Enemy.MachineState.ATTACKING;
         }
     }
 

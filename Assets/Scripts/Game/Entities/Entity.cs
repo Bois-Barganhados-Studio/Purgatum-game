@@ -88,13 +88,27 @@ public abstract class Entity
         set { isAttacking = value; }
     }
 
+    
+
     public Entity(int hp)
     {
         this.hp = hp;
         direction = new Vector2();
         moveState = MoveState.IDLE;
-        moveSpeed = 1.0f;
+        MoveSpeed = 1.0f;
         dodgeSpeed = 1.0f;
+        isAttacking = false;
+        isDead = false;
+        facingDir = new Vector2(0, 1);
+    }
+
+    public Entity(int hp, float speed)
+    {
+        this.hp = hp;
+        direction = new Vector2();
+        moveState = MoveState.IDLE;
+        MoveSpeed = speed;
+        dodgeSpeed = speed;
         isAttacking = false;
         isDead = false;
         facingDir = new Vector2(0, 1);
