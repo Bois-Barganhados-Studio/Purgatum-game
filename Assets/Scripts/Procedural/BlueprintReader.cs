@@ -5,23 +5,30 @@ using System;
 
 public class BluePrintReader
 {
-
     private const string FOLDER = "Blueprints/";
-    private static readonly int[] BPS = { 0,1,2,3,4 };
+    private static readonly int[] BPS = { 0, 1, 2, 3, 4 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     private List<string> blueprint = new List<string>();
-    private List<(string, Vector3)> decodedRoom;
+    private Room decodedRoom;
     public const int SIZE_OF_CHUNK = 10;
     public const double W_PIXELS = 3.2;
     public const double H_PIXELS = 3.2;
+    private int numOfRooms = 0;
+    private List<Room> rooms = new List<Room>();
+
+    public void SetNumOfRooms(int numOfRooms)
+    {
+        rooms.Clear();
+        this.numOfRooms = numOfRooms;
+    }
 
     public enum TileType
     {
         WALL = 'w',
         GROUND = 'g',
-        DOOR = 'd',
         CHEST = 'c',
-        SPAWN = 's'
+        SPAWN = 's',
+        MSPAWN = 'm',
     }
 
     public enum BlueprintIndex
@@ -39,27 +46,30 @@ public class BluePrintReader
     /**
      * Define um blueprint para gerar a sala
      */
-    public void defineBp(int bp)
+    public void defineBp(int[] bp)
     {
-        if (bp < BPS.Length)
+        foreach (int bpItem in bp)
         {
-            if (BPS_DATA.Count == 0)
+            if (bpItem < BPS.Length)
             {
-                ReadBpFromDisk();
+                if (BPS_DATA.Count == 0)
+                {
+                    ReadBpFromDisk();
+                }
+                blueprint.Clear();
+                string[] lines = BPS_DATA[bpItem].text.Split('\n');
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    lines[i] = lines[i].TrimEnd('\r', '\n');
+                }
+                blueprint.AddRange(lines);
+                DecodeBp();
             }
-            blueprint.Clear();
-            string[] lines = BPS_DATA[bp].text.Split('\n');
-            for (int i = 0; i < lines.Length; i++)
+            else
             {
-                lines[i] = lines[i].TrimEnd('\r', '\n');
+                //chamar func do gustavo para gerar novo blueprint BP
+                DecodeBp();
             }
-            blueprint.AddRange(lines);
-            DecodeBp();
-        }
-        else
-        {
-            //chamar func do gustavo para gerar novo blueprint BP
-            DecodeBp();
         }
     }
 
@@ -85,19 +95,21 @@ public class BluePrintReader
         bool status = false;
         try
         {
-            decodedRoom = new List<(string, Vector3)>();
+            decodedRoom = new Room();
             for (int lineIndex = 0; lineIndex < blueprint.Count; lineIndex++)
             {
                 string line = blueprint[lineIndex];
                 for (int colIndex = 0; colIndex < line.ToCharArray().Length; colIndex++)
                 {
                     char letter = line[colIndex];
-                    if (letter != ' ') { 
-                        decodedRoom.Add((Enum.GetName(typeof(TileType), letter),
-                            SetGlobalPosition(lineIndex, colIndex)));
+                    if (letter != ' ')
+                    {
+                        decodedRoom.AddBlock((Enum.GetName(typeof(TileType), letter)));
+                        decodedRoom.AddPosition(SetGlobalPosition(lineIndex, colIndex));   
                     }
                 }
             }
+            rooms.Add(decodedRoom);
             status = true;
         }
         catch (Exception e)
@@ -113,13 +125,13 @@ public class BluePrintReader
      */
     Vector3 SetGlobalPosition(int indexOfLine, int indexOfCol)
     {
-        (double, double) tuple = ToIsometric(indexOfLine *-1, indexOfCol *-1);
+        (double, double) tuple = ToIsometric(indexOfLine, indexOfCol);
         return new Vector3((float)tuple.Item1, (float)tuple.Item2, 0);
     }
 
-    public List<(string, Vector3)> RoomReaded()
+    public List<Room> RoomsLoaded()
     {
-        return decodedRoom;
+        return rooms;
     }
 
     /**

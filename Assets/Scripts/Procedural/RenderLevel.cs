@@ -9,7 +9,6 @@ public class RenderLevel
     private List<GameObject> level = new List<GameObject>();
     private static List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
     private static Dictionary<string, GameObject> loadedTiles = new Dictionary<string, GameObject>();
-    
     private GameObject renderLevels = null;
 
     public RenderLevel()
