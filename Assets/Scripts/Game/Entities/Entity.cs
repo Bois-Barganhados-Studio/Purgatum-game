@@ -16,7 +16,14 @@ public abstract class Entity
     public bool IsDead 
     {
         get { return isDead; }
-    }    
+    }
+
+    private int maxHp;
+    public int MaxHp
+    {
+        get { return maxHp; }
+        set { maxHp = value; }
+    }
 
     private int hp;
     public int Hp
@@ -88,13 +95,28 @@ public abstract class Entity
         set { isAttacking = value; }
     }
 
+    
+
     public Entity(int hp)
+    {
+        this.hp = hp;
+        MaxHp = hp;
+        direction = new Vector2();
+        moveState = MoveState.IDLE;
+        MoveSpeed = 1.0f;
+        dodgeSpeed = 1.0f;
+        isAttacking = false;
+        isDead = false;
+        facingDir = new Vector2(0, 1);
+    }
+
+    public Entity(int hp, float speed)
     {
         this.hp = hp;
         direction = new Vector2();
         moveState = MoveState.IDLE;
-        moveSpeed = 1.0f;
-        dodgeSpeed = 1.0f;
+        MoveSpeed = speed;
+        dodgeSpeed = speed;
         isAttacking = false;
         isDead = false;
         facingDir = new Vector2(0, 1);

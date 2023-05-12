@@ -1,5 +1,5 @@
 
-public class Weapon : ICollectable {
+public class Weapon {
 
     public static readonly float BASE_COOLDOWN = 0.3f;
 

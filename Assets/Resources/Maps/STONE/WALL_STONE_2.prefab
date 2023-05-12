@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7662741542962843609}
   - component: {fileID: 8199887611601348577}
   - component: {fileID: 7655293605369334718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +666,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29803923, g: 0.4509804, b: 0.29803923, a: 1}
   m_Origin: {x: -8, y: -7, z: 0}
   m_Size: {x: 16, y: 13, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}

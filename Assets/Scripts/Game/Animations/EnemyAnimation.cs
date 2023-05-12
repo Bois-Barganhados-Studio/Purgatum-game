@@ -1,3 +1,4 @@
+using System.Xml.Schema;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,38 +7,59 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator anim;
-
+    public string[] staticDirections = { "Idle N", "Idle NW", "Idle W", "Idle SW", "Idle S", "Idle SE", "Idle E", "Idle NE" };
+    public string[] runDirections = { "Running N", "Running NW", "Running W", "Running SW", "Running S", "Running SE", "Running E", "Running NE" };
+    public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
+    public string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
+    private int lastDirection;
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void die(Vector2 _direction)
+    public void die(Transform target)
     {
-        string[] animDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
-        anim.Play(animDirection[DirectionToIndex(_direction)]);
+        lastDirection = DirectionToIndex(target);
+        //string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
+        anim.Play(DieDirection[lastDirection]);
     }
 
-    //MARKER Converts a Vector2 direction to an index to a slcie around a circle
-    //CORE this goes in a counter-clock direction
-    // TODO - Animator class hiararchy
-    public int DirectionToIndex(Vector2 _direction)
+    public void idle(Transform target)
     {
-        Vector2 norDir = _direction.normalized;//MARKER return this vector with a magnitude of 1 and get the normalized to an index
+        lastDirection = DirectionToIndex(target);
+        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
+        anim.Play(staticDirections[lastDirection]);
+    }
 
-        float step = 360 / 8;//MARKER 45 one circle and 8 slices//Calcuate how many degrees one slice is 
-        float offset = step / 2;//MARKER 22.5//OFFSET help us easy to calcuate and get the correct index of the string array
+    public void moving(Transform target)
+    {
+        lastDirection = DirectionToIndex(target);
+        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
+        anim.Play(runDirections[lastDirection]);
+    }
 
-        float angle = Vector2.SignedAngle(Vector2.up, norDir);//MARKER returns the signed angle in degrees between A and B
+    public void attacking(Transform target)
+    {
+        lastDirection = DirectionToIndex(target);
+        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
+        anim.Play(staticDirections[lastDirection]);
+    }
 
-        angle += offset;//Help us easy to calcuate and get the correct index of the string array
-
-        if (angle < 0)//avoid the negative number 
+    public int DirectionToIndex(Transform target)
+    {
+        float angulo = (float)Math.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg;
+        int index = 0;
+        angulo -= 90.0f;   
+        if(angulo < 0)
         {
-            angle += 360;
+            angulo += 360;
         }
-
-        float stepCount = angle / step;
-        return Mathf.FloorToInt(stepCount);
+        if(angulo == 0) angulo = 360;
+        
+        
+        index = (int)Mathf.Round(angulo / 45) % 8;
+        UnityEngine.Debug.Log("x: " + (target.position.x - transform.position.x) + " Y: " + (target.position.y - transform.position.y) + " angulo: " + angulo + " index: " + index);
+        return index;
+        
     }
 }
