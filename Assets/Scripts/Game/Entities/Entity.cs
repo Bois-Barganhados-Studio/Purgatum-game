@@ -16,7 +16,14 @@ public abstract class Entity
     public bool IsDead 
     {
         get { return isDead; }
-    }    
+    }
+
+    private int maxHp;
+    public int MaxHp
+    {
+        get { return maxHp; }
+        set { maxHp = value; }
+    }
 
     private int hp;
     public int Hp
@@ -93,6 +100,7 @@ public abstract class Entity
     public Entity(int hp)
     {
         this.hp = hp;
+        MaxHp = hp;
         direction = new Vector2();
         moveState = MoveState.IDLE;
         MoveSpeed = 1.0f;

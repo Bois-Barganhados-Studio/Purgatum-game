@@ -9,15 +9,18 @@ public class PlayerObject : MonoBehaviour
     public LayerMask itemLayer;
     public GameObject[] attackPoints;
     private Vector2 idleDir;
-    private List<ItemObject> items;
+    private WeaponObject mw;
+    private WeaponObject sw;
+
 
     // Initializing
     void Awake()
     {
         player = new Player();
-        Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
         idleDir = new Vector2(0, 0);
-        items = new List<ItemObject>();
+        mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
+        sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
+        Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
     }
 
     // Start is called before the first frame update
@@ -135,20 +138,28 @@ public class PlayerObject : MonoBehaviour
 
     public void takeAttack(Weapon eWeapon)
     {
-        if (player.Move_State == Entity.MoveState.DODGING)
+        if (player.Move_State == Entity.MoveState.DODGING || player.IsDead)
             return;
         int dmg = player.takeAttack(eWeapon);
         if (dmg > 0)
         {
-            // TODO - Update Health Bar
+            UpdateHealthBar();
             if (player.IsDead)
             {
-                // TODO - Make player die
+                GetComponent<Rigidbody2D>().simulated = false;
+                GetComponent<PlayerController>().DisableUpdate();
+                FindObjectOfType<PlayerAnimation>().SetDyingDirection(player.Direction);
+                // TODO - Game Over
             } else
             {
                 StartCoroutine(blinkSprite());
             }
         }
+    }
+
+    public bool IsDead()
+    {
+        return player.IsDead;
     }
 
     public IEnumerator blinkSprite()
@@ -160,20 +171,58 @@ public class PlayerObject : MonoBehaviour
         sr.color = lastColor;
     }
 
-    public void Collect()
+    public void UpdateHealthBar()
+    {
+        GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>().setHealth(player.Hp);
+    }
+
+    public void CollectWeapon()
     {
         if (player.CanCollect())
         {
             int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
-            Collider2D[] itemsReached = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, 0.05f, itemLayer);
-            foreach (var i in itemsReached)
+            Collider2D col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
+            if (col != null)
             {
-                if (items.Count < player.ItemCap)
-                {
-                    items.Add(i.GetComponent<ItemObject>());
-                }
-                Destroy(i);
+                DropWeapon();
+                mw = col.GetComponent<WeaponObject>();
+                player.MainWeapon = mw.weapon;
+                UpdateHotBar();
             }
         }
     }
+
+    public void DropWeapon()
+    {
+        WeaponObject tmp = mw;
+        mw = null;
+        player.DropWeapon();
+        UpdateHotBar();
+        Instantiate(tmp, this.transform.position, Quaternion.identity);
+        // TODO - Move drop away from the player
+    }
+
+    public void SwapWeapon()
+    {
+        var tmp = player.MainWeapon;
+        player.MainWeapon = sw.weapon;
+        player.SubWeapon = mw.weapon;
+        UpdateHotBar();
+    }
+
+    public void UpdateHotBar()
+    {
+        // TODO - Update Hot Bar
+    }
+
+    public void Heal(float healPct)
+    {
+        player.Heal(healPct);
+    }
+
+    //public void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col != null)
+    //        Debug.Log(col);
+    //}
 }   
