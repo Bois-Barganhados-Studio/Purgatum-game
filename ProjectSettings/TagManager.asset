@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RENDER
   - Enemy
+  - HUD
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - Item
+  - Collectables
   - 
   - 
   - 

@@ -16,7 +16,7 @@ public class Enemy : Entity
     public Enemy(int hp)
         : base(hp)
     {
-        MainWeapon = new Weapon(3.0f, 0.1f, 2.0f);
+        MainWeapon = new Weapon(20.0f, 0.1f, 2.0f);
     }
 
     public int takeAttack(Weapon pWeapon)

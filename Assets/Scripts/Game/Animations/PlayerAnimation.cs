@@ -72,8 +72,13 @@ public class PlayerAnimation : MonoBehaviour
         anim.Play(directionArray[lastDirection]);
     }
 
-    //MARKER Converts a Vector2 direction to an index to a slcie around a circle
-    //CORE this goes in a counter-clock direction
+    public void SetDyingDirection(Vector2 _direction)
+    {
+        string[] dyingDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
+        anim.Play(dyingDirection[DirectionToIndex(_direction)]);
+    }
+        //MARKER Converts a Vector2 direction to an index to a slcie around a circle
+        //CORE this goes in a counter-clock direction
     public int DirectionToIndex(Vector2 _direction)
     {
         Vector2 norDir = _direction.normalized;//MARKER return this vector with a magnitude of 1 and get the normalized to an index

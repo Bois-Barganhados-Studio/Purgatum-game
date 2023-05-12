@@ -8,19 +8,11 @@ public class Player : Entity
 
     public const int LAYER = 6;
 
-    private int itemCap;
-    public int ItemCap
-    {
-        get { return itemCap; }
-        set { itemCap = value; }
-    }
-
     public Player()
         : base(100)
     {
         MainWeapon = new DefaultWeapon();
-        // SubWeapon = new DefaultWeapon();
-        ItemCap = 5;
+        SubWeapon = null;
     }
 
     public Vector2 MoveVelocity()
@@ -47,12 +39,12 @@ public class Player : Entity
         set { mainWeapon = value; }
     }
 
-    //private Weapon subWeapon;
-    //public Weapon SubWeapon 
-    //{   
-    //    get { return subWeapon; }
-    //    set { subWeapon = value; }
-    //}
+    private Weapon subWeapon;
+    public Weapon SubWeapon
+    {
+        get { return subWeapon; }
+        set { subWeapon = value; }
+    }
 
     public bool CanDodge() 
     {
@@ -84,4 +76,14 @@ public class Player : Entity
         return dmg;
     }
 
+    public void DropWeapon()
+    {
+        MainWeapon = subWeapon;
+        subWeapon = null;
+    }
+
+    public void Heal(float healPct)
+    {
+        Hp += (int)((float) MaxHp * healPct);
+    }
 }
