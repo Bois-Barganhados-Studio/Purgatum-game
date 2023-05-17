@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 /**
  * @author Leon Jr
@@ -23,6 +24,9 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly string WALL = "WALL";
     private int GROUNDS_SZ = 0, WALLS_SZ = 0;
     public int origin = 0;
+    private GameObject player = null;
+    private GameObject targetObject = null;
+    private Vector3 previousPlayerPosition = new Vector3(0, 0, 0);
 
     public ProceduralMapBuilder()
     {
@@ -52,8 +56,10 @@ public class ProceduralMapBuilder : MonoBehaviour
         stylesIni.AddRange(lines);
     }
 
-    void Start()
+    private async Task BuildMap()
     {
+        player = GameObject.Find("Player");
+        targetObject = GameObject.Find("Pathfinding");
         if (blueprints == null || blueprints.Length == 0)
         {
             blueprints = ChooseBlueprints();
@@ -65,13 +71,43 @@ public class ProceduralMapBuilder : MonoBehaviour
                 ReadIni(style + "/" + style.ToLower());
             }
         }
-        if (BuildTerrain(roomStyle, randFactor, numOfRooms, blueprints))
+        if (await BuildTerrainAsync(roomStyle, randFactor, numOfRooms, blueprints))
         {
             Debug.Log("MAPA GERADO COM SUCESSO: " + blueprints);
         }
         else
         {
             Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+        }
+        previousPlayerPosition = player.transform.position;
+        StartCoroutine(RepositionGraphCoroutine());
+    }
+
+
+    async void CenterGraph(Vector3 spawn)
+    {
+        targetObject.transform.position = spawn;
+        AstarPath ast = targetObject.GetComponent<AstarPath>();
+        ast.data.gridGraph.center = spawn;
+        ast.data.gridGraph.Scan();
+        //await Task.Run(() => );
+    }
+
+    async void Start()
+    {
+        await BuildMap();
+    }
+
+    private IEnumerator RepositionGraphCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+            if (player.transform.position != previousPlayerPosition)
+            {
+                CenterGraph(player.transform.position);
+                previousPlayerPosition = player.transform.position;
+            }
         }
     }
 
@@ -87,7 +123,7 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     /**
      * Iniciar o novo nivel e limpar renderizador
-     */
+     
     void NewLevel()
     {
         if (blueprints == null || blueprints.Length == 0)
@@ -104,7 +140,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             Debug.Log("ERRO AO GERAR MAPA DO JOGO");
         }
-    }
+    }*/
 
     /**
      * Inicia a construção de um nível da torre
@@ -112,14 +148,14 @@ public class ProceduralMapBuilder : MonoBehaviour
      * @args randFactor fator de aleatoriedade da construção do mapa (SEED)
      * @args numRooms número de salas que vão ser geradas nesse nivel
      */
-    bool BuildTerrain(int roomStyle, int randFactor, int numRooms, int[] blueprint)
+    async Task<bool> BuildTerrainAsync(int roomStyle, int randFactor, int numRooms, int[] blueprint)
     {
         bool status = false;
         Vector3 spawnPoint = new Vector3(0, 0, 0);
         try
         {
             int[] matrixIndexes = new int[numRooms];
-            matrixIndexes = GenerateMapIndexes(matrixIndexes.Length);
+            matrixIndexes = await GenerateMapIndexes(matrixIndexes.Length);
             //usar randFactor para definir posições no mapa dos elementos
             levelRenderer = new RenderLevel();
             List<string> chunkPaths = new List<string>();
@@ -175,9 +211,8 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
-            GameObject.Find("Player").transform.position = spawnPoint;
+            player.transform.position = spawnPoint;
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
-            GameObject.Find("Pathfinding").transform.position = spawnPoint;
             CenterGraph(spawnPoint);
             levelRenderer.RenderElements();
             status = true;
@@ -189,12 +224,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         return status;
     }
 
-    void CenterGraph(Vector3 spawn)
-    {
-        GameObject targetObject = GameObject.Find("Pathfinding");
-        AstarPath ast = targetObject.GetComponent<AstarPath>();
-        ast.data.gridGraph.center = spawn + new Vector3(1.5f, 1.0f, 0);
-    }
 
     int NextGroundEnumerate()
     {
@@ -237,7 +266,7 @@ public class ProceduralMapBuilder : MonoBehaviour
      * Função de mapeamento para gerar posições das salas em uma grade
      * de mapa para 4x4 matricial
      */
-    int[] GenerateMapIndexes(int numOfRooms)
+    Task<int[]> GenerateMapIndexes(int numOfRooms)
     {
         int[] matrix = new int[numOfRooms];
         origin = (origin == 0 ? origin : UnityEngine.Random.Range(0, 15));
@@ -250,7 +279,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         do
         {
             op = escolhas[Random.Range(0, escolhas.Count)];
-            // Debug.Log("op: " + op);
             if (op == 0)
             {
                 if (!MATRIX_LEFT_ELEMENTS.Contains(op))
@@ -323,6 +351,6 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
             }
         } while (index < numOfRooms);
-        return matrix;
+        return Task.FromResult(matrix);
     }
 }
