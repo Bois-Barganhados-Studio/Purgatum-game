@@ -7,26 +7,27 @@ using UnityEngine;
  */
 public class ProceduralMapBuilder : MonoBehaviour
 {
-    private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 6, 12 };
+    private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
     private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
     private RenderLevel levelRenderer = null;
     private const string DIVIDER = "_";
     private const string FOLDER = "Maps/";
     private static readonly string[] styles = { "STONE" };
     private static List<string> stylesIni = new List<string>();
-    private BluePrintReader bpReader = null;
+    private BluePrintReader blueprintsReader = null;
     public int tileNumber;
-    public int[] bp;
+    public int[] blueprints;
     private int groundCounter = 1, wallCounter = 1;
     public int roomStyle = 0, randFactor = 6, numOfRooms = 5;
     private static readonly string GROUND = "GROUND";
     private static readonly string WALL = "WALL";
     private int GROUNDS_SZ = 0, WALLS_SZ = 0;
+    public int origin = 0;
 
     public ProceduralMapBuilder()
     {
         Debug.Log("INICIANDO GERAÇÂO DE MUNDO");
-        bpReader = new BluePrintReader();
+        blueprintsReader = new BluePrintReader();
     }
 
     /**
@@ -39,11 +40,11 @@ public class ProceduralMapBuilder : MonoBehaviour
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i] = lines[i].TrimEnd('\r', '\n');
-            if (lines[i].Contains("GROUND"))
+            if (lines[i].Contains(GROUND))
             {
                 GROUNDS_SZ++;
             }
-            else if (lines[i].Contains("WALL"))
+            else if (lines[i].Contains(WALL))
             {
                 WALLS_SZ++;
             }
@@ -53,13 +54,10 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     void Start()
     {
-        //criar func so para isso e gerar bps
-        bp = new int[numOfRooms];
-        bp[0] = 2;
-        bp[1] = 0;
-        bp[2] = 1;
-        bp[3] = 3;
-        bp[4] = 4;
+        if (blueprints == null || blueprints.Length == 0)
+        {
+            blueprints = ChooseBlueprints();
+        }
         if (stylesIni.Count == 0)
         {
             foreach (string style in styles)
@@ -67,9 +65,9 @@ public class ProceduralMapBuilder : MonoBehaviour
                 ReadIni(style + "/" + style.ToLower());
             }
         }
-        if (BuildTerrain(roomStyle, randFactor, numOfRooms, bp))
+        if (BuildTerrain(roomStyle, randFactor, numOfRooms, blueprints))
         {
-            Debug.Log("MAPA GERADO COM SUCESSO: " + bp);
+            Debug.Log("MAPA GERADO COM SUCESSO: " + blueprints);
         }
         else
         {
@@ -77,20 +75,28 @@ public class ProceduralMapBuilder : MonoBehaviour
         }
     }
 
+    int[] ChooseBlueprints()
+    {
+        int[] bps = new int[numOfRooms];
+        for (int i = 0; i < numOfRooms; i++)
+        {
+            bps[i] = UnityEngine.Random.Range(0, BluePrintReader.BLUEPRINTS_TOTAL - 1);
+        }
+        return bps;
+    }
+
     /**
      * Iniciar o novo nivel e limpar renderizador
      */
     void NewLevel()
     {
-        bp = new int[numOfRooms];
-        bp[0] = 0;
-        bp[1] = 4;
-        bp[2] = 3;
-        bp[3] = 2;
-        bp[4] = 1;
+        if (blueprints == null || blueprints.Length == 0)
+        {
+            blueprints = ChooseBlueprints();
+        }
         levelRenderer.UnloadMemory();
         levelRenderer.ClearGameObject();
-        if (BuildTerrain(roomStyle, randFactor, numOfRooms, bp))
+        if (BuildTerrain(roomStyle, randFactor, numOfRooms, blueprints))
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
         }
@@ -118,10 +124,10 @@ public class ProceduralMapBuilder : MonoBehaviour
             levelRenderer = new RenderLevel();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
-            bpReader.SetNumOfRooms(numRooms);
-            bpReader.defineBp(blueprint);
-            //List<Room> structures = bpReader.RoomsLoaded();
-            Map map = new Map(bpReader.RoomsLoaded(), matrixIndexes);
+            blueprintsReader.SetNumOfRooms(numRooms);
+            blueprintsReader.defineBp(blueprint);
+            //List<Room> structures = blueprintsReader.RoomsLoaded();
+            Map map = new Map(blueprintsReader.RoomsLoaded(), matrixIndexes);
             //alterar todo o metodo para usar o objeto de mapa
             //salvar I na classe Room para isso definir os I de matrix aqui usando algum metodo qualquer!
             //recalcular as posições baseado no I da matriz dos elementos por exemplo (xI*0,yI*10,20)
@@ -160,7 +166,6 @@ public class ProceduralMapBuilder : MonoBehaviour
                                 path += DIVIDER + NextWallEnumerate();
                             }
                         }
-                        Debug.Log(path);
                         if (stylesIni.Contains(path))
                         {
                             chunkPaths.Add(FOLDER + styles[roomStyle] + "/" + path);
@@ -172,7 +177,8 @@ public class ProceduralMapBuilder : MonoBehaviour
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
             GameObject.Find("Player").transform.position = spawnPoint;
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
-            GameObject.Find("Pathfinding").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
+            GameObject.Find("Pathfinding").transform.position = spawnPoint;
+            CenterGraph(spawnPoint);
             levelRenderer.RenderElements();
             status = true;
         }
@@ -183,11 +189,18 @@ public class ProceduralMapBuilder : MonoBehaviour
         return status;
     }
 
+    void CenterGraph(Vector3 spawn)
+    {
+        GameObject targetObject = GameObject.Find("Pathfinding");
+        AstarPath ast = targetObject.GetComponent<AstarPath>();
+        ast.data.gridGraph.center = spawn + new Vector3(1.5f, 1.0f, 0);
+    }
+
     int NextGroundEnumerate()
     {
         if (groundCounter == randFactor)
         {
-            groundCounter++;
+            groundCounter = 0;
             int gd = Random.Range(1, GROUNDS_SZ);
             return (gd == 8 || gd == 10) ? 1 : gd;
         }
@@ -199,7 +212,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             groundCounter = 1;
         }
-        return 1;
+        return groundCounter == 0 ? groundCounter : 1;
     }
 
     int NextWallEnumerate()
@@ -227,7 +240,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     int[] GenerateMapIndexes(int numOfRooms)
     {
         int[] matrix = new int[numOfRooms];
-        int origin = UnityEngine.Random.Range(0, 15);
+        origin = (origin == 0 ? origin : UnityEngine.Random.Range(0, 15));
         matrix[0] = origin;
         List<int> conj = new List<int>();
         List<int> escolhas = new List<int> { 0, 1, 2, 3 };

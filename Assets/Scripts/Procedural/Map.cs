@@ -7,7 +7,7 @@ public class Map
 {
     private List<Room> rooms;
     private int[] matrixRooms;
-    private static readonly float SIZE_OF_ROOM_X = 19.4f;
+    private static readonly float SIZE_OF_ROOM_X = 19.0f;
     private static readonly float SIZE_OF_ROOM_Y = 19.0f;
     public static readonly float W_PIXELS = 3.2f;
     public static readonly float H_PIXELS = 3.2f;

@@ -15,6 +15,7 @@ public class BluePrintReader
     public const double H_PIXELS = 3.2;
     private int numOfRooms = 0;
     private List<Room> rooms = new List<Room>();
+    public static readonly int BLUEPRINTS_TOTAL = 5;
 
     public void SetNumOfRooms(int numOfRooms)
     {
