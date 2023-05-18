@@ -65,11 +65,29 @@ public class RenderLevel
         }
     }
 
+    public float x_min = 9999999, y_min = 9999999, x_max = -9999999, y_max = -9999999;
+
     /**
      * Renderização do tilemap no object de renderLevels
      */
     GameObject GenGameTileMap(GameObject obj, Vector3 pos)
     {
+        if (pos.x < x_min)
+        {
+            x_min = pos.x;
+        }
+        if (pos.x > x_max)
+        {
+            x_max = pos.x;
+        }
+        if (pos.y < y_min)
+        {
+            y_min = pos.y;
+        }
+        if (pos.y > y_max)
+        {
+            y_max = pos.y;
+        }
         GameObject tilemap = GameObject.Instantiate(obj, pos, Quaternion.identity, renderLevels.transform);
         tilemap.transform.parent = renderLevels.transform;
         return tilemap;

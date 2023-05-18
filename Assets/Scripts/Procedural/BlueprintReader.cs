@@ -138,7 +138,7 @@ public class BluePrintReader
     /**
      * Convertendo Coordenadas
      */
-    private (double, double) ToIsometric(double x, double y)
+    public (double, double) ToIsometric(double x, double y)
     {
         double nx = (x * 0.5 * (W_PIXELS)) + (y * -0.5 * (W_PIXELS));
         double ny = (x * 0.25 * (H_PIXELS)) + (y * 0.25 * (H_PIXELS));
