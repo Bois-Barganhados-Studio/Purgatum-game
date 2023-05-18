@@ -31,9 +31,6 @@ public class MenuMoving : MonoBehaviour
 
 
         transform.position = new Vector3((float)(x_start + xMod), (float)(y_start + yMod), 0);
-        
-
-        UnityEngine.Debug.Log("x: " + transform.position.x + " y: " + transform.position.y);
 
     }
 }
