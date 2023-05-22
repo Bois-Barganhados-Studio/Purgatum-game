@@ -35,6 +35,11 @@ public class Map
         return this.rooms;
     }
 
+    public Room GetRoom(int index)
+    {
+        return rooms[index];
+    }
+
     //codigo para buscar dados da matriz vezes a constante de tamanho
     private void newRoomsPositions()
     {
