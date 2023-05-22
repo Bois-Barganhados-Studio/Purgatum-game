@@ -25,11 +25,12 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string DIVIDER = "_";
     private const float G_NODE_SIZE = 0.4f;
     private const string FOLDER = "Maps/";
+    private const int DOORS_LIMIT = 10;
     private static readonly string[] styles = { "STONE" };
-    private static readonly string GROUND = "GROUND", WALL = "WALL";
+    private static readonly string GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND";
     //utils
     private int groundCounter = 1, wallCounter = 1;
-    private int GROUNDS_SZ = 0, WALLS_SZ = 0;
+    private int groundsSize = 0, wallsSize = 0;
 
     public ProceduralMapBuilder()
     {
@@ -49,11 +50,11 @@ public class ProceduralMapBuilder : MonoBehaviour
             lines[i] = lines[i].TrimEnd('\r', '\n');
             if (lines[i].Contains(GROUND))
             {
-                GROUNDS_SZ++;
+                groundsSize++;
             }
             else if (lines[i].Contains(WALL))
             {
-                WALLS_SZ++;
+                wallsSize++;
             }
         }
         stylesIni.AddRange(lines);
@@ -103,7 +104,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         await BuildMap();
         CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
                        (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
-                       (int)(2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
     }
 
     /**
@@ -221,13 +222,15 @@ public class ProceduralMapBuilder : MonoBehaviour
      */
     int NextGroundEnumerate()
     {
+        //criar modo de default ground para ter varios chãos padrões
         if (groundCounter == randFactor)
         {
             groundCounter = 0;
-            int gd = Random.Range(1, GROUNDS_SZ);
+            int gd = Random.Range(1, groundsSize);
+            //condição para remover tiles bugados (remover depois)
             return (gd == 8 || gd == 10) ? 1 : gd;
         }
-        if (groundCounter < GROUNDS_SZ)
+        if (groundCounter < groundsSize)
         {
             groundCounter++;
         }
@@ -247,9 +250,9 @@ public class ProceduralMapBuilder : MonoBehaviour
         if (wallCounter == randFactor)
         {
             wallCounter = 1;
-            return Random.Range(wallCounter, WALLS_SZ);
+            return Random.Range(wallCounter, wallsSize);
         }
-        if (wallCounter < WALLS_SZ)
+        if (wallCounter < wallsSize)
         {
             wallCounter++;
         }
@@ -270,6 +273,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         int index = 1, selected = 0;
         List<int> conj = new List<int>();
         List<int> escolhas = new List<int> { 0, 1, 2, 3 };
+        bool ignore = false;
         pathRooms.Clear();
         origin = (origin != 0 ? origin : UnityEngine.Random.Range(0, 15));
         matrix[0] = origin;
@@ -278,6 +282,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         do
         {
             op = escolhas[Random.Range(0, escolhas.Count)];
+            ignore = false;
             if (op == 0)
             {
                 if (!MATRIX_LEFT_ELEMENTS.Contains(op))
@@ -286,7 +291,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
                 else
                 {
-                    escolhas.Remove(op);
+                    ignore = true;
                 }
             }
             else if (op == 1)
@@ -297,7 +302,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 }
                 else
                 {
-                    escolhas.Remove(op);
+                    ignore = true;
                 }
             }
             else if (op == 2)
@@ -308,8 +313,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             {
                 selected = conjElement - 4;
             }
-
-            if (index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
+            if (!ignore && index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
             {
                 matrix[index] = selected;
                 conj.Add(selected);
@@ -436,11 +440,25 @@ public class ProceduralMapBuilder : MonoBehaviour
                 default:
                     break;
             }
-            foreach ((int, int) block in targets)
+            if (targets.Count >= DOORS_LIMIT)
             {
-                room1.UpdateBlock(GROUND, block.Item1);
-                room2.UpdateBlock(GROUND, block.Item2);
+                int divider = targets.Count / 3;
+                for (int i = divider; i < targets.Count - divider; i++)
+                {
+                    (int, int) block = targets[i];
+                    room1.UpdateBlock(DOOR, block.Item1);
+                    room2.UpdateBlock(DOOR, block.Item2);
+                }
             }
+            else
+            {
+                foreach ((int, int) block in targets)
+                {
+                    room1.UpdateBlock(DOOR, block.Item1);
+                    room2.UpdateBlock(DOOR, block.Item2);
+                }
+            }
+
         }
     }
 

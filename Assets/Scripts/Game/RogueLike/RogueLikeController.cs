@@ -10,7 +10,7 @@ public class RogueLikeController : MonoBehaviour
     //definir logica
 
 
-    async void Start()
+    void Start()
     {
         
     }
