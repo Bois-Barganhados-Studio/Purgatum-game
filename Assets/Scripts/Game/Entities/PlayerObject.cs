@@ -13,12 +13,19 @@ public class PlayerObject : MonoBehaviour
     private WeaponObject mw;
     private WeaponObject sw;
 
+    private bool isUpdateDisabled;
+    public bool IsUpdateDisabled
+    {
+        get { return isUpdateDisabled; }
+    }
+
 
     // Initializing
     void Awake()
     {
         player = new Player();
-        idleDir = new Vector2(0, 0);
+        idleDir = Vector2.zero;
+        isUpdateDisabled = false;
         mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
         sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
@@ -72,20 +79,23 @@ public class PlayerObject : MonoBehaviour
     public void Move(Vector2 dir)
     {
         if (player.Move_State != Entity.MoveState.DODGING) {
-            player.Move_State = Entity.MoveState.MOVING;
+            if (dir == idleDir)
+                player.Move_State = Entity.MoveState.IDLE;
+            else 
+                player.Move_State = Entity.MoveState.MOVING;
         }
         setDirection(dir);
     }
 
-    public void EndMove()
-    {
-        if (player.LastState == Entity.MoveState.MOVING) {
-            player.LastState = Entity.MoveState.IDLE;
-        } else if (player.Move_State == Entity.MoveState.MOVING) {
-            player.toLastState();
-        }
-        player.Direction = idleDir; 
-    }
+    //public void EndMove()
+    //{
+    //    if (player.LastState == Entity.MoveState.MOVING) {
+    //        player.LastState = Entity.MoveState.IDLE;
+    //    } else if (player.Move_State == Entity.MoveState.MOVING) {
+    //        player.toLastState();
+    //    }
+    //    player.Direction = idleDir; 
+    //}
 
     public void Dodge()
     {
@@ -103,6 +113,12 @@ public class PlayerObject : MonoBehaviour
         StartCoroutine(player.coolDown(() => {
             player.DodgingCD = false;
         }, Player.BASE_COOLDOWN));
+    }
+
+    public void EndDeath()
+    {
+        // TODO - Game Over
+
     }
 
     public void Attack()
@@ -143,10 +159,10 @@ public class PlayerObject : MonoBehaviour
             UpdateHealthBar();
             if (player.IsDead)
             {
+                Debug.Log("died");
                 GetComponent<Rigidbody2D>().simulated = false;
-                GetComponent<PlayerController>().DisableUpdate();
+                isUpdateDisabled = true;
                 FindObjectOfType<PlayerAnimation>().SetDyingDirection(player.Direction);
-                // TODO - Game Over
             } else
             {
                 StartCoroutine(blinkSprite());
@@ -177,7 +193,6 @@ public class PlayerObject : MonoBehaviour
     {
         if (!player.CanCollect())
             return;
-        
         int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
         // TODO - Call player collection animation
         var col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);

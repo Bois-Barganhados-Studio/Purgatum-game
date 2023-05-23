@@ -8,19 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     public PlayerObject player;
-    private bool updateDisabled;
     
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerObject>();
-        updateDisabled = false;
-    }
-
-    public void DisableUpdate()
-    {
-        updateDisabled = true;
     }
 
     void Start()
@@ -30,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (updateDisabled)
+        if (player.IsUpdateDisabled)
             return;
         if (player.getMoveState() == Entity.MoveState.MOVING || player.getMoveState() == Entity.MoveState.IDLE) {
             rb.velocity = player.MoveVelocity();
