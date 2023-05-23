@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerObject : MonoBehaviour
@@ -7,7 +8,6 @@ public class PlayerObject : MonoBehaviour
     private Player player;
     public LayerMask enemyLayer;
     public LayerMask itemLayer;
-    public LayerMask weaponLayer;
     public GameObject[] attackPoints;
     private Vector2 idleDir;
     private WeaponObject mw;
@@ -22,12 +22,6 @@ public class PlayerObject : MonoBehaviour
         mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
         sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     public Vector2 MoveVelocity()
@@ -105,9 +99,9 @@ public class PlayerObject : MonoBehaviour
     public void EndDodge()
     {
         player.toLastState();
+        player.UnlockDir();
         StartCoroutine(player.coolDown(() => {
             player.DodgingCD = false;
-            player.UnlockDir();
         }, Player.BASE_COOLDOWN));
     }
 
@@ -179,22 +173,38 @@ public class PlayerObject : MonoBehaviour
         GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>().setHealth(player.Hp);
     }
 
-    public void CollectWeapon()
+    public void Collect()
     {
-        if (player.CanCollect())
+        if (!player.CanCollect())
+            return;
+        
+        int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
+        // TODO - Call player collection animation
+        var col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
+        if (col != null)
         {
-            int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
-            Collider2D col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, weaponLayer);
-            if (col != null)
+            var item = col.GetComponent<ItemObject>();
+            if (item != null)
+                CollectItem(item);
+            else
             {
-                DropWeapon();
-                mw = col.GetComponent<WeaponObject>();
-                player.MainWeapon = mw.weapon;
-                UpdateHotBar();
+                var weapon = col.GetComponent<WeaponObject>();
+                if (weapon != null)
+                {
+                    CollectWeapon(weapon);
+                }
             }
         }
     }
 
+    private void CollectWeapon(WeaponObject newWeapon)
+    {
+        DropWeapon();
+        mw = newWeapon;
+        player.MainWeapon = mw.weapon;
+        UpdateHotBar();
+    }
+    
     public void DropWeapon()
     {
         WeaponObject tmp = mw;
@@ -218,14 +228,15 @@ public class PlayerObject : MonoBehaviour
         // TODO - Update Hot Bar
     }
 
+    private void CollectItem(ItemObject item)
+    {
+        item.Effect(this);
+        Destroy(item.gameObject);
+    }
+
     public void Heal(float healPct)
     {
         player.Heal(healPct);
     }
 
-    //public void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col != null)
-    //        Debug.Log(col);
-    //}
 }   

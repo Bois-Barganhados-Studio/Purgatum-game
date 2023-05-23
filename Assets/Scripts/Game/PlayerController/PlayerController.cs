@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-            player.CollectWeapon();
+            player.Collect();
         }
     }
 }

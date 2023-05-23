@@ -55,7 +55,6 @@ public abstract class Entity
     public Vector2 FacingDir
     {
         get { return facingDir; }
-        //set { facingDir = value; } 
     }
 
     private Vector2 direction;
