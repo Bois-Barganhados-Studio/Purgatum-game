@@ -123,7 +123,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     /**
      * Iniciar o novo nivel e limpar renderizador
      */
-    async void NewLevel()
+    public async void NewLevel()
     {
         levelRenderer.UnloadMemory();
         levelRenderer.ClearGameObject();
@@ -135,6 +135,9 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             Debug.Log("ERRO AO GERAR MAPA DO JOGO");
         }
+        CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
+                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
     }
 
     /**
@@ -285,7 +288,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             ignore = false;
             if (op == 0)
             {
-                if (!MATRIX_LEFT_ELEMENTS.Contains(op))
+                if (!MATRIX_LEFT_ELEMENTS.Contains(conjElement))
                 {
                     selected = conjElement - 1;
                 }
@@ -296,7 +299,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             }
             else if (op == 1)
             {
-                if (!MATRIX_RIGHT_ELEMENTS.Contains(op))
+                if (!MATRIX_RIGHT_ELEMENTS.Contains(conjElement))
                 {
                     selected = conjElement + 1;
                 }

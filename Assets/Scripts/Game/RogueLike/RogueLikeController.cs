@@ -12,6 +12,12 @@ public class RogueLikeController : MonoBehaviour
 
     void Start()
     {
-        
+       // Invoke("NewLevel", 15f);
+    }
+
+    void NewLevel()
+    {
+        GameObject gobj = GameObject.Find("renderLevels");
+        gobj.GetComponent<ProceduralMapBuilder>().NewLevel();
     }
 }
