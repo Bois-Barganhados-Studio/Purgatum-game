@@ -46,13 +46,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        if (player.getMoveState() != Entity.MoveState.DODGING)
-        {
-            player.Move(ctx.ReadValue<Vector2>().normalized);
-        }
-        if (ctx.canceled) {
-            player.EndMove();
-        }
+        player.Move(ctx.ReadValue<Vector2>());
     }
 
     public void OnDodge(InputAction.CallbackContext ctx)

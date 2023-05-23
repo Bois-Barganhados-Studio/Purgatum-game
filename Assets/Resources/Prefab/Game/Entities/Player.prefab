@@ -227,7 +227,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: -37030
+  m_InstanceId: -48076
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +526,9 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 256
+  weaponLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   attackPoints:
   - {fileID: 4928372899879651448}
   - {fileID: 4928372898166009846}

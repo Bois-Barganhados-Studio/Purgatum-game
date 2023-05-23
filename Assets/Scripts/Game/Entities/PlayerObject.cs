@@ -7,6 +7,7 @@ public class PlayerObject : MonoBehaviour
     private Player player;
     public LayerMask enemyLayer;
     public LayerMask itemLayer;
+    public LayerMask weaponLayer;
     public GameObject[] attackPoints;
     private Vector2 idleDir;
     private WeaponObject mw;
@@ -78,8 +79,8 @@ public class PlayerObject : MonoBehaviour
     {
         if (player.Move_State != Entity.MoveState.DODGING) {
             player.Move_State = Entity.MoveState.MOVING;
-            setDirection(dir);
         }
+        setDirection(dir);
     }
 
     public void EndMove()
@@ -96,6 +97,7 @@ public class PlayerObject : MonoBehaviour
     {
         if (player.CanDodge()) {
             player.Move_State = Entity.MoveState.DODGING;
+            player.LockDir();
             player.DodgingCD = true;
         }
     }
@@ -105,6 +107,7 @@ public class PlayerObject : MonoBehaviour
         player.toLastState();
         StartCoroutine(player.coolDown(() => {
             player.DodgingCD = false;
+            player.UnlockDir();
         }, Player.BASE_COOLDOWN));
     }
 
@@ -181,7 +184,7 @@ public class PlayerObject : MonoBehaviour
         if (player.CanCollect())
         {
             int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
-            Collider2D col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
+            Collider2D col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, weaponLayer);
             if (col != null)
             {
                 DropWeapon();
