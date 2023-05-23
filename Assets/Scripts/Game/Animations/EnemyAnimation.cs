@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator anim;
-    public string[] staticDirections = { "Idle N", "Idle NW", "Idle W", "Idle SW", "Idle S", "Idle SE", "Idle E", "Idle NE" };
+    public string[] staticDirections = { "Idling N", "Idling NW", "Idling W", "Idling SW", "Idling S", "Idling SE", "Idling E", "Idling NE" };
     public string[] runDirections = { "Running N", "Running NW", "Running W", "Running SW", "Running S", "Running SE", "Running E", "Running NE" };
     public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
     public string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };

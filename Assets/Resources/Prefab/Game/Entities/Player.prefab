@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 357f7b534b17bd44fb3dc9b8d7cb6556, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4e5a7b287da34147ab6bb865f7666be, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,14 +132,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staticDirections:
-  - Idle N
-  - Idle NW
-  - Idle W
-  - Idle SW
-  - Idle S
-  - Idle SE
-  - Idle E
-  - Idle NE
+  - Idling N
+  - Idling NW
+  - Idling W
+  - Idling SW
+  - Idling S
+  - Idling SE
+  - Idling E
+  - Idling NE
   runDirections:
   - Running N
   - Running NW
@@ -227,7 +227,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: -2144
+  m_InstanceId: -37030
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
