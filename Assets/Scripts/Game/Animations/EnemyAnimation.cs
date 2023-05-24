@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Security.Cryptography.X509Certificates;
 
 public class EnemyAnimation : MonoBehaviour
 {
@@ -12,16 +13,24 @@ public class EnemyAnimation : MonoBehaviour
     public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
     public string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
     private int lastDirection;
+    private Action callBack;
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void die(Transform target)
+    public void die(Transform target, Action cb)
     {
+        if (cb != null && callBack == null)
+            callBack = cb;
         lastDirection = DirectionToIndex(target);
         //string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
         anim.Play(DieDirection[lastDirection]);
+    }
+
+    public void EndDeath()
+    {
+        callBack();
     }
 
     public void idle(Transform target)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerObject : MonoBehaviour
@@ -12,21 +13,22 @@ public class PlayerObject : MonoBehaviour
     private WeaponObject mw;
     private WeaponObject sw;
 
+    private bool isUpdateDisabled;
+    public bool IsUpdateDisabled
+    {
+        get { return isUpdateDisabled; }
+    }
+
 
     // Initializing
     void Awake()
     {
         player = new Player();
-        idleDir = new Vector2(0, 0);
+        idleDir = Vector2.zero;
+        isUpdateDisabled = false;
         mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
         sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     public Vector2 MoveVelocity()
@@ -77,25 +79,29 @@ public class PlayerObject : MonoBehaviour
     public void Move(Vector2 dir)
     {
         if (player.Move_State != Entity.MoveState.DODGING) {
-            player.Move_State = Entity.MoveState.MOVING;
-            setDirection(dir);
+            if (dir == idleDir)
+                player.Move_State = Entity.MoveState.IDLE;
+            else 
+                player.Move_State = Entity.MoveState.MOVING;
         }
+        setDirection(dir);
     }
 
-    public void EndMove()
-    {
-        if (player.LastState == Entity.MoveState.MOVING) {
-            player.LastState = Entity.MoveState.IDLE;
-        } else if (player.Move_State == Entity.MoveState.MOVING) {
-            player.toLastState();
-        }
-        player.Direction = idleDir; 
-    }
+    //public void EndMove()
+    //{
+    //    if (player.LastState == Entity.MoveState.MOVING) {
+    //        player.LastState = Entity.MoveState.IDLE;
+    //    } else if (player.Move_State == Entity.MoveState.MOVING) {
+    //        player.toLastState();
+    //    }
+    //    player.Direction = idleDir; 
+    //}
 
     public void Dodge()
     {
         if (player.CanDodge()) {
             player.Move_State = Entity.MoveState.DODGING;
+            player.LockDir();
             player.DodgingCD = true;
         }
     }
@@ -103,9 +109,16 @@ public class PlayerObject : MonoBehaviour
     public void EndDodge()
     {
         player.toLastState();
+        player.UnlockDir();
         StartCoroutine(player.coolDown(() => {
             player.DodgingCD = false;
         }, Player.BASE_COOLDOWN));
+    }
+
+    public void EndDeath()
+    {
+        // TODO - Game Over
+
     }
 
     public void Attack()
@@ -146,10 +159,10 @@ public class PlayerObject : MonoBehaviour
             UpdateHealthBar();
             if (player.IsDead)
             {
+                Debug.Log("died");
                 GetComponent<Rigidbody2D>().simulated = false;
-                GetComponent<PlayerController>().DisableUpdate();
+                isUpdateDisabled = true;
                 FindObjectOfType<PlayerAnimation>().SetDyingDirection(player.Direction);
-                // TODO - Game Over
             } else
             {
                 StartCoroutine(blinkSprite());
@@ -176,22 +189,37 @@ public class PlayerObject : MonoBehaviour
         GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>().setHealth(player.Hp);
     }
 
-    public void CollectWeapon()
+    public void Collect()
     {
-        if (player.CanCollect())
+        if (!player.CanCollect())
+            return;
+        int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
+        // TODO - Call player collection animation
+        var col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
+        if (col != null)
         {
-            int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDir);
-            Collider2D col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
-            if (col != null)
+            var item = col.GetComponent<ItemObject>();
+            if (item != null)
+                CollectItem(item);
+            else
             {
-                DropWeapon();
-                mw = col.GetComponent<WeaponObject>();
-                player.MainWeapon = mw.weapon;
-                UpdateHotBar();
+                var weapon = col.GetComponent<WeaponObject>();
+                if (weapon != null)
+                {
+                    CollectWeapon(weapon);
+                }
             }
         }
     }
 
+    private void CollectWeapon(WeaponObject newWeapon)
+    {
+        DropWeapon();
+        mw = newWeapon;
+        player.MainWeapon = mw.weapon;
+        UpdateHotBar();
+    }
+    
     public void DropWeapon()
     {
         WeaponObject tmp = mw;
@@ -215,14 +243,15 @@ public class PlayerObject : MonoBehaviour
         // TODO - Update Hot Bar
     }
 
+    private void CollectItem(ItemObject item)
+    {
+        item.Effect(this);
+        Destroy(item.gameObject);
+    }
+
     public void Heal(float healPct)
     {
         player.Heal(healPct);
     }
 
-    //public void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col != null)
-    //        Debug.Log(col);
-    //}
 }   

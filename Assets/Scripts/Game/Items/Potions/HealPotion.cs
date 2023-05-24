@@ -1,5 +1,5 @@
 
-public class HealPotion : ICollectables
+public class HealPotion : IItem
 {
     private float healPct;
     public float HealPct
