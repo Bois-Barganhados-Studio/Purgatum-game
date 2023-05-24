@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class RogueLikeController : MonoBehaviour
 {
-    
-    //definir dados
 
-    //definir logica
-
+    RogueLogic rogueLogic = new RogueLogic();
 
     void Start()
     {
-       // Invoke("NewLevel", 15f);
+        //Invoke("NewLevel", 10f);
     }
 
-    void NewLevel()
+    public void NewLevel()
     {
-        GameObject gobj = GameObject.Find("renderLevels");
-        gobj.GetComponent<ProceduralMapBuilder>().NewLevel();
+        rogueLogic.DoAction();
     }
+    
 }

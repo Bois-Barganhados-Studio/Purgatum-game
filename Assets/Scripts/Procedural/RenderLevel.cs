@@ -6,14 +6,26 @@ using System.Collections.Generic;
  */
 public class RenderLevel
 {
-    private List<GameObject> level = new List<GameObject>();
+    private static List<GameObject> level = new List<GameObject>();
     private static List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
     private static Dictionary<string, GameObject> loadedTiles = new Dictionary<string, GameObject>();
-    private GameObject renderLevels = null;
+    public static GameObject ROOM_COLLIDER_PREFAB = null;
+    private const string ROOM_COLLIDER = "RoomCollider";
+    public static GameObject renderLevels = null;
+    public float x_min = 9999999, y_min = 9999999, x_max = -9999999, y_max = -9999999;
 
     public RenderLevel()
     {
         renderLevels = GameObject.Find("renderLevels");
+        ROOM_COLLIDER_PREFAB = Resources.Load<GameObject>("Maps/" + ROOM_COLLIDER);
+    }
+
+    /*
+    * Busca o gameobject da Sala em questÃ£o
+    */
+    public static GameObject GetRoomObject(int index)
+    {
+        return level[index];
     }
 
     /**
@@ -37,6 +49,11 @@ public class RenderLevel
                 GameObject.DestroyImmediate(renderLevels.transform.GetChild(i).gameObject);
             }
         }
+        level.Clear();
+        x_min = 9999999;
+        y_min = 9999999;
+        x_max = -9999999;
+        y_max = -9999999;
     }
 
     /**
@@ -65,10 +82,16 @@ public class RenderLevel
         }
     }
 
-    public float x_min = 9999999, y_min = 9999999, x_max = -9999999, y_max = -9999999;
+    public void RenderColliders(List<Vector3> positions)
+    {
+        foreach (Vector3 position in positions)
+        {
+            GameObject.Instantiate(ROOM_COLLIDER_PREFAB, position, Quaternion.identity, renderLevels.transform);
+        }
+    }
 
     /**
-     * Renderização do tilemap no object de renderLevels
+     * Renderizaï¿½ï¿½o do tilemap no object de renderLevels
      */
     GameObject GenGameTileMap(GameObject obj, Vector3 pos)
     {

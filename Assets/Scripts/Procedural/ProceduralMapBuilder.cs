@@ -11,7 +11,7 @@ public class ProceduralMapBuilder : MonoBehaviour
 {
     //pametros públicos para uso do script (valores default estão definidos)
     public int[] blueprints;
-    public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = 0;
+    public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = -1;
     //parametros internos do sistema de criação do mapa do jogo
     private RenderLevel levelRenderer = null;
     private BluePrintReader blueprintsReader = null;
@@ -67,6 +67,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     {
         player = GameObject.Find("Player");
         targetObject = GameObject.Find("Pathfinding");
+        levelRenderer = new RenderLevel();
         if (stylesIni.Count == 0)
         {
             foreach (string style in styles)
@@ -95,7 +96,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         ast.data.gridGraph.center = spawn;
         ast.data.gridGraph.width = width;
         ast.data.gridGraph.depth = height;
-        ast.data.gridGraph.SetDimensions(width, height, G_NODE_SIZE); //setDimensions
+        ast.data.gridGraph.SetDimensions(width, height, G_NODE_SIZE);
         ast.data.gridGraph.Scan();
     }
 
@@ -121,10 +122,23 @@ public class ProceduralMapBuilder : MonoBehaviour
     }
 
     /**
+     * Novos parametros para o novo nivel do jogo
+     */
+    public void SetLevelData(LevelData levelData)
+    {
+        this.numOfRooms = levelData.GetNumOfRooms();
+        this.roomStyle = levelData.GetRoomStyle();
+        this.origin = levelData.GetOrigin();
+        this.randFactor = levelData.GetRandFactor();
+        this.blueprints = levelData.GetBlueprints();
+    }
+
+    /**
      * Iniciar o novo nivel e limpar renderizador
      */
-    public async void NewLevel()
+    public async Task<bool> NewLevel()
     {
+        bool status = true;
         levelRenderer.UnloadMemory();
         levelRenderer.ClearGameObject();
         if (await BuildTerrainAsync())
@@ -134,17 +148,19 @@ public class ProceduralMapBuilder : MonoBehaviour
         else
         {
             Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+            status = false;
         }
         CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
                        (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
-                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+        return status;
     }
 
     /**
-     * Inicia a constru��o de um n�vel da torre
+     * Inicia a construção de um nível da torre
      * @args roomStyle estilo da sala (STONE, GRASS, FIRE etc)
-     * @args randFactor fator de aleatoriedade da constru��o do mapa (SEED)
-     * @args numOfRooms n�mero de salas que v�o ser geradas nesse nivel
+     * @args randFactor fator de aleatoriedade da construção do mapa (SEED)
+     * @args numOfRooms numero de salas que vão ser geradas nesse nivel
      */
     async Task<bool> BuildTerrainAsync()
     {
@@ -157,11 +173,11 @@ public class ProceduralMapBuilder : MonoBehaviour
             {
                 blueprints = ChooseBlueprints();
             }
-            levelRenderer = new RenderLevel();
+
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
             blueprintsReader.SetNumOfRooms(numOfRooms);
-            blueprintsReader.defineBp(blueprints);
+            blueprintsReader.DefineBp(blueprints);
             Map map = new Map(blueprintsReader.RoomsLoaded(), matrixIndexes);
             GenerateGlobalDoors(map);
             foreach (Room room in map.GetRooms())
@@ -190,6 +206,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                             path = structure + DIVIDER + styles[roomStyle];
                             if (structure.Equals(GROUND))
                             {
+                                //adicionar plain e spawns
                                 path += DIVIDER + NextGroundEnumerate();
                             }
                             else if (structure.Equals(WALL))
@@ -210,6 +227,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             //remover isso depois (apenas para testes)
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
             levelRenderer.RenderElements();
+            levelRenderer.RenderColliders(map.GetRoomsCollider());
             status = true;
         }
         catch (System.Exception e)
@@ -229,9 +247,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         if (groundCounter == randFactor)
         {
             groundCounter = 0;
-            int gd = Random.Range(1, groundsSize);
-            //condição para remover tiles bugados (remover depois)
-            return (gd == 8 || gd == 10) ? 1 : gd;
+            return Random.Range(1, groundsSize);
         }
         if (groundCounter < groundsSize)
         {
@@ -278,7 +294,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         List<int> escolhas = new List<int> { 0, 1, 2, 3 };
         bool ignore = false;
         pathRooms.Clear();
-        origin = (origin != 0 ? origin : UnityEngine.Random.Range(0, 15));
+        origin = (origin != -1 ? origin : UnityEngine.Random.Range(0, 15));
         matrix[0] = origin;
         conj.Add(origin);
         int conjElement = conj[0], op = 0, realSize = 1;

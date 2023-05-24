@@ -7,11 +7,26 @@ public class Map
 {
     private List<Room> rooms;
     private int[] matrixRooms;
-    private static readonly float SIZE_OF_ROOM_X = 19.0f;
-    private static readonly float SIZE_OF_ROOM_Y = 19.0f;
+    private static readonly float SIZE_OF_ROOM_X = 20.0f;
+    private static readonly float SIZE_OF_ROOM_Y = 20.0f;
     public static readonly float W_PIXELS = 3.2f;
     public static readonly float H_PIXELS = 3.2f;
     public static readonly int SIZE_OF_CHUNK = 10;
+
+    public List<Vector3> GetRoomsCollider()
+    {
+        float row = 0f, col = 0f;
+        Vector3 roomPosition = Vector3.zero;
+        List<Vector3> collidersLocations = new List<Vector3>();
+        foreach (int index in matrixRooms)
+        {
+            row = (index / 4);
+            col = (index % 4);
+            roomPosition = new Vector3((float)ToIsometricX(row, col) * SIZE_OF_ROOM_X, (float)ToIsometricY(row, col) * SIZE_OF_ROOM_Y, 0);
+            collidersLocations.Add(roomPosition);
+        }
+        return collidersLocations;
+    }
 
     public Map(List<Room> rooms, int[] matrixRooms)
     {
@@ -47,7 +62,6 @@ public class Map
         {
             List<Vector3> roomsLocations = new List<Vector3>();
             int matrixIndex = matrixRooms[i];
-            //Debug.Log("MATRIX: " + matrixIndex);
             Room room = rooms[i];
             foreach (Vector3 pos in room.GetPositions())
             {
@@ -59,28 +73,28 @@ public class Map
     }
 
     /**
-     * Calculo global de posições para uma cordenada matriz de elementos com cada item
+     * Calculo global de posiÃ§Ãµes para uma cordenada matriz de elementos com cada item
      * sendo uma sala no mundo
      */
     private Vector3 CalculateGlobalPosition(int m_index, Vector3 position)
     {
         double row = (m_index / 4) * SIZE_OF_ROOM_X;
         double column = (m_index % 4) * SIZE_OF_ROOM_Y;
-        position.x = (float)ToIsometricX(row,column) + position.x;
-        position.y = (float)ToIsometricY(row,column) + position.y;
+        position.x = (float)ToIsometricX(row, column) + position.x;
+        position.y = (float)ToIsometricY(row, column) + position.y;
         return position;
     }
 
     /**
      * Convertendo Coordenadas
      */
-    private double ToIsometricX(double x, double y)
+    public static double ToIsometricX(double x, double y)
     {
         double nx = (x * 0.5 * (W_PIXELS)) + (y * -0.5 * (W_PIXELS));
         return nx;
     }
 
-    private double ToIsometricY(double x, double y)
+    public static double ToIsometricY(double x, double y)
     {
         double ny = (x * 0.25 * (H_PIXELS)) + (y * 0.25 * (H_PIXELS));
         return ny;

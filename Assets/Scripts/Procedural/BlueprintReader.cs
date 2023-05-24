@@ -8,9 +8,10 @@ public class BluePrintReader
     //constantes
     private const string FOLDER = "Blueprints/";
     public const int SIZE_OF_CHUNK = 10;
-    public const int SIZE_OF_ROOM = 20;
+    public static readonly int SIZE_OF_ROOM = 20;
     public const double W_PIXELS = 3.2;
     public const double H_PIXELS = 3.2;
+    private static readonly List<char> WALLS = new List<char> { 'w', 'e', 'r', 't', 'W', 'E', 'R', 'T' };
     public static readonly int BLUEPRINTS_TOTAL = 5;
     private static readonly int[] BPS = { 0, 1, 2, 3, 4 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
@@ -22,11 +23,17 @@ public class BluePrintReader
 
     public enum TileType
     {
-        WALL = 'w',
         GROUND = 'g',
+        WALL = 'w',
+        WALL_NE = 'e',
+        WALL_SW = 'r',
+        WALL_SE = 't',
+        WALL_N = 'W',
+        WALL_E = 'E',
+        WALL_S = 'R',
+        WALL_T = 'T',
         CHEST = 'c',
         SPAWN = 's',
-        MSPAWN = 'm',
     }
 
     public enum BlueprintIndex
@@ -50,7 +57,7 @@ public class BluePrintReader
     /**
      * Define um blueprint para gerar a sala
      */
-    public void defineBp(int[] bp)
+    public void DefineBp(int[] bp)
     {
         foreach (int bpItem in bp)
         {
@@ -67,11 +74,6 @@ public class BluePrintReader
                     lines[i] = lines[i].TrimEnd('\r', '\n');
                 }
                 blueprint.AddRange(lines);
-                DecodeBp();
-            }
-            else
-            {
-                //chamar func do gustavo para gerar novo blueprint BP
                 DecodeBp();
             }
         }
@@ -92,7 +94,7 @@ public class BluePrintReader
 
     /**
      * Decode da matriz de elementos
-     * custo alto visto que é uma matriz!
+     * custo alto visto que Ã© uma matriz!
      */
     public bool DecodeBp()
     {
@@ -173,7 +175,7 @@ public class BluePrintReader
     }
 
     /**
-     * Gera um vector com a posição dos elementos dentro da sala
+     * Gera um vector com a posiÃ§Ã£o dos elementos dentro da sala
      */
     private Vector3 SetGlobalPosition(int indexOfLine, int indexOfCol)
     {

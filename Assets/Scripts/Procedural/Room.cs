@@ -80,22 +80,22 @@ public class Room
         this.maxRight = maxRight;
     }
 
-    public List<(int,int)> GetMaxRight()
+    public List<(int, int)> GetMaxRight()
     {
         return maxRight;
     }
 
-    public List<(int,int)> GetMaxLeft()
+    public List<(int, int)> GetMaxLeft()
     {
         return maxLeft;
     }
 
-    public List<(int,int)> GetMaxUp()
+    public List<(int, int)> GetMaxUp()
     {
         return maxUp;
     }
 
-    public List<(int,int)> GetMaxDown()
+    public List<(int, int)> GetMaxDown()
     {
         return maxDown;
     }
