@@ -58,7 +58,7 @@ public class Player : Entity
 
     public bool CanCollect()
     {
-        return (!IsAttacking && Move_State != Entity.MoveState.DODGING);
+        return (!IsAttacking && Move_State == Entity.MoveState.IDLE);
     }
 
     //public void Attack()

@@ -17,25 +17,22 @@ public class EnemyObject : MonoBehaviour
     public LayerMask playerLayer;
     private IAstarAI pathfinder;
     public Transform target;
+    private bool updateEnabled;
 
-    
 
     public void Awake()
     {
-
         enemy = new Enemy(50,0.8f);
         pathfinder = GetComponent<IAstarAI>();
         pathfinder.maxSpeed = enemy.MoveSpeed;
-
+        updateEnabled = true;
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void FixedUpdate()
     {
-        if(enemy.State == Enemy.MachineState.DYING)
-        {
+        if (!updateEnabled)
             return;
-        }
 
         double distance = Math.Sqrt(Math.Pow(transform.position.x - target.position.x, 2) + Math.Pow(transform.position.y - target.position.y, 2));
         //UnityEngine.Debug.Log(distance);
@@ -44,8 +41,6 @@ public class EnemyObject : MonoBehaviour
         updateMachineState(distance);
         //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
         //UnityEngine.Debug.Log(enemy.State);
-
-        
 
         switch (enemy.State)
         {
@@ -64,7 +59,7 @@ public class EnemyObject : MonoBehaviour
 
             case Enemy.MachineState.ATTACKING:
                 FindObjectOfType<EnemyAnimation>().attacking(target);
-                
+
                 Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
                 PlayerObject p = null;
                 if (col != null)
@@ -73,26 +68,39 @@ public class EnemyObject : MonoBehaviour
                 {
                     // TODO - make enemy look at player
                     enemy.IsAttacking = true;
-                    StartCoroutine(enemy.coolDown(() => {
+                    StartCoroutine(enemy.coolDown(() =>
+                    {
                         enemy.IsAttacking = false;
                     }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
                     p.takeAttack(enemy.MainWeapon);
-                    
+
                 }
                 break;
 
             case Enemy.MachineState.DYING:
-                FindObjectOfType<EnemyAnimation>().die(target);
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-
+                Die();
                 break;
 
         }
     }
 
+    public void Die()
+    {
+        FindObjectOfType<EnemyAnimation>().die(target, this.EndDeath);
+        disableUpdate();
+    }
 
+    public void EndDeath()
+    {
+        Destroy(this.gameObject);
+    }
 
+    private void disableUpdate()
+    {
+        updateEnabled = false;
+    }
 
     public void takeAttack(Weapon pWeapon)
     {

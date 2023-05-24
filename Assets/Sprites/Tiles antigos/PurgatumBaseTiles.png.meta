@@ -113,6 +113,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1092,10 +1104,10 @@ TextureImporter:
       PurgatumBaseTiles_1: -1449962733
       PurgatumBaseTiles_29: -32137561
       PurgatumBaseTiles_13: 1369455718
-      PurgatumBaseTiles_43: -935947892
-      PurgatumBaseTiles_30: -1718253657
       PurgatumBaseTiles_32: 319520907
+      PurgatumBaseTiles_30: -1718253657
       PurgatumBaseTiles_20: 409593500
+      PurgatumBaseTiles_43: -935947892
       PurgatumBaseTiles_3: -2075108844
       PurgatumBaseTiles_36: 1033483803
       PurgatumBaseTiles_31: -1725527956

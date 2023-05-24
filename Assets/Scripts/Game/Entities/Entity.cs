@@ -39,18 +39,32 @@ public abstract class Entity
         }
     }
 
+    private bool lockedDir;
+
+    public void LockDir()
+    {
+        lockedDir = true;
+    }
+
+    public void UnlockDir()
+    {
+        lockedDir = false;
+    }
+
     private Vector2 facingDir;
     public Vector2 FacingDir
     {
         get { return facingDir; }
     }
+
     private Vector2 direction;
     public Vector2 Direction
     {
         get { return direction; }
         set 
-        { 
-            if (value != new Vector2(0, 0)) {
+        {
+            if (value != new Vector2(0, 0) && !lockedDir)
+            {
                 facingDir = value;
             }
             direction = value; 
@@ -95,8 +109,6 @@ public abstract class Entity
         set { isAttacking = value; }
     }
 
-    
-
     public Entity(int hp)
     {
         this.hp = hp;
@@ -120,6 +132,7 @@ public abstract class Entity
         isAttacking = false;
         isDead = false;
         facingDir = new Vector2(0, 1);
+        lockedDir = false;
     }
 
     public void toLastState()

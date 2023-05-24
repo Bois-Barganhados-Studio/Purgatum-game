@@ -9,28 +9,32 @@ using Pathfinding;
  */
 public class ProceduralMapBuilder : MonoBehaviour
 {
-    private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
-    private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
-    private RenderLevel levelRenderer = null;
-    private const string DIVIDER = "_";
-    private const string FOLDER = "Maps/";
-    private static readonly string[] styles = { "STONE" };
-    private static List<string> stylesIni = new List<string>();
-    private BluePrintReader blueprintsReader = null;
-    private int tileNumber;
+    //pametros pÃºblicos para uso do script (valores default estÃ£o definidos)
     public int[] blueprints;
-    private int groundCounter = 1, wallCounter = 1;
-    public int roomStyle = 0, randFactor = 6, numOfRooms = 5;
-    private static readonly string GROUND = "GROUND";
-    private static readonly string WALL = "WALL";
-    private int GROUNDS_SZ = 0, WALLS_SZ = 0;
-    public int origin = 0;
+    public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = 0;
+    //parametros internos do sistema de criaÃ§Ã£o do mapa do jogo
+    private RenderLevel levelRenderer = null;
+    private BluePrintReader blueprintsReader = null;
+    private static List<string> stylesIni = new List<string>();
+    private List<(int, int)> pathRooms = new List<(int, int)>();
     private GameObject player = null;
     private GameObject targetObject = null;
+    //constantes
+    private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
+    private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
+    private const string DIVIDER = "_";
+    private const float G_NODE_SIZE = 0.4f;
+    private const string FOLDER = "Maps/";
+    private const int DOORS_LIMIT = 10;
+    private static readonly string[] styles = { "STONE" };
+    private static readonly string GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND";
+    //utils
+    private int groundCounter = 1, wallCounter = 1;
+    private int groundsSize = 0, wallsSize = 0;
 
     public ProceduralMapBuilder()
     {
-        Debug.Log("INICIANDO GERAÇÂO DE MUNDO");
+        Debug.Log("INICIANDO MUNDO PROCEDURAL...");
         blueprintsReader = new BluePrintReader();
     }
 
@@ -46,18 +50,18 @@ public class ProceduralMapBuilder : MonoBehaviour
             lines[i] = lines[i].TrimEnd('\r', '\n');
             if (lines[i].Contains(GROUND))
             {
-                GROUNDS_SZ++;
+                groundsSize++;
             }
             else if (lines[i].Contains(WALL))
             {
-                WALLS_SZ++;
+                wallsSize++;
             }
         }
         stylesIni.AddRange(lines);
     }
-    
+
     /**
-     * Iniciar a construção do mapa na primeira run
+     * Iniciar a build do mapa na primeira run
      */
     private async Task BuildMap()
     {
@@ -84,27 +88,23 @@ public class ProceduralMapBuilder : MonoBehaviour
      * Centralizar o grafo dos inimigos para o meio do mapa
      * Define os bounds do grafo
      */
-    void CenterGraph(Vector3 spawn, int width, int height)
+    private void CenterGraph(Vector3 spawn, int width, int height)
     {
-        Debug.Log(spawn);
-        Debug.Log(width);
-        Debug.Log(height);
         targetObject.transform.position = spawn;
         AstarPath ast = targetObject.GetComponent<AstarPath>();
         ast.data.gridGraph.center = spawn;
         ast.data.gridGraph.width = width;
         ast.data.gridGraph.depth = height;
-        //ast.data.gridGraph.SetDimensions();
-        ast.data.gridGraph.UpdateSizeFromWidthDepth(); //setDimensions
+        ast.data.gridGraph.SetDimensions(width, height, G_NODE_SIZE); //setDimensions
         ast.data.gridGraph.Scan();
     }
 
     async void Start()
     {
-
         await BuildMap();
         CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
-                 (int)(2.5 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))), (int)(3 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
+                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
     }
 
     /**
@@ -123,7 +123,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     /**
      * Iniciar o novo nivel e limpar renderizador
      */
-    async void NewLevel()
+    public async void NewLevel()
     {
         levelRenderer.UnloadMemory();
         levelRenderer.ClearGameObject();
@@ -135,13 +135,16 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             Debug.Log("ERRO AO GERAR MAPA DO JOGO");
         }
+        CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
+                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
     }
 
     /**
-     * Inicia a construção de um nível da torre
+     * Inicia a construï¿½ï¿½o de um nï¿½vel da torre
      * @args roomStyle estilo da sala (STONE, GRASS, FIRE etc)
-     * @args randFactor fator de aleatoriedade da construção do mapa (SEED)
-     * @args numOfRooms número de salas que vão ser geradas nesse nivel
+     * @args randFactor fator de aleatoriedade da construï¿½ï¿½o do mapa (SEED)
+     * @args numOfRooms nï¿½mero de salas que vï¿½o ser geradas nesse nivel
      */
     async Task<bool> BuildTerrainAsync()
     {
@@ -160,6 +163,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             blueprintsReader.SetNumOfRooms(numOfRooms);
             blueprintsReader.defineBp(blueprints);
             Map map = new Map(blueprintsReader.RoomsLoaded(), matrixIndexes);
+            GenerateGlobalDoors(map);
             foreach (Room room in map.GetRooms())
             {
                 for (int i = 0; i < room.SizeOf(); i++)
@@ -203,6 +207,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
             player.transform.position = spawnPoint;
+            //remover isso depois (apenas para testes)
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
             levelRenderer.RenderElements();
             status = true;
@@ -214,16 +219,21 @@ public class ProceduralMapBuilder : MonoBehaviour
         return status;
     }
 
-
+    /**
+     * Proximo chÃ£o na escolha da sala
+     * @return int numero da sala dentro da folder
+     */
     int NextGroundEnumerate()
     {
+        //criar modo de default ground para ter varios chÃ£os padrÃµes
         if (groundCounter == randFactor)
         {
             groundCounter = 0;
-            int gd = Random.Range(1, GROUNDS_SZ);
+            int gd = Random.Range(1, groundsSize);
+            //condiÃ§Ã£o para remover tiles bugados (remover depois)
             return (gd == 8 || gd == 10) ? 1 : gd;
         }
-        if (groundCounter < GROUNDS_SZ)
+        if (groundCounter < groundsSize)
         {
             groundCounter++;
         }
@@ -234,14 +244,18 @@ public class ProceduralMapBuilder : MonoBehaviour
         return groundCounter == 0 ? groundCounter : 1;
     }
 
+    /**
+     * Proxima parede na escolha da sala
+     * @return int numero da sala dentro da folder
+     */
     int NextWallEnumerate()
     {
         if (wallCounter == randFactor)
         {
             wallCounter = 1;
-            return Random.Range(wallCounter, WALLS_SZ);
+            return Random.Range(wallCounter, wallsSize);
         }
-        if (wallCounter < WALLS_SZ)
+        if (wallCounter < wallsSize)
         {
             wallCounter++;
         }
@@ -253,42 +267,45 @@ public class ProceduralMapBuilder : MonoBehaviour
     }
 
     /**
-     * Função de mapeamento para gerar posições das salas em uma grade
+     * FunÃ§Ã£o de mapeamento para gerar posiï¿½ï¿½es das salas em uma grade
      * de mapa para 4x4 matricial
      */
     Task<int[]> GenerateMapIndexes()
     {
         int[] matrix = new int[numOfRooms];
-        origin = (origin != 0 ? origin : UnityEngine.Random.Range(0, 15));
-        matrix[0] = origin;
+        int index = 1, selected = 0;
         List<int> conj = new List<int>();
         List<int> escolhas = new List<int> { 0, 1, 2, 3 };
+        bool ignore = false;
+        pathRooms.Clear();
+        origin = (origin != 0 ? origin : UnityEngine.Random.Range(0, 15));
+        matrix[0] = origin;
         conj.Add(origin);
-        int index = 1, selected = 0;
         int conjElement = conj[0], op = 0, realSize = 1;
         do
         {
             op = escolhas[Random.Range(0, escolhas.Count)];
+            ignore = false;
             if (op == 0)
             {
-                if (!MATRIX_LEFT_ELEMENTS.Contains(op))
+                if (!MATRIX_LEFT_ELEMENTS.Contains(conjElement))
                 {
                     selected = conjElement - 1;
                 }
                 else
                 {
-                    escolhas.Remove(op);
+                    ignore = true;
                 }
             }
             else if (op == 1)
             {
-                if (!MATRIX_RIGHT_ELEMENTS.Contains(op))
+                if (!MATRIX_RIGHT_ELEMENTS.Contains(conjElement))
                 {
                     selected = conjElement + 1;
                 }
                 else
                 {
-                    escolhas.Remove(op);
+                    ignore = true;
                 }
             }
             else if (op == 2)
@@ -299,11 +316,11 @@ public class ProceduralMapBuilder : MonoBehaviour
             {
                 selected = conjElement - 4;
             }
-
-            if (index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
+            if (!ignore && index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
             {
                 matrix[index] = selected;
                 conj.Add(selected);
+                pathRooms.Add((conjElement, selected));
                 conjElement = conj[Random.Range(0, conj.Count)];
                 realSize++;
                 if (conjElement == matrix[index] && escolhas.Count == 1)
@@ -344,4 +361,129 @@ public class ProceduralMapBuilder : MonoBehaviour
         numOfRooms = realSize;
         return Task.FromResult(matrix);
     }
+    /*
+     * Gerar posiÃ§Ã£o das portas nas salas globalmente
+     * intersections: (RL - 1, LR - 2, DU - 3, UD - 4)
+     */
+    void GenerateGlobalDoors(Map map)
+    {
+        int intersection = 0;
+        int diff = 0;
+        List<int> indexes = new List<int>();
+        List<(int, int)> targets = new List<(int, int)>();
+        foreach ((int, int) path in pathRooms)
+        {
+            if (!indexes.Contains(path.Item1))
+            {
+                indexes.Add(path.Item1);
+            }
+            if (!indexes.Contains(path.Item2))
+            {
+                indexes.Add(path.Item2);
+            }
+        }
+        foreach ((int, int) path in pathRooms)
+        {
+            if (path.Item1 < path.Item2)
+            {
+                diff = path.Item2 - path.Item1;
+                if (diff == 1)
+                {
+                    intersection = 1;
+                }
+                else if (diff == -1)
+                {
+                    intersection = 2;
+                }
+                else if (diff == 4)
+                {
+                    intersection = 3;
+                }
+                else if (diff == -4)
+                {
+                    intersection = 4;
+                }
+            }
+            else
+            {
+                diff = path.Item1 - path.Item2;
+                if (diff == 1)
+                {
+                    intersection = 2;
+                }
+                else if (diff == -1)
+                {
+                    intersection = 1;
+                }
+                else if (diff == 4)
+                {
+                    intersection = 4;
+                }
+                else if (diff == -4)
+                {
+                    intersection = 3;
+                }
+            }
+            Room room1 = map.GetRoom(indexes.IndexOf(path.Item1));
+            Room room2 = map.GetRoom(indexes.IndexOf(path.Item2));
+            switch (intersection)
+            {
+                case 1:
+                    targets = GetTargetDoors(room1.GetMaxRight(), room2.GetMaxLeft());
+                    break;
+                case 2:
+                    targets = GetTargetDoors(room1.GetMaxLeft(), room2.GetMaxRight());
+                    break;
+                case 3:
+                    targets = GetTargetDoors(room1.GetMaxDown(), room2.GetMaxUp());
+                    break;
+                case 4:
+                    targets = GetTargetDoors(room1.GetMaxUp(), room2.GetMaxDown());
+                    break;
+                default:
+                    break;
+            }
+            if (targets.Count >= DOORS_LIMIT)
+            {
+                int divider = targets.Count / 3;
+                for (int i = divider; i < targets.Count - divider; i++)
+                {
+                    (int, int) block = targets[i];
+                    room1.UpdateBlock(DOOR, block.Item1);
+                    room2.UpdateBlock(DOOR, block.Item2);
+                }
+            }
+            else
+            {
+                foreach ((int, int) block in targets)
+                {
+                    room1.UpdateBlock(DOOR, block.Item1);
+                    room2.UpdateBlock(DOOR, block.Item2);
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Definir portas usando regras e listas de MAX definidos na classe ROOM
+     * Encontrar posiÃ§Ãµes semelhantes para remover walls e adicionar grounds
+     */
+    List<(int, int)> GetTargetDoors(List<(int, int)> max1, List<(int, int)> max2)
+    {
+        List<(int, int)> targets = new List<(int, int)>();
+        foreach ((int, int) target in max1)
+        {
+            foreach ((int, int) target2 in max2)
+            {
+                if (target.Item2 == target2.Item2)
+                {
+                    targets.Add((target.Item1, target2.Item1));
+                }
+
+            }
+        }
+        return targets;
+    }
+
 }
