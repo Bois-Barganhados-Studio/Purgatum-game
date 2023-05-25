@@ -1,10 +1,29 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Entity
 {
+    #region Vector Direction
+    public Vector2 FacingDirection { get; set; }
+
+    private Vector2 currentDirection;
+    public Vector2 CurrentDirection
+    {
+        get => currentDirection;
+        set
+        {
+            if (value != new Vector2(0, 0) && !LockedDir)
+            {
+                FacingDirection = value;
+            }
+            currentDirection = value;
+        }
+    }
+    #endregion
+
+    #region Movement
+
     public enum MoveState
     {
         IDLE,
@@ -12,145 +31,138 @@ public abstract class Entity
         DODGING,
     }
 
-    private bool isDead;
-    public bool IsDead 
-    {
-        get { return isDead; }
-    }
+    public MoveState LastState { get; set; }
 
-    private int maxHp;
-    public int MaxHp
+    private MoveState currentMoveState;
+    public MoveState CurrentMoveState
     {
-        get { return maxHp; }
-        set { maxHp = value; }
-    }
-
-    private int hp;
-    public int Hp
-    {
-        get { return hp; }
-        set {
-            if (value <= 0) {
-                hp = 0;
-                isDead = true;
-            } else {
-                hp = value;
-            }
+        get => currentMoveState;
+        set
+        {
+            LastState = CurrentMoveState;
+            currentMoveState = value;
         }
     }
 
-    private bool lockedDir;
+    public float MoveSpeed { get; set; }
+
+    public float DodgeSpeed { get; set; }
+
+    public bool LockedDir { get; set; }
+
+    public void ToLastState()
+    {
+        (LastState, CurrentMoveState) = (CurrentMoveState, LastState);
+    }
 
     public void LockDir()
     {
-        lockedDir = true;
+        LockedDir = true;
     }
 
     public void UnlockDir()
     {
-        lockedDir = false;
+        LockedDir = false;
     }
 
-    private Vector2 facingDir;
-    public Vector2 FacingDir
-    {
-        get { return facingDir; }
-    }
 
-    private Vector2 direction;
-    public Vector2 Direction
-    {
-        get { return direction; }
-        set 
-        {
-            if (value != new Vector2(0, 0) && !lockedDir)
-            {
-                facingDir = value;
-            }
-            direction = value; 
-        }
-    }
+    #endregion
 
-    private MoveState lastState;
-    public MoveState LastState
-    {
-        get { return lastState; }
-        set { lastState = value; }
-    }
-    private MoveState moveState;
-    public MoveState Move_State
-    {
-        get { return moveState; }
-        set 
-        { 
-            lastState = moveState;
-            moveState = value;
-        }
-    }
+    #region Attack
+    public bool IsAttacking { get; set; }
 
-    private float moveSpeed;
-    public float MoveSpeed
+    public bool TakeDamage(int dmg)
     {
-        get { return moveSpeed; }
-        set { moveSpeed = value; }
-    }
-
-    private float dodgeSpeed;
-    public float DodgeSpeed
-    {
-        get { return dodgeSpeed; }
-        set { dodgeSpeed = value; }
-    }
-
-    private bool isAttacking;
-    public bool IsAttacking
-    {
-        get { return isAttacking; }
-        set { isAttacking = value; }
-    }
-
-    public Entity(int hp)
-    {
-        this.hp = hp;
-        MaxHp = hp;
-        direction = new Vector2();
-        moveState = MoveState.IDLE;
-        MoveSpeed = 1.0f;
-        dodgeSpeed = 1.0f;
-        isAttacking = false;
-        isDead = false;
-        facingDir = new Vector2(0, 1);
-    }
-
-    public Entity(int hp, float speed)
-    {
-        this.hp = hp;
-        direction = new Vector2();
-        moveState = MoveState.IDLE;
-        MoveSpeed = speed;
-        dodgeSpeed = speed;
-        isAttacking = false;
-        isDead = false;
-        facingDir = new Vector2(0, 1);
-        lockedDir = false;
-    }
-
-    public void toLastState()
-    {
-        MoveState tmp = lastState;
-        lastState = moveState;
-        moveState = tmp;
-    }
-
-    public bool takeDamage(int dmg)
-    {
-        Hp = Hp - dmg;
+        Hp -= dmg;
         return true;
     }
 
-    public IEnumerator coolDown(Action func, float time)
+    #endregion
+
+    #region Stats
+
+    private int vitality;
+    public int Vitality
+    {
+        get => vitality;
+        set
+        {
+            vitality = value;
+            MaxHp = vitality * 5;
+            if (hp == 0)
+            {
+                hp = MaxHp;
+            }
+        }
+    }
+
+    public int Strength { get; set; }
+
+    private int agility;
+    public int Agility
+    {
+        get => agility;
+        set
+        {
+            agility = value;
+            DodgeSpeed = 1 + 0.0055f * agility;
+        }
+    }
+
+    public int Defense { get; set; }
+    public int Luck { get; set; }
+
+    private int speed;
+    public int Speed
+    {
+        get => speed;
+        set
+        {
+            speed = value;
+            MoveSpeed = 1 + 0.005f * speed;
+        }
+    }
+
+    #endregion
+
+    #region EntityState
+    public bool IsDead { get; set; }
+
+    public int MaxHp { get; set; }
+
+    private int hp;
+    public int Hp
+    {
+        get => hp;
+        set
+        {
+            if (value <= 0)
+            {
+                hp = 0;
+                IsDead = true;
+            }
+            else
+            {
+                hp = value;
+            }
+        }
+    }
+    #endregion
+
+    #region Utils
+    public IEnumerator CoolDown(Action func, float time)
     {
         yield return new WaitForSeconds(time);
         func();
+    }
+    #endregion
+
+    protected Entity()
+    {
+        CurrentDirection = Vector2.zero;
+        CurrentMoveState = MoveState.IDLE;
+        IsAttacking = false;
+        IsDead = false;
+        FacingDirection = new Vector2(0, 1);
     }
 }

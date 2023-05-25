@@ -9,7 +9,6 @@ public class Player : Entity
     public const int LAYER = 6;
 
     public Player()
-        : base(100)
     {
         MainWeapon = new DefaultWeapon();
         SubWeapon = null;
@@ -17,12 +16,12 @@ public class Player : Entity
 
     public Vector2 MoveVelocity()
     {
-        return Direction * MoveSpeed;
+        return CurrentDirection * MoveSpeed;
     }
 
     public Vector2 DodgeVelocity()
     {
-        return FacingDir * DodgeSpeed;
+        return FacingDirection * DodgeSpeed;
     }
 
     private bool dodgingCD;
@@ -48,30 +47,26 @@ public class Player : Entity
 
     public bool CanDodge() 
     {
-        return (!dodgingCD && !IsAttacking && Move_State != Entity.MoveState.DODGING);
+        return (!dodgingCD && !IsAttacking && CurrentMoveState != Entity.MoveState.DODGING);
     }
 
     public bool CanAttack()
     {
-        return (!IsAttacking && Move_State != Entity.MoveState.DODGING);
+        return (!IsAttacking && CurrentMoveState != Entity.MoveState.DODGING);
     }
 
     public bool CanCollect()
     {
-        return (!IsAttacking && Move_State == Entity.MoveState.IDLE);
+        return (!IsAttacking && CurrentMoveState == Entity.MoveState.IDLE);
     }
 
-    //public void Attack()
-    //{
-
-    //}
 
     public int takeAttack(Weapon eWeapon)
     {
         int dmg = Random.Range((int)(eWeapon.BaseDmg - eWeapon.BaseDmg * 0.2f), (int)(eWeapon.BaseDmg + eWeapon.BaseDmg * 0.2f));
         if (dmg > 0)
         {
-            takeDamage(dmg);
+            TakeDamage(dmg);
         }
         return dmg;
     }

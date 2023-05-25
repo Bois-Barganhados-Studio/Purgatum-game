@@ -19,10 +19,17 @@ public class EnemyObject : MonoBehaviour
     public Transform target;
     private bool updateEnabled;
 
-
     public void Awake()
     {
-        enemy = new Enemy(50,0.8f);
+        enemy = new Enemy()
+        {
+            Vitality = 1,
+            Strength = 1,
+            Agility = 1,
+            Defense = 1,
+            Speed = 1,
+            Luck = 1
+        };
         pathfinder = GetComponent<IAstarAI>();
         pathfinder.maxSpeed = enemy.MoveSpeed;
         updateEnabled = true;
@@ -68,7 +75,7 @@ public class EnemyObject : MonoBehaviour
                 {
                     // TODO - make enemy look at player
                     enemy.IsAttacking = true;
-                    StartCoroutine(enemy.coolDown(() =>
+                    StartCoroutine(enemy.CoolDown(() =>
                     {
                         enemy.IsAttacking = false;
                     }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));

@@ -19,8 +19,7 @@ public class Enemy : Entity
         set { mainWeapon = value; }
     }
 
-    public Enemy(int hp, float speed)
-        : base(hp, speed)
+    public Enemy()
     {
         MainWeapon = new Weapon(3.0f, 0.1f, 2.0f);
         State = MachineState.IDLE;
@@ -41,7 +40,7 @@ public class Enemy : Entity
         int dmg = Random.Range((int)(pWeapon.BaseDmg - pWeapon.BaseDmg * 0.2f), (int)(pWeapon.BaseDmg + pWeapon.BaseDmg * 0.2f));
         if (dmg > 0)
         {
-            takeDamage(dmg);
+            TakeDamage(dmg);
         }
         return dmg;
     }
