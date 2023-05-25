@@ -3,6 +3,16 @@ public class Weapon {
 
     public static readonly float BASE_COOLDOWN = 0.3f;
 
+    // TODO - Add meaningful names lol
+    public enum ANIMATION_TYPE
+    {
+        ANIM_1,
+        ANIM_2,
+        ANIM_3
+    }
+
+    public ANIMATION_TYPE AnimType { get; set; }
+
     private float baseDmg;
     public float BaseDmg
     {
@@ -36,5 +46,6 @@ public class Weapon {
         BaseDmg = baseDmg_;
         Range = range_;
         Weight = weight_;
+        // TODO - Range/Dmg logic to determine ANIM enum
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372897997516314}
   m_Layer: 6
-  m_Name: AttackPointNE
+  m_Name: ActionPointNE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1302
+  m_InstanceId: -1304
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372898166009801}
   m_Layer: 6
-  m_Name: AttackPointNW
+  m_Name: ActionPointNW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372898209018420}
   m_Layer: 6
-  m_Name: AttackPointSW
+  m_Name: ActionPointSW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372898235610889}
   m_Layer: 6
-  m_Name: AttackPointE
+  m_Name: ActionPointE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,7 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372899349652173}
   m_Layer: 6
-  m_Name: AttackPointSE
+  m_Name: ActionPointSE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372899716254217}
   m_Layer: 6
-  m_Name: AttackPointW
+  m_Name: ActionPointW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,7 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372899879651451}
   m_Layer: 6
-  m_Name: AttackPointN
+  m_Name: ActionPointN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,15 +526,16 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 256
-  attackPoints:
+  actionPoints:
   - {fileID: 4928372899879651448}
-  - {fileID: 4928372898166009846}
-  - {fileID: 4928372898235610934}
-  - {fileID: 4928372898209018421}
-  - {fileID: 4928372900086632301}
-  - {fileID: 4928372899349652170}
-  - {fileID: 4928372899716254262}
   - {fileID: 4928372897997516315}
+  - {fileID: 4928372898235610934}
+  - {fileID: 4928372899349652170}
+  - {fileID: 4928372900086632301}
+  - {fileID: 4928372898209018421}
+  - {fileID: 4928372899716254262}
+  - {fileID: 4928372898166009846}
+  rb: {fileID: 0}
 --- !u!114 &4928372900053999969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -677,6 +678,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 974bb0bc-6324-4bb8-833d-94e52e99d86d
     m_ActionName: Player/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4928372900053999969}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnTest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ed735647-f60b-4e79-abcb-b1c9acdefa97
+    m_ActionName: Player/Test[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -692,7 +709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928372900086632300}
   m_Layer: 6
-  m_Name: AttackPointS
+  m_Name: ActionPointS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

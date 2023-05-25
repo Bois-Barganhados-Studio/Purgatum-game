@@ -62,7 +62,8 @@ public abstract class Entity
 
     public void UnlockDir()
     {
-        LockedDir = false;
+        lockedDir = false;
+        facingDir = direction;
     }
 
 

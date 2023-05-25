@@ -1,5 +1,5 @@
 
-public class HealPotion : IItem
+public class HealPotion : Potion, IItem
 {
     private float healPct;
     public float HealPct
@@ -8,9 +8,9 @@ public class HealPotion : IItem
         set { healPct = value; } 
     }
         
-    public HealPotion(float healPct)
+    public HealPotion(Potion.LEVEL lvl)
     {
-        HealPct = healPct;
+        HealPct = Potion.BASE_PCT * ((int)lvl);
     }
 
     public virtual void Effect(PlayerObject p)

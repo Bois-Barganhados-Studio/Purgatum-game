@@ -6,13 +6,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
     public PlayerObject player;
     
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerObject>();
     }
 
@@ -26,10 +24,10 @@ public class PlayerController : MonoBehaviour
         if (player.IsUpdateDisabled)
             return;
         if (player.getMoveState() == Entity.MoveState.MOVING || player.getMoveState() == Entity.MoveState.IDLE) {
-            rb.velocity = player.MoveVelocity();
+            player.rb.velocity = player.MoveVelocity();
             FindObjectOfType<PlayerAnimation>().SetMoveDirection(player.getDirection());
         } else if (player.getMoveState() == Entity.MoveState.DODGING) {
-            rb.velocity = player.DodgeVelocity();
+            player.rb.velocity = player.DodgeVelocity();
             FindObjectOfType<PlayerAnimation>().SetDodgeDirection(player.getFacingDir());
         }
         //if (player.isAttacking()) {
@@ -72,6 +70,16 @@ public class PlayerController : MonoBehaviour
         if (ctx.performed)
         {
             player.Collect();
+        }
+    }
+
+    public void OnTest(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            // Add whatever you want
+            // test by pressing 'T'
+            
         }
     }
 }

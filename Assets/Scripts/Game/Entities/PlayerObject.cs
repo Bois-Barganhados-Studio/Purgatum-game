@@ -3,16 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class PlayerObject : MonoBehaviour
 {
     private Player player;
     public LayerMask enemyLayer;
     public LayerMask itemLayer;
-    public GameObject[] attackPoints;
+    public GameObject[] actionPoints;
+    public Rigidbody2D rb;
     private Vector2 idleDir;
     private WeaponObject mw;
     private WeaponObject sw;
+    private SpriteRenderer sr;
+    private PlayerAnimation pAnim;
 
     private bool isUpdateDisabled;
     public bool IsUpdateDisabled
@@ -39,6 +43,9 @@ public class PlayerObject : MonoBehaviour
         mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
         sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
+        sr = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        pAnim = FindObjectOfType<PlayerAnimation>();
     }
 
     public Vector2 MoveVelocity()
@@ -129,17 +136,17 @@ public class PlayerObject : MonoBehaviour
     public void EndDeath()
     {
         // TODO - Game Over
-
+        gameObject.SetActive(false);
     }
 
     public void Attack()
     {
         if (player.CanAttack()) {
             player.IsAttacking = true;
-            int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDirection);
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
+            int idx = pAnim.DirectionToIndex(player.FacingDir);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
             foreach (var e in enemies) {
-                e.GetComponent<EnemyObject>().takeAttack(player.MainWeapon);
+                e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
             }
             StartCoroutine(player.CoolDown(() => {
                 EndAttack();
@@ -149,7 +156,7 @@ public class PlayerObject : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        foreach (var it in attackPoints)
+        foreach (var it in actionPoints)
         {
             Gizmos.DrawWireSphere(it.transform.position, 0.1f);
         }
@@ -170,10 +177,9 @@ public class PlayerObject : MonoBehaviour
             UpdateHealthBar();
             if (player.IsDead)
             {
-                Debug.Log("died");
-                GetComponent<Rigidbody2D>().simulated = false;
+                rb.simulated = false;
                 isUpdateDisabled = true;
-                FindObjectOfType<PlayerAnimation>().SetDyingDirection(player.CurrentDirection);
+                pAnim.SetDyingDirection(player.Direction);
             } else
             {
                 StartCoroutine(blinkSprite());
@@ -188,7 +194,6 @@ public class PlayerObject : MonoBehaviour
 
     public IEnumerator blinkSprite()
     {
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         Color lastColor = sr.color;
         sr.color = new Color(255, 255, 255, 0.5f);
         yield return new WaitForSeconds(.15f);
@@ -209,9 +214,9 @@ public class PlayerObject : MonoBehaviour
     {
         if (!player.CanCollect())
             return;
-        int idx = FindObjectOfType<PlayerAnimation>().DirectionToIndex(player.FacingDirection);
+        int idx = pAnim.DirectionToIndex(player.FacingDir);
         // TODO - Call player collection animation
-        var col = Physics2D.OverlapCircle(attackPoints[idx].transform.position, 0.05f, itemLayer);
+        var col = Physics2D.OverlapCircle(actionPoints[idx].transform.position, 0.05f, itemLayer);
         if (col != null)
         {
             var item = col.GetComponent<ItemObject>();

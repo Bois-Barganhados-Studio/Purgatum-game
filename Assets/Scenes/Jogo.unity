@@ -421,7 +421,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &1285355610
+--- !u!43 &1141429907
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -585,7 +585,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!43 &1422964928
+--- !u!43 &1285355610
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1239,7 +1239,7 @@ PrefabInstance:
     - target: {fileID: 4928372898069709071, guid: 549c0a3ecf343bf45b0ddeaf270d0d7b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1422964928}
+      objectReference: {fileID: 1141429907}
     - target: {fileID: 4928372900053999979, guid: 549c0a3ecf343bf45b0ddeaf270d0d7b, type: 3}
       propertyPath: m_Name
       value: Player

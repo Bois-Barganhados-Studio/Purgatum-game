@@ -1,10 +1,5 @@
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.IO;
 using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
@@ -18,6 +13,11 @@ public class EnemyObject : MonoBehaviour
     private IAstarAI pathfinder;
     public Transform target;
     private bool updateEnabled;
+    private SpriteRenderer sr;
+    private EnemyAnimation eAnim;
+    private PlayerObject p;
+    private TextMesh textMesh;
+    private Rigidbody2D rb;
 
     public void Awake()
     {
@@ -34,6 +34,11 @@ public class EnemyObject : MonoBehaviour
         pathfinder.maxSpeed = enemy.MoveSpeed;
         updateEnabled = true;
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        sr = GetComponentInChildren<SpriteRenderer>();
+        eAnim = FindObjectOfType<EnemyAnimation>();
+        p = FindObjectOfType <PlayerObject>();
+        textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     public void FixedUpdate()
@@ -45,7 +50,7 @@ public class EnemyObject : MonoBehaviour
         //UnityEngine.Debug.Log(distance);
 
         //Atualiza a máquina de estados
-        updateMachineState(distance);
+        UpdateMachineState(distance);
         //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
         //UnityEngine.Debug.Log(enemy.State);
 
@@ -54,24 +59,20 @@ public class EnemyObject : MonoBehaviour
             case Enemy.MachineState.IDLE:
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-                FindObjectOfType<EnemyAnimation>().idle(target);
+                eAnim.idle(target);
                 break;
 
             case Enemy.MachineState.CHASING:
                 pathfinder.canSearch = true;
                 pathfinder.canMove = true;
                 pathfinder.destination = target.position;
-                FindObjectOfType<EnemyAnimation>().moving(target);
+                eAnim.moving(target);
                 break;
 
             case Enemy.MachineState.ATTACKING:
-                FindObjectOfType<EnemyAnimation>().attacking(target);
-
+                eAnim.attacking(target);
                 Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
-                PlayerObject p = null;
-                if (col != null)
-                    p = col.GetComponent<PlayerObject>();
-                if (p != null && !enemy.IsAttacking)
+                if (col != null && !enemy.IsAttacking)
                 {
                     // TODO - make enemy look at player
                     enemy.IsAttacking = true;
@@ -95,8 +96,9 @@ public class EnemyObject : MonoBehaviour
 
     public void Die()
     {
-        FindObjectOfType<EnemyAnimation>().die(target, this.EndDeath);
-        disableUpdate();
+        eAnim.die(target, this.EndDeath);
+        rb.simulated = false;
+        DisableUpdate();
     }
 
     public void EndDeath()
@@ -104,17 +106,17 @@ public class EnemyObject : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void disableUpdate()
+    private void DisableUpdate()
     {
         updateEnabled = false;
     }
 
-    public void takeAttack(Weapon pWeapon)
+    public void TakeAttack(Weapon pWeapon)
     {
         int dmg = enemy.takeAttack(pWeapon);
         if (dmg != 0) {
-            StartCoroutine(blinkSprite());
-            DamageIndicator.GetComponentInChildren<TextMesh>().text = dmg.ToString();
+            StartCoroutine(BlinkSprite());
+            textMesh.text = dmg.ToString();
             Instantiate(DamageIndicator, transform.position, Quaternion.identity);
             // if (enemy.IsDead) {
             //     FindObjectOfType<EnemyAnimation>().die(enemy.FacingDir);
@@ -125,7 +127,7 @@ public class EnemyObject : MonoBehaviour
     }
 
     
-    public void updateMachineState(double distance)
+    public void UpdateMachineState(double distance)
     {
         if(enemy.State == Enemy.MachineState.DYING)
         {
@@ -149,9 +151,8 @@ public class EnemyObject : MonoBehaviour
         }
     }
 
-    public IEnumerator blinkSprite()
+    public IEnumerator BlinkSprite()
     {
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         Color lastColor = sr.color;
         sr.color = new Color(255, 255, 255, 1);
         yield return new WaitForSeconds(.15f);

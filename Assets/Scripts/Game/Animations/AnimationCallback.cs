@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class AnimationCallback : MonoBehaviour
 {
+    private PlayerObject po;
+
     void EndDodge()
     {
-        gameObject.transform.parent.GetComponent<PlayerObject>().EndDodge();
+        po.EndDodge();
     }
 
     void EndDeath()
     {
-        //gameObject.transform.parent.GetComponent<EnemyObject>().EndDeath();
+        po.EndDeath();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    // Initializing
+    void Awake()
     {
-        
+        po = gameObject.transform.parent.GetComponent<PlayerObject>();
     }
 
     // Update is called once per frame

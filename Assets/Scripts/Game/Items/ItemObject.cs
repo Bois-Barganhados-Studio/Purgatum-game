@@ -5,10 +5,13 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour
 {
     private IItem item;
+    private SpriteRenderer sRenderer;
 
-    public void SetItem(IItem i)
+    public void Init(IItem i, Sprite sprite)
     {
         item = i;
+        sRenderer.sprite = sprite;
+        gameObject.SetActive(true);
     }
 
     public void Effect(PlayerObject p)
@@ -22,12 +25,7 @@ public class ItemObject : MonoBehaviour
     // Initializing
     void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gameObject.SetActive(false);
+        sRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 }
