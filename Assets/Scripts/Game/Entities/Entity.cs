@@ -13,7 +13,7 @@ public abstract class Entity
         get => currentDirection;
         set
         {
-            if (value != new Vector2(0, 0) && !LockedDir)
+            if (value != new Vector2.zero && !LockedDir) 
             {
                 FacingDirection = value;
             }

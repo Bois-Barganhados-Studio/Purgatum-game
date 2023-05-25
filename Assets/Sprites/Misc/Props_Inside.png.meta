@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Props_0
+      name: Props_Inside_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43aad84fc37ae7a4ea71e6d3315067bb
-      internalID: 888886285
+      spriteID: 4d9f5ca504abb4247ad04a007eeb8571
+      internalID: -2070695536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_1
+      name: Props_Inside_1
       rect:
         serializedVersion: 2
         x: 33
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8d7e1a082e78604aaa12abba63a974a
-      internalID: 1580713195
+      spriteID: 2b25c0a3719686444a9d4a3e9f505fc0
+      internalID: 817234880
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_2
+      name: Props_Inside_2
       rect:
         serializedVersion: 2
         x: 51
@@ -173,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47b37a764780ae64f9e99fa30120c92f
-      internalID: -1008613869
+      spriteID: 7a44d36fa9cdc2e4ba6d181845bf0228
+      internalID: 1895084634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_3
+      name: Props_Inside_3
       rect:
         serializedVersion: 2
         x: 64
@@ -194,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67546ddda1310c546b563db69dc1eff4
-      internalID: 633591907
+      spriteID: b600ee1ccf0ec4049a7f4d89c00d1c52
+      internalID: -1338081974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_4
+      name: Props_Inside_4
       rect:
         serializedVersion: 2
         x: 98
@@ -215,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edb2e4552cd876142adaef1f13ae5624
-      internalID: 1362314031
+      spriteID: bf62182741c7d8649839520017649a4b
+      internalID: 533798559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_5
+      name: Props_Inside_5
       rect:
         serializedVersion: 2
         x: 145
@@ -236,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e9f2c9df07f12c439a6dae8103b9961
-      internalID: 1656939113
+      spriteID: c21827de39b33d248816612ea19ce27f
+      internalID: -654248587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_6
+      name: Props_Inside_6
       rect:
         serializedVersion: 2
         x: 161
@@ -257,14 +257,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00329bb428476e245b94d59adb538176
-      internalID: -487626658
+      spriteID: 2f1ffef46363ee849b05d3e92d8aa813
+      internalID: -1830562525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_7
+      name: Props_Inside_7
       rect:
         serializedVersion: 2
         x: 177
@@ -278,14 +278,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ba7abdb70e76244f817c0f9073c02aa
-      internalID: -615996072
+      spriteID: 3d1eaf51f8a956943ab7dcdd8491a179
+      internalID: 1338274935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_8
+      name: Props_Inside_8
       rect:
         serializedVersion: 2
         x: 193
@@ -299,14 +299,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9c69b95fbcbe6e4199e215b50c77491
-      internalID: -1623460936
+      spriteID: 658ed871cbe9b6a419081f794268d439
+      internalID: -721585333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_9
+      name: Props_Inside_9
       rect:
         serializedVersion: 2
         x: 209
@@ -320,14 +320,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e296a3352665264d8795a6ebb57d7fe
-      internalID: 1194932570
+      spriteID: eedc32d94c0ac894c965f21ba18f6624
+      internalID: -638977884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_10
+      name: Props_Inside_10
       rect:
         serializedVersion: 2
         x: 0
@@ -341,14 +341,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6176fa5c848dd1442807b1c0fa4a7e02
-      internalID: -1984776317
+      spriteID: eb04a3c40ec03dd428cb11e7093b9bab
+      internalID: -391287028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_11
+      name: Props_Inside_11
       rect:
         serializedVersion: 2
         x: 33
@@ -362,14 +362,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9b97e5143854a949a08e075865ddef4
-      internalID: -183755864
+      spriteID: 87131e235c435cf4bac14010c1709d55
+      internalID: -44331018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_12
+      name: Props_Inside_12
       rect:
         serializedVersion: 2
         x: 51
@@ -383,14 +383,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93b5b364d0693b6419f3d1df8e59773c
-      internalID: -791979923
+      spriteID: 8cb07c900d7e9d54fb6c68468500a835
+      internalID: -1318811613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_13
+      name: Props_Inside_13
       rect:
         serializedVersion: 2
         x: 66
@@ -404,14 +404,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: baf8952868958cc48b22633399a38834
-      internalID: 294127568
+      spriteID: 36b3d2aed6e686b48a8adaf7f0a05dfc
+      internalID: -1785513779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_14
+      name: Props_Inside_14
       rect:
         serializedVersion: 2
         x: 100
@@ -425,14 +425,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1ffef3223907d74e83cd694035ea4ad
-      internalID: 934024427
+      spriteID: c74438f70af67e940aa22e9cbdfd1199
+      internalID: 595993463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_15
+      name: Props_Inside_15
       rect:
         serializedVersion: 2
         x: 114
@@ -446,14 +446,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d3741a8b2cf2734ba1aedc48309c7c2
-      internalID: 1090393001
+      spriteID: f58c933218c38a747af4b9b2bca767b2
+      internalID: 1951059426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_16
+      name: Props_Inside_16
       rect:
         serializedVersion: 2
         x: 160
@@ -467,14 +467,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15492a2dd9e24b34883d77a0a4077136
-      internalID: -581094750
+      spriteID: 574da45a697ffb0488347aa8d73af8d8
+      internalID: -1001960470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_17
+      name: Props_Inside_17
       rect:
         serializedVersion: 2
         x: 33
@@ -488,14 +488,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b729639a6981ac648b327c508303288a
-      internalID: 238899697
+      spriteID: 685bf15bc37da5240b13d80d09c3a3af
+      internalID: 380306978
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_18
+      name: Props_Inside_18
       rect:
         serializedVersion: 2
         x: 51
@@ -509,14 +509,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fba9f59ea96ffd49b67f356f53e3d2f
-      internalID: 1027364484
+      spriteID: f0d526112fb731248859a87dac08a152
+      internalID: 59195195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_19
+      name: Props_Inside_19
       rect:
         serializedVersion: 2
         x: 192
@@ -530,14 +530,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9558d303d02aaa4d8b0a341871a911b
-      internalID: 1116295518
+      spriteID: fef23517259ed374f9ef81354d0cc975
+      internalID: -2034473106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_20
+      name: Props_Inside_20
       rect:
         serializedVersion: 2
         x: 0
@@ -551,14 +551,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8547cd2bdce4d42418791323fbc24fba
-      internalID: 1847224271
+      spriteID: 0acdd1ca64924fc459182c4fa683e039
+      internalID: -880502891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_21
+      name: Props_Inside_21
       rect:
         serializedVersion: 2
         x: 34
@@ -572,14 +572,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6154bf2986d7ee4e84d8f67ab201524
-      internalID: 104612183
+      spriteID: 18ec8765584b354469c92e18117ff876
+      internalID: -1111188361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_22
+      name: Props_Inside_22
       rect:
         serializedVersion: 2
         x: 52
@@ -593,14 +593,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bc4576c4beae474092e65f0bbecda0e
-      internalID: 139822652
+      spriteID: e4acba56cdb9fdc4a9576fa15112a3b1
+      internalID: -207037107
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_23
+      name: Props_Inside_23
       rect:
         serializedVersion: 2
         x: 132
@@ -614,14 +614,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22dd948d799e5c54380ad5f0c833f925
-      internalID: 1818412110
+      spriteID: 2550f21a38ae1d4468cf558fd22b500e
+      internalID: 316904922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_24
+      name: Props_Inside_24
       rect:
         serializedVersion: 2
         x: 148
@@ -635,14 +635,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3d37782ed7e0d34c83d70b83ffb7503
-      internalID: 2011418615
+      spriteID: f47a8853fa6768b4185be547e0685c16
+      internalID: -1735627497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_25
+      name: Props_Inside_25
       rect:
         serializedVersion: 2
         x: 0
@@ -656,14 +656,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff27ca1602814fc48966b005f2038998
-      internalID: 1201683404
+      spriteID: c1e9d85cb51660148854fc96df5bfe9e
+      internalID: 1218345882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_26
+      name: Props_Inside_26
       rect:
         serializedVersion: 2
         x: 74
@@ -677,14 +677,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4aaece7cd2eb344cb70cbef1ca1bf4a
-      internalID: 856236487
+      spriteID: dd10b96c6e2b7d140b74ae42ddb443ab
+      internalID: -517758758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_27
+      name: Props_Inside_27
       rect:
         serializedVersion: 2
         x: 115
@@ -698,14 +698,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1691ed1b955fe8a4890777b5071ad923
-      internalID: -907928964
+      spriteID: d6413014cf19ed249aac4f0c2565573d
+      internalID: 386180906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_28
+      name: Props_Inside_28
       rect:
         serializedVersion: 2
         x: 128
@@ -719,14 +719,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b202ba886ed52c7499638580636ffe9c
-      internalID: 758809226
+      spriteID: aca72a365095cdd488c52b9a266c9680
+      internalID: 1184887189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_29
+      name: Props_Inside_29
       rect:
         serializedVersion: 2
         x: 151
@@ -740,14 +740,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f52c15ad52dc8a04e95e3aa874e6bed1
-      internalID: -1442331225
+      spriteID: 684f1544891299549bc1533c40c317af
+      internalID: 1466859839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_30
+      name: Props_Inside_30
       rect:
         serializedVersion: 2
         x: 192
@@ -761,14 +761,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d3546e4c587d4d42b3c905ccf3a0619
-      internalID: 1128145861
+      spriteID: 557e64542addf2b4abdd4c5aa9a9edb9
+      internalID: -1033725677
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_31
+      name: Props_Inside_31
       rect:
         serializedVersion: 2
         x: 3
@@ -782,14 +782,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8750af5ffbc6b7488fa9dcc2deae8b4
-      internalID: 1896243468
+      spriteID: 0a28ce1b89489d648a47f8276103cb3a
+      internalID: -1914910938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_32
+      name: Props_Inside_32
       rect:
         serializedVersion: 2
         x: 19
@@ -803,14 +803,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9a3bbfe88f1af04199e875e9feb430f
-      internalID: -1766868296
+      spriteID: 7eb682d40b3289c498f5d38ab45a8e3f
+      internalID: -1738428923
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_33
+      name: Props_Inside_33
       rect:
         serializedVersion: 2
         x: 35
@@ -824,14 +824,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd68b1a06e156314ea60d1e0711a30d7
-      internalID: -1438780028
+      spriteID: 36cf5f581ec91b44fad08eca402b2f02
+      internalID: 1457622025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_34
+      name: Props_Inside_34
       rect:
         serializedVersion: 2
         x: 51
@@ -845,14 +845,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1428092c877f09049a969bf7d152eeb0
-      internalID: -1881531355
+      spriteID: c7b74e65711d6c54faa63b0a7472b006
+      internalID: 532685495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_35
+      name: Props_Inside_35
       rect:
         serializedVersion: 2
         x: 67
@@ -866,14 +866,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e346f85bf9281944e8e1ba816eadd23c
-      internalID: -171842295
+      spriteID: fbc3ccee192474747a62dbf933c26972
+      internalID: 1765141066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_36
+      name: Props_Inside_36
       rect:
         serializedVersion: 2
         x: 83
@@ -887,14 +887,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35f26663135b366418097f1e6c4f04b3
-      internalID: -1055201467
+      spriteID: e4d7553f159a2cd409c841f07479d7a3
+      internalID: 1138316456
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_37
+      name: Props_Inside_37
       rect:
         serializedVersion: 2
         x: 99
@@ -908,14 +908,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da80963fae152d842b8c3b020671afc9
-      internalID: 2119618833
+      spriteID: a717755849d512a449175c1c774b033a
+      internalID: 575117509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_38
+      name: Props_Inside_38
       rect:
         serializedVersion: 2
         x: 115
@@ -929,14 +929,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27608884683241d469d783e04d881433
-      internalID: 595632406
+      spriteID: f84d229d1c5a7904da927b5c969a1a17
+      internalID: 979962018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_39
+      name: Props_Inside_39
       rect:
         serializedVersion: 2
         x: 21
@@ -950,14 +950,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ed1e52d58688264db05c8c2c9d82664
-      internalID: 1717118153
+      spriteID: f957beecee5d44440a83e794d48887c9
+      internalID: -1215030552
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_40
+      name: Props_Inside_40
       rect:
         serializedVersion: 2
         x: 100
@@ -971,14 +971,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb08b3e04f1f2a04692dfaf0ea317045
-      internalID: 78370795
+      spriteID: 4a1bd608c5bf1cb40bfc0212746ad190
+      internalID: -1113484353
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_41
+      name: Props_Inside_41
       rect:
         serializedVersion: 2
         x: 115
@@ -992,14 +992,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0d6d9f9a28a6ad4fbcf1b6a99c67767
-      internalID: -1572840044
+      spriteID: d22e0eab600d1fa49a8a5710d3fe266d
+      internalID: 341609631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_42
+      name: Props_Inside_42
       rect:
         serializedVersion: 2
         x: 0
@@ -1013,14 +1013,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6b91cab06e6564428c6db2f676390eb
-      internalID: -1272109923
+      spriteID: fa97027337f45f948a0d75cdb1ecbb47
+      internalID: -1124017405
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_43
+      name: Props_Inside_43
       rect:
         serializedVersion: 2
         x: 43
@@ -1034,14 +1034,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04e7aaa5683b14f4898d5ccbb8ef1c94
-      internalID: -254738667
+      spriteID: 67881f2dbe2bbc043ba4810663b67d8b
+      internalID: 1597389196
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_44
+      name: Props_Inside_44
       rect:
         serializedVersion: 2
         x: 102
@@ -1055,14 +1055,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1113e889efd18843a7b7c338ff69a0e
-      internalID: -2004053841
+      spriteID: 8caaa970f049ae2449b05400e6fe0ef1
+      internalID: -1727723827
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_45
+      name: Props_Inside_45
       rect:
         serializedVersion: 2
         x: 117
@@ -1076,14 +1076,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc04a19fce93e6f4ba64816da09c678c
-      internalID: 1000714517
+      spriteID: 24dcbada3a5f32b4d98a5e82eda31bfd
+      internalID: -1771506810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_46
+      name: Props_Inside_46
       rect:
         serializedVersion: 2
         x: 128
@@ -1097,14 +1097,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a2f2ce2a918b754eb779204573f3d1d
-      internalID: -1719063048
+      spriteID: 8a8aa1f35570acc43af04d0f06d09006
+      internalID: -1817901262
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_47
+      name: Props_Inside_47
       rect:
         serializedVersion: 2
         x: 1
@@ -1118,14 +1118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8050b945efe48c4ea425128c4683334
-      internalID: 1672354950
+      spriteID: 870ebae7993c80745859075de211f5b9
+      internalID: 2095635398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_48
+      name: Props_Inside_48
       rect:
         serializedVersion: 2
         x: 17
@@ -1139,14 +1139,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ad541ef7919cbe4ea55dffd837e9851
-      internalID: -1216973412
+      spriteID: de7f18e1511e522489bc62c5db7ae0b2
+      internalID: 1967830361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_49
+      name: Props_Inside_49
       rect:
         serializedVersion: 2
         x: 33
@@ -1160,14 +1160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a460670b77a183459d34b645b6b7cdd
-      internalID: 34465710
+      spriteID: 9cef39c01ba316648bf25bd6d1012ddf
+      internalID: -513884415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_50
+      name: Props_Inside_50
       rect:
         serializedVersion: 2
         x: 48
@@ -1181,14 +1181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c38a2940e99e77f449e3a96dadf2d793
-      internalID: 935585340
+      spriteID: 8f7b88fdac6468b42b0b783b2132140f
+      internalID: -135069526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_51
+      name: Props_Inside_51
       rect:
         serializedVersion: 2
         x: 117
@@ -1202,14 +1202,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa2dbb76e1e97ca42abccb6c96ad752b
-      internalID: -1428035009
+      spriteID: eae6aa936d9c24245ae5aedd2320b715
+      internalID: -553907757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_52
+      name: Props_Inside_52
       rect:
         serializedVersion: 2
         x: 182
@@ -1223,14 +1223,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c43225296cad9441af6d333b889e3d3
-      internalID: -2080984738
+      spriteID: d911e23738e79ef498ca5f2017caf7d6
+      internalID: -421961714
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_53
+      name: Props_Inside_53
       rect:
         serializedVersion: 2
         x: 195
@@ -1244,14 +1244,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3418d3207f011214eab25790e8c6e4e5
-      internalID: -911215896
+      spriteID: bd845b1b2e7192a41b3c588e47c3a5f4
+      internalID: -786351300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_54
+      name: Props_Inside_54
       rect:
         serializedVersion: 2
         x: 85
@@ -1265,14 +1265,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58b135803894ac64eac7cc6ec8da67b6
-      internalID: 1219203688
+      spriteID: 0478cb9937d59f14b952fd75b7a360cf
+      internalID: 1252264551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_55
+      name: Props_Inside_55
       rect:
         serializedVersion: 2
         x: 197
@@ -1286,14 +1286,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84278c7c704d77c47aed055fde7318d7
-      internalID: -2046129639
+      spriteID: 1f65afe62e9993f469205f38dddb4368
+      internalID: 172859740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_56
+      name: Props_Inside_56
       rect:
         serializedVersion: 2
         x: 3
@@ -1307,14 +1307,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8976442996239842bf656fffbf4f3ba
-      internalID: 581665637
+      spriteID: 8f220082b04014c42b47eb241b74f675
+      internalID: 1115882416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_57
+      name: Props_Inside_57
       rect:
         serializedVersion: 2
         x: 19
@@ -1328,14 +1328,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 750bc51fbff08b048beec6697ee50633
-      internalID: -1875835217
+      spriteID: ece231d3e843f494caabbad1753c69b1
+      internalID: -1543718669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_58
+      name: Props_Inside_58
       rect:
         serializedVersion: 2
         x: 35
@@ -1349,14 +1349,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6bd1e65bc7785c40baf31cb35cc3e6b
-      internalID: 212263755
+      spriteID: 24cc0171851dce1479eb9b011c296a3d
+      internalID: -1753064344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_59
+      name: Props_Inside_59
       rect:
         serializedVersion: 2
         x: 48
@@ -1370,14 +1370,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0130fa58d3c53e47bf7e2d717a769ec
-      internalID: -1986858915
+      spriteID: d24d5dbbfe1523244bb6fb84463a5922
+      internalID: 1394717686
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_60
+      name: Props_Inside_60
       rect:
         serializedVersion: 2
         x: 129
@@ -1391,14 +1391,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0416755fc5e161148b0702fd3931c570
-      internalID: 811300439
+      spriteID: ad0b4884b783035458b9f51d7bf1c2d1
+      internalID: 1403183271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_61
+      name: Props_Inside_61
       rect:
         serializedVersion: 2
         x: 165
@@ -1412,14 +1412,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: faaa2f939c29e8a49a798845ad83c833
-      internalID: 36941525
+      spriteID: 4157d86c1e2f56143b80ea094e572aa7
+      internalID: -2074032498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_62
+      name: Props_Inside_62
       rect:
         serializedVersion: 2
         x: 181
@@ -1433,14 +1433,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdad5a05a01eb654b842e001597ae939
-      internalID: -216681437
+      spriteID: 4a87fb1b1f2936940b9f3088a89ebd84
+      internalID: 1077925399
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_63
+      name: Props_Inside_63
       rect:
         serializedVersion: 2
         x: 85
@@ -1454,14 +1454,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 913a715cc65f2c64fb286ed8dce86bcc
-      internalID: 1189551471
+      spriteID: ae2844833af85f34f950252f134c5e27
+      internalID: -735495909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_64
+      name: Props_Inside_64
       rect:
         serializedVersion: 2
         x: 97
@@ -1475,14 +1475,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb6171d9a7ffaf246b12c2870e3545ae
-      internalID: -388058645
+      spriteID: 698da962a14bfa14b93b8cbbd9143c6e
+      internalID: -1829155202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_65
+      name: Props_Inside_65
       rect:
         serializedVersion: 2
         x: 181
@@ -1496,14 +1496,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea75ad0bda4447a40834ab7b487e12ce
-      internalID: -1432833737
+      spriteID: ef9beff1ea1b6984abf9395401736dba
+      internalID: 862839802
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_66
+      name: Props_Inside_66
       rect:
         serializedVersion: 2
         x: 197
@@ -1517,14 +1517,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa2e1de74f783e349a2a459c29356ff5
-      internalID: 1286254600
+      spriteID: 1a3f14145965f8b489158137da0bec01
+      internalID: 736126189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_67
+      name: Props_Inside_67
       rect:
         serializedVersion: 2
         x: 3
@@ -1538,14 +1538,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a1b2417550c6b34986937a9448e0d75
-      internalID: 300583921
+      spriteID: 51d090435787de0439eecfa433604e58
+      internalID: -1628570392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_68
+      name: Props_Inside_68
       rect:
         serializedVersion: 2
         x: 19
@@ -1559,14 +1559,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dbefe0d1f77c594d85807d5c5646468
-      internalID: 1202666773
+      spriteID: 6d7d1917394d4374db23592a06faf3aa
+      internalID: 1219526820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_69
+      name: Props_Inside_69
       rect:
         serializedVersion: 2
         x: 35
@@ -1580,14 +1580,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc94113d6ac0a0a4abfe51421d08142f
-      internalID: 1576215481
+      spriteID: 8dc2697089a27ed4ebdd32ebed21f379
+      internalID: -1445366760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_70
+      name: Props_Inside_70
       rect:
         serializedVersion: 2
         x: 51
@@ -1601,14 +1601,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38ffd173ac0f5374887c7efba3781b89
-      internalID: 808336567
+      spriteID: 49007ec99a8293948ba64209f377f202
+      internalID: 932795394
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_71
+      name: Props_Inside_71
       rect:
         serializedVersion: 2
         x: 67
@@ -1622,14 +1622,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1d3f3fef59d3144e809dcf2182b12a2
-      internalID: 1843852343
+      spriteID: bd9bc217b24eb0d4fa694c9f32aa60fd
+      internalID: 1183482540
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_72
+      name: Props_Inside_72
       rect:
         serializedVersion: 2
         x: 115
@@ -1643,14 +1643,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dbc6e29740bc474f9426adf7909e370
-      internalID: -62977386
+      spriteID: 94061bae8ec6c1f4294b59a715b9d995
+      internalID: 1217460990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_73
+      name: Props_Inside_73
       rect:
         serializedVersion: 2
         x: 147
@@ -1664,14 +1664,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d30894bcd0e127e4c8cea2278c8958f9
-      internalID: -1582835296
+      spriteID: 1feffcfeebb51bb45b496c28f97466d9
+      internalID: -97112971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_74
+      name: Props_Inside_74
       rect:
         serializedVersion: 2
         x: 2
@@ -1685,14 +1685,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2fb4cc89a7bdf24f9e870307697fb09
-      internalID: -108055430
+      spriteID: ac60f20d3559c514d943aa9549b3442c
+      internalID: -953769388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_75
+      name: Props_Inside_75
       rect:
         serializedVersion: 2
         x: 18
@@ -1706,14 +1706,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 364307e2562285042a60dd96f3efbbe2
-      internalID: -1231870009
+      spriteID: 1011bc4bef349b34cade3d0ffbacd0bd
+      internalID: 1770641792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_76
+      name: Props_Inside_76
       rect:
         serializedVersion: 2
         x: 34
@@ -1727,14 +1727,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0928d286a24b4ef40a8756dc8072ebd6
-      internalID: -1230303390
+      spriteID: 72d6914d1d80dbe4494ad1ca89723dc1
+      internalID: -713019354
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_77
+      name: Props_Inside_77
       rect:
         serializedVersion: 2
         x: 50
@@ -1748,14 +1748,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 890fb6f13d194264c9eed6087e69acb9
-      internalID: 888828336
+      spriteID: 951369f0833a74f4684febc139dada78
+      internalID: -380923008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_78
+      name: Props_Inside_78
       rect:
         serializedVersion: 2
         x: 66
@@ -1769,14 +1769,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0ee61bab016ec2478ab59b43d7773ae
-      internalID: -2070569873
+      spriteID: 0ba7dd5b9b22b094183470e5849f35fd
+      internalID: 1150875756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_79
+      name: Props_Inside_79
       rect:
         serializedVersion: 2
         x: 85
@@ -1790,14 +1790,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b25fa4cca706fa4c947ee42a6462327
-      internalID: 1608180351
+      spriteID: 32743664e5832fe4791597f2eaf4d155
+      internalID: 1596026500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_80
+      name: Props_Inside_80
       rect:
         serializedVersion: 2
         x: 97
@@ -1811,14 +1811,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf490759a23585247832e14c01d88a4c
-      internalID: 1634438277
+      spriteID: 1ee13cc05ade1564abfe4456d2e7aa1f
+      internalID: 1587817159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props_81
+      name: Props_Inside_81
       rect:
         serializedVersion: 2
         x: 129
@@ -1832,8 +1832,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ded44f9d5fb9ba1429ea06bc65cae888
-      internalID: 2106122512
+      spriteID: 4fc37682c1b6df442bef55c817694b70
+      internalID: -1300777261
       vertices: []
       indices: 
       edges: []
@@ -1849,88 +1849,88 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Props_38: 595632406
-      Props_48: -1216973412
-      Props_33: -1438780028
-      Props_55: -2046129639
-      Props_56: 581665637
-      Props_80: 1634438277
-      Props_26: 856236487
-      Props_2: -1008613869
-      Props_70: 808336567
-      Props_75: -1231870009
-      Props_53: -911215896
-      Props_10: -1984776317
-      Props_73: -1582835296
-      Props_65: -1432833737
-      Props_58: 212263755
-      Props_43: -254738667
-      Props_50: 935585340
-      Props_52: -2080984738
-      Props_64: -388058645
-      Props_42: -1272109923
-      Props_17: 238899697
-      Props_60: 811300439
-      Props_39: 1717118153
-      Props_25: 1201683404
-      Props_44: -2004053841
-      Props_45: 1000714517
-      Props_69: 1576215481
-      Props_6: -487626658
-      Props_77: 888828336
-      Props_72: -62977386
-      Props_78: -2070569873
-      Props_15: 1090393001
-      Props_28: 758809226
-      Props_49: 34465710
-      Props_71: 1843852343
-      Props_54: 1219203688
-      Props_12: -791979923
-      Props_40: 78370795
-      Props_29: -1442331225
-      Props_63: 1189551471
-      Props_18: 1027364484
-      Props_1: 1580713195
-      Props_0: 888886285
-      Props_32: -1766868296
-      Props_76: -1230303390
-      Props_5: 1656939113
-      Props_24: 2011418615
-      Props_13: 294127568
-      Props_19: 1116295518
-      Props_34: -1881531355
-      Props_20: 1847224271
-      Props_46: -1719063048
-      Props_37: 2119618833
-      Props_31: 1896243468
-      Props_51: -1428035009
-      Props_81: 2106122512
-      Props_36: -1055201467
-      Props_41: -1572840044
-      Props_22: 139822652
-      Props_7: -615996072
-      Props_23: 1818412110
-      Props_47: 1672354950
-      Props_8: -1623460936
-      Props_67: 300583921
-      Props_59: -1986858915
-      Props_4: 1362314031
-      Props_27: -907928964
-      Props_3: 633591907
-      Props_57: -1875835217
-      Props_16: -581094750
-      Props_74: -108055430
-      Props_61: 36941525
-      Props_30: 1128145861
-      Props_62: -216681437
-      Props_68: 1202666773
-      Props_66: 1286254600
-      Props_11: -183755864
-      Props_21: 104612183
-      Props_14: 934024427
-      Props_35: -171842295
-      Props_9: 1194932570
-      Props_79: 1608180351
+      Props_Inside_46: -1817901262
+      Props_Inside_69: -1445366760
+      Props_Inside_50: -135069526
+      Props_Inside_36: 1138316456
+      Props_Inside_22: -207037107
+      Props_Inside_53: -786351300
+      Props_Inside_5: -654248587
+      Props_Inside_79: 1596026500
+      Props_Inside_8: -721585333
+      Props_Inside_7: 1338274935
+      Props_Inside_41: 341609631
+      Props_Inside_49: -513884415
+      Props_Inside_18: 59195195
+      Props_Inside_29: 1466859839
+      Props_Inside_39: -1215030552
+      Props_Inside_16: -1001960470
+      Props_Inside_51: -553907757
+      Props_Inside_54: 1252264551
+      Props_Inside_24: -1735627497
+      Props_Inside_45: -1771506810
+      Props_Inside_26: -517758758
+      Props_Inside_78: 1150875756
+      Props_Inside_38: 979962018
+      Props_Inside_57: -1543718669
+      Props_Inside_17: 380306978
+      Props_Inside_60: 1403183271
+      Props_Inside_73: -97112971
+      Props_Inside_67: -1628570392
+      Props_Inside_74: -953769388
+      Props_Inside_20: -880502891
+      Props_Inside_55: 172859740
+      Props_Inside_42: -1124017405
+      Props_Inside_66: 736126189
+      Props_Inside_68: 1219526820
+      Props_Inside_80: 1587817159
+      Props_Inside_0: -2070695536
+      Props_Inside_76: -713019354
+      Props_Inside_64: -1829155202
+      Props_Inside_37: 575117509
+      Props_Inside_19: -2034473106
+      Props_Inside_25: 1218345882
+      Props_Inside_32: -1738428923
+      Props_Inside_43: 1597389196
+      Props_Inside_62: 1077925399
+      Props_Inside_72: 1217460990
+      Props_Inside_52: -421961714
+      Props_Inside_59: 1394717686
+      Props_Inside_2: 1895084634
+      Props_Inside_10: -391287028
+      Props_Inside_21: -1111188361
+      Props_Inside_71: 1183482540
+      Props_Inside_65: 862839802
+      Props_Inside_12: -1318811613
+      Props_Inside_58: -1753064344
+      Props_Inside_56: 1115882416
+      Props_Inside_61: -2074032498
+      Props_Inside_34: 532685495
+      Props_Inside_63: -735495909
+      Props_Inside_9: -638977884
+      Props_Inside_77: -380923008
+      Props_Inside_23: 316904922
+      Props_Inside_33: 1457622025
+      Props_Inside_44: -1727723827
+      Props_Inside_35: 1765141066
+      Props_Inside_75: 1770641792
+      Props_Inside_4: 533798559
+      Props_Inside_28: 1184887189
+      Props_Inside_48: 1967830361
+      Props_Inside_14: 595993463
+      Props_Inside_81: -1300777261
+      Props_Inside_47: 2095635398
+      Props_Inside_6: -1830562525
+      Props_Inside_40: -1113484353
+      Props_Inside_70: 932795394
+      Props_Inside_3: -1338081974
+      Props_Inside_1: 817234880
+      Props_Inside_15: 1951059426
+      Props_Inside_11: -44331018
+      Props_Inside_27: 386180906
+      Props_Inside_30: -1033725677
+      Props_Inside_31: -1914910938
+      Props_Inside_13: -1785513779
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
