@@ -27,10 +27,12 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string FOLDER = "Maps/";
     private const int DOORS_LIMIT = 10;
     private static readonly string[] styles = { "STONE" };
-    private static readonly string GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND";
+    private static readonly string GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
+    private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
     //utils
-    private int groundCounter = 1, wallCounter = 1;
-    private int groundsSize = 0, wallsSize = 0;
+    private int groundCounter = 1;
+    private int groundsSize = 0, plainsSize = 0;
+    int[] wallsSize = new int[8];
 
     public ProceduralMapBuilder()
     {
@@ -45,18 +47,54 @@ public class ProceduralMapBuilder : MonoBehaviour
     {
         TextAsset iniFile = Resources.Load<TextAsset>(FOLDER + path);
         string[] lines = iniFile.text.Split('\n');
+        plainsSize = 0;
+        groundsSize = 0;
+        wallsSize = new int[8];
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i] = lines[i].TrimEnd('\r', '\n');
             if (lines[i].Contains(GROUND))
             {
                 groundsSize++;
+                if (lines[i].Contains(PLAIN))
+                {
+                    plainsSize++;
+                }
             }
             else if (lines[i].Contains(WALL))
             {
-                wallsSize++;
+                switch (lines[i].Substring(5, 2).Replace("_", ""))
+                {
+                    case "SE":
+                        wallsSize[0]++;
+                        break;
+                    case "NE":
+                        wallsSize[1]++;
+                        break;
+                    case "SW":
+                        wallsSize[2]++;
+                        break;
+                    case "NW":
+                        wallsSize[3]++;
+                        break;
+                    case "S":
+                        wallsSize[4]++;
+                        break;
+                    case "E":
+                        wallsSize[5]++;
+                        break;
+                    case "W":
+                        wallsSize[6]++;
+                        break;
+                    case "N":
+                        wallsSize[7]++;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+        groundsSize -= plainsSize;
         stylesIni.AddRange(lines);
     }
 
@@ -105,7 +143,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         await BuildMap();
         CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
                        (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
-                       (int)(2.2 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
     }
 
     /**
@@ -198,7 +236,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                             }
                             else
                             {
-                                path = GROUND + DIVIDER + styles[roomStyle] + DIVIDER + NextGroundEnumerate();
+                                path = PLAIN + DIVIDER + styles[roomStyle] + DIVIDER + Random.Range(1, plainsSize);
                             }
                         }
                         else
@@ -206,12 +244,26 @@ public class ProceduralMapBuilder : MonoBehaviour
                             path = structure + DIVIDER + styles[roomStyle];
                             if (structure.Equals(GROUND))
                             {
-                                //adicionar plain e spawns
-                                path += DIVIDER + NextGroundEnumerate();
+                                (bool, int) groundChoice = NextGroundEnumerate();
+                                if (groundChoice.Item1)
+                                {
+                                    path = PLAIN + DIVIDER + styles[roomStyle];
+                                }
+                                path += DIVIDER + groundChoice.Item2;
                             }
-                            else if (structure.Equals(WALL))
+                            else if (structure.Contains(WALL))
                             {
-                                path += DIVIDER + NextWallEnumerate();
+                                int direction = 0;
+                                string wallDirection = structure.Substring(4, 2).Replace("_", "");
+                                foreach (string wall in wallsName)
+                                {
+                                    if (wallDirection == wall)
+                                    {
+                                        break;
+                                    }
+                                    direction++;
+                                }
+                                path += DIVIDER + NextWallEnumerate(direction);
                             }
                         }
                         if (stylesIni.Contains(path))
@@ -241,13 +293,12 @@ public class ProceduralMapBuilder : MonoBehaviour
      * Proximo chão na escolha da sala
      * @return int numero da sala dentro da folder
      */
-    int NextGroundEnumerate()
+    (bool, int) NextGroundEnumerate()
     {
-        //criar modo de default ground para ter varios chãos padrões
         if (groundCounter == randFactor)
         {
             groundCounter = 0;
-            return Random.Range(1, groundsSize);
+            return (false, Random.Range(1, groundsSize));
         }
         if (groundCounter < groundsSize)
         {
@@ -257,29 +308,19 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             groundCounter = 1;
         }
-        return groundCounter == 0 ? groundCounter : 1;
+        //Debug.Log(plainsSize);
+        return (true, Random.Range(1, plainsSize + 1));
     }
 
     /**
      * Proxima parede na escolha da sala
      * @return int numero da sala dentro da folder
      */
-    int NextWallEnumerate()
+    int NextWallEnumerate(int direction)
     {
-        if (wallCounter == randFactor)
-        {
-            wallCounter = 1;
-            return Random.Range(wallCounter, wallsSize);
-        }
-        if (wallCounter < wallsSize)
-        {
-            wallCounter++;
-        }
-        else
-        {
-            wallCounter = 1;
-        }
-        return wallCounter;
+        //Debug.Log(direction);
+        return randFactor < wallsSize[direction] ?
+         Random.Range(randFactor, wallsSize[direction]) : Random.Range(1, wallsSize[direction]);
     }
 
     /**

@@ -11,9 +11,9 @@ public class BluePrintReader
     public static readonly int SIZE_OF_ROOM = 20;
     public const double W_PIXELS = 3.2;
     public const double H_PIXELS = 3.2;
-    private static readonly List<char> WALLS = new List<char> { 'w', 'e', 'r', 't', 'W', 'E', 'R', 'T' };
+    private static readonly List<char> WALLS = new List<char> { (char)TileType.WALL_NW, (char)TileType.WALL_NE, (char)TileType.WALL_SW, (char)TileType.WALL_SE, (char)TileType.WALL_N, (char)TileType.WALL_E, (char)TileType.WALL_S, (char)TileType.WALL_W };
     public static readonly int BLUEPRINTS_TOTAL = 5;
-    private static readonly int[] BPS = { 0, 1, 2, 3, 4 };
+    private static readonly int[] BPS = { 0, 1, 2, 3, 4, 5, 6 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     //utils
     private List<string> blueprint = new List<string>();
@@ -24,14 +24,14 @@ public class BluePrintReader
     public enum TileType
     {
         GROUND = 'g',
-        WALL = 'w',
-        WALL_NE = 'e',
-        WALL_SW = 'r',
-        WALL_SE = 't',
-        WALL_N = 'W',
-        WALL_E = 'E',
-        WALL_S = 'R',
-        WALL_T = 'T',
+        WALL_NW = ']',
+        WALL_NE = '=',
+        WALL_SW = '-',
+        WALL_SE = '[',
+        WALL_N = 'C',
+        WALL_E = 'D',
+        WALL_S = 'B',
+        WALL_W = 'E',
         CHEST = 'c',
         SPAWN = 's',
     }
@@ -43,6 +43,8 @@ public class BluePrintReader
         HEXA = 2,
         CRAZY = 3,
         CRUX = 4,
+        WAYS = 5,
+        EGG = 6,
     }
 
     public BluePrintReader()
@@ -125,28 +127,28 @@ public class BluePrintReader
                     char letter = line[colIndex];
                     if (lineIndex == 0)
                     {
-                        if (letter == 'w' && colIndex < postline.Length && postline[colIndex] == 'g')
+                        if (WALLS.Contains(letter) && colIndex < postline.Length && postline[colIndex] == ((char)TileType.GROUND))
                         {
                             maxUp.Add((insertIndex, colIndex));
                         }
                     }
                     if (lineIndex == SIZE_OF_ROOM - 1)
                     {
-                        if (letter == 'w' && colIndex < postline.Length && postline[colIndex] == 'g')
+                        if (WALLS.Contains(letter) && colIndex < postline.Length && postline[colIndex] == ((char)TileType.GROUND))
                         {
                             maxDown.Add((insertIndex, colIndex));
                         }
                     }
                     if (colIndex == 0)
                     {
-                        if (letter == 'w' && colIndex + 1 < line.Length && line[colIndex + 1] == 'g')
+                        if (WALLS.Contains(letter) && colIndex + 1 < line.Length && line[colIndex + 1] == ((char)TileType.GROUND))
                         {
                             maxLeft.Add((insertIndex, lineIndex));
                         }
                     }
                     if (colIndex == SIZE_OF_ROOM - 1)
                     {
-                        if (letter == 'w' && line[colIndex - 1] == 'g')
+                        if (WALLS.Contains(letter) && line[colIndex - 1] == ((char)TileType.GROUND))
                         {
                             maxRight.Add((insertIndex, lineIndex));
                         }
