@@ -143,7 +143,7 @@ public class PlayerObject : MonoBehaviour
     {
         if (player.CanAttack()) {
             player.IsAttacking = true;
-            int idx = pAnim.DirectionToIndex(player.FacingDir);
+            int idx = pAnim.DirectionToIndex(player.FacingDirection);
             Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
             foreach (var e in enemies) {
                 e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
@@ -179,7 +179,7 @@ public class PlayerObject : MonoBehaviour
             {
                 rb.simulated = false;
                 isUpdateDisabled = true;
-                pAnim.SetDyingDirection(player.Direction);
+                pAnim.SetDyingDirection(player.CurrentDirection);
             } else
             {
                 StartCoroutine(blinkSprite());
@@ -214,7 +214,7 @@ public class PlayerObject : MonoBehaviour
     {
         if (!player.CanCollect())
             return;
-        int idx = pAnim.DirectionToIndex(player.FacingDir);
+        int idx = pAnim.DirectionToIndex(player.FacingDirection);
         // TODO - Call player collection animation
         var col = Physics2D.OverlapCircle(actionPoints[idx].transform.position, 0.05f, itemLayer);
         if (col != null)
