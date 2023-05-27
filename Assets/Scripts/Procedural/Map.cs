@@ -50,6 +50,11 @@ public class Map
         return this.rooms;
     }
 
+    public int GetSizeOfRooms()
+    {
+        return this.rooms.Count;
+    }
+
     public Room GetRoom(int index)
     {
         return rooms[index];

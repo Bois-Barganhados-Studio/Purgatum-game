@@ -13,7 +13,7 @@ public class BluePrintReader
     public const double H_PIXELS = 3.2;
     private static readonly List<char> WALLS = new List<char> { (char)TileType.WALL_NW, (char)TileType.WALL_NE, (char)TileType.WALL_SW, (char)TileType.WALL_SE, (char)TileType.WALL_N, (char)TileType.WALL_E, (char)TileType.WALL_S, (char)TileType.WALL_W };
     public static readonly int BLUEPRINTS_TOTAL = 5;
-    private static readonly int[] BPS = { 0, 1, 2, 3, 4, 5, 6 };
+    public static readonly int[] BPS = { 0, 1, 2, 3, 4, 5, 6 };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     //utils
     private List<string> blueprint = new List<string>();
