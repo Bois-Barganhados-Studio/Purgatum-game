@@ -541,6 +541,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: songs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: songs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 17432aa502901024a82564f35d7b3454, type: 3}
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: songNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: songNames.Array.data[0]
+      value: mainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: soundEffectNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820229772589057904, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
+      propertyPath: soundEffectNames.Array.data[0]
+      value: click
+      objectReference: {fileID: 0}
     - target: {fileID: 820229772589057906, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
       propertyPath: m_RootOrder
       value: 5
