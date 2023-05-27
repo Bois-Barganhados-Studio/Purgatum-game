@@ -8,23 +8,17 @@ public class RogueLogic
     public enum States
     {
         STARTING = -1,
-        RESTART = 0,
-        NEW_LEVEL = 1,
+        NEW_LEVEL = 0,
+        RESTART = 1,
         PLAYING = 2,
     };
-
-    private States state = States.STARTING;
-    private const int MAX_LEVELS = 7;
-    private const int MAX_ROOMS = 16;
-    private const int MIN_ROOMS = 2;
-    private const int SZ_ROOM_STYLE = 5;
-    private const int MAX_ORIGIN = 16;
-    private const int MIN_ORIGIN = 0;
+    private const int MAX_LEVELS = 7, HUB_INDEX = 0, BOSS_INDEX = 7;
+    private ProceduralMapBuilder mapBuilder;
     private static int level = 0;
-    private const int HUB_INDEX = 0;
-    private const int BOSS_INDEX = 7;
-    private GameObject renderLevelsObj = null;
-    private ProceduralMapBuilder mapBuilder = null;
+    private static States state;
+    private int actualScene = 0, mainScene, hubScene;
+    private LoadingScreen loading;
+
     //private AI ia = null;
 
     public RogueLogic()
@@ -36,28 +30,19 @@ public class RogueLogic
     /**
      * Cria um novo level para o jogo com as regras para inicio do game
      */
-    private async Task<bool> NewLevel(LevelData levelData)
+    private async Task<bool> NewLevel()
     {
         bool status = true;
         try
         {
             if (level == HUB_INDEX)
             {
-                //StartHub();
+                Debug.Log("Poço scene");
+                StartHubScene();
             }
             else if (level < MAX_LEVELS)
             {
-                if (renderLevelsObj == null)
-                {
-                    renderLevelsObj = GameObject.Find("renderLevels");
-                    mapBuilder = renderLevelsObj.GetComponent<ProceduralMapBuilder>();
-                }
-                mapBuilder.SetLevelData(levelData);
-                if (await mapBuilder.NewLevel())
-                {
-                    state = States.PLAYING;
-                    level++;
-                }
+                await StartNewProceduralLevel();
             }
             else if (level == BOSS_INDEX)
             {
@@ -72,29 +57,76 @@ public class RogueLogic
         return status;
     }
 
-    private void ResetLevel()
+    private async Task<bool> StartNewProceduralLevel()
+    {
+        if (mapBuilder == null)
+            mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
+        //gerar dados da IA ou passar dados gerados aqui!
+        mapBuilder.SetLevelData(new LevelData(numOfRooms: 4, roomStyle: 0, origin: 0, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 }));
+        bool response = await mapBuilder.NewLevel();
+        if (response)
+        {
+            state = States.PLAYING;
+            level++;
+        }
+        return response;
+    }
+
+    private void StartHubScene()
+    {
+        actualScene = hubScene;
+        if (loading == null)
+            loading = GameObject.FindObjectOfType<LoadingScreen>();
+        loading.LoadScene(hubScene);
+    }
+
+    private void StartMainScene()
+    {
+        actualScene = mainScene;
+        if (loading == null)
+            loading = GameObject.FindObjectOfType<LoadingScreen>();
+        loading.LoadScene(hubScene);
+    }
+
+    private async Task<bool> ResetLevel()
     {
         level = 0;
         state = States.RESTART;
+        return await NewLevel();
     }
 
     public async void DoAction()
     {
+        Debug.Log("Doing some action");
         switch ((int)state)
         {
             case -1:
-                level = 1;
-                await NewLevel(new LevelData(5, 0, 0, 5, null));
+                Debug.Log("poço");
+                level = 0;
+                await NewLevel();
                 break;
             case 0:
+                await NewLevel();
                 break;
             case 1:
+                await ResetLevel();
                 break;
             case 2:
+                //LogData();
                 break;
             default:
                 break;
         }
+    }
+
+    public void SetMainScene(int mainScene)
+    {
+        this.mainScene = mainScene;
+    }
+
+    public void SetHubScene(int hubScene)
+    {
+        this.hubScene = hubScene;
     }
 
 }

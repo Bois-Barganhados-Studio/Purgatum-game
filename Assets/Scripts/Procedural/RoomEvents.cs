@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class RoomEvents : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    bool visited = false;
+    private void OnTriggerEnter2D(Collider2D colliderElement)
     {
-        if (Player.LAYER == (Player.LAYER | (1 << other.gameObject.layer)))
+        if (!visited && Player.LAYER == (Player.LAYER | (1 << colliderElement.gameObject.layer)))
         {
             Debug.Log("Player entered the room!");
+            visited = true;
+            //desligar colisão com o player
         }
     }
 }

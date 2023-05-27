@@ -10,7 +10,11 @@ public class LoadingScreen : MonoBehaviour
     public Image LoadingBarFill;
     public float speed;
     public float delayDuration = 10f;
-    
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void LoadScene(int sceneId)
     {

@@ -377,6 +377,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 820229772589057911, guid: 3b06d88246dad9243a9db26b07a37aa7, type: 3}
   m_PrefabInstance: {fileID: 820229771768093468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1478660537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1478660539}
+  - component: {fileID: 1478660538}
+  m_Layer: 0
+  m_Name: RogueLikeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1478660538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478660537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f75ae4aa8e569b49bdfb88e6c63cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainScene: 1
+  hubScene: 2
+--- !u!4 &1478660539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478660537}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 648.4376, y: 344.78635, z: -659.85144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1648454436 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5414773515604934331, guid: 35a6b77b25883ba42be1f7146604378a, type: 3}
