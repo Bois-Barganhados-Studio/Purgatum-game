@@ -128,6 +128,15 @@ public class SoundControl : MonoBehaviour
         //battleSong.Stop();
     }
 
+    public void SetGlobalSoundVolume(float volume)
+    {
+        SoundControl.globalSoundVolume = volume;
+        SoundControl.globalSongVolume = volume;
+        audioSource.volume = volume;
+        ambience.volume = volume;
+        battleSong.volume = volume;
+    }
+
 }
 
 public static class FadeAudioSource {
