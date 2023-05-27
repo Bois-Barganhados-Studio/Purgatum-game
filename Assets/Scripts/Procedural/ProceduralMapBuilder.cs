@@ -11,6 +11,7 @@ public class ProceduralMapBuilder : MonoBehaviour
 {
     //pametros públicos para uso do script (valores default estão definidos)
     public int[] blueprints;
+    //aberto para testes
     public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = -1;
     //parametros internos do sistema de criação do mapa do jogo
     private RenderLevel levelRenderer = null;
@@ -27,7 +28,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string FOLDER = "Maps/";
     private const int DOORS_LIMIT = 10;
     private static readonly string[] styles = { "STONE" };
-    private static readonly string GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
+    private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
     //utils
     private int groundCounter = 1;
@@ -41,61 +42,29 @@ public class ProceduralMapBuilder : MonoBehaviour
     }
 
     /**
-     * Ler iniciadores para os tilemaps
-     */
-    void ReadIni(string path)
+    * Iniciar o novo nivel e limpar renderizador
+    */
+    public async Task<bool> NewLevel(bool isStarting = false)
     {
-        TextAsset iniFile = Resources.Load<TextAsset>(FOLDER + path);
-        string[] lines = iniFile.text.Split('\n');
-        plainsSize = 0;
-        groundsSize = 0;
-        wallsSize = new int[8];
-        for (int i = 0; i < lines.Length; i++)
+        bool status = true;
+        if (!isStarting)
         {
-            lines[i] = lines[i].TrimEnd('\r', '\n');
-            if (lines[i].Contains(GROUND))
-            {
-                groundsSize++;
-                if (lines[i].Contains(PLAIN))
-                {
-                    plainsSize++;
-                }
-            }
-            else if (lines[i].Contains(WALL))
-            {
-                switch (lines[i].Substring(5, 2).Replace("_", ""))
-                {
-                    case "SE":
-                        wallsSize[0]++;
-                        break;
-                    case "NE":
-                        wallsSize[1]++;
-                        break;
-                    case "SW":
-                        wallsSize[2]++;
-                        break;
-                    case "NW":
-                        wallsSize[3]++;
-                        break;
-                    case "S":
-                        wallsSize[4]++;
-                        break;
-                    case "E":
-                        wallsSize[5]++;
-                        break;
-                    case "W":
-                        wallsSize[6]++;
-                        break;
-                    case "N":
-                        wallsSize[7]++;
-                        break;
-                    default:
-                        break;
-                }
-            }
+            levelRenderer.UnloadMemory();
+            levelRenderer.ClearGameObject();
         }
-        groundsSize -= plainsSize;
-        stylesIni.AddRange(lines);
+        if (await BuildTerrainAsync())
+        {
+            Debug.Log("MAPA GERADO COM SUCESSO");
+        }
+        else
+        {
+            Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+            status = false;
+        }
+        CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
+                       (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
+        return status;
     }
 
     /**
@@ -106,13 +75,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         player = GameObject.Find("Player");
         targetObject = GameObject.Find("Pathfinding");
         levelRenderer = new RenderLevel();
-        if (stylesIni.Count == 0)
-        {
-            foreach (string style in styles)
-            {
-                ReadIni(style + "/" + style.ToLower());
-            }
-        }
+        ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());
         if (await BuildTerrainAsync())
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
@@ -172,29 +135,6 @@ public class ProceduralMapBuilder : MonoBehaviour
     }
 
     /**
-     * Iniciar o novo nivel e limpar renderizador
-     */
-    public async Task<bool> NewLevel()
-    {
-        bool status = true;
-        levelRenderer.UnloadMemory();
-        levelRenderer.ClearGameObject();
-        if (await BuildTerrainAsync())
-        {
-            Debug.Log("MAPA GERADO COM SUCESSO");
-        }
-        else
-        {
-            Debug.Log("ERRO AO GERAR MAPA DO JOGO");
-            status = false;
-        }
-        CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
-                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
-                       (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
-        return status;
-    }
-
-    /**
      * Inicia a construção de um nível da torre
      * @args roomStyle estilo da sala (STONE, GRASS, FIRE etc)
      * @args randFactor fator de aleatoriedade da construção do mapa (SEED)
@@ -202,8 +142,10 @@ public class ProceduralMapBuilder : MonoBehaviour
      */
     async Task<bool> BuildTerrainAsync()
     {
-        bool status = false;
+        bool status = false, createDespawn = false;
+        string path = "";
         Vector3 spawnPoint = new Vector3(0, 0, 0);
+        int roomsCounter = 0;
         try
         {
             int[] matrixIndexes = await GenerateMapIndexes();
@@ -220,16 +162,25 @@ public class ProceduralMapBuilder : MonoBehaviour
             GenerateGlobalDoors(map);
             foreach (Room room in map.GetRooms())
             {
+                if (roomsCounter == map.GetSizeOfRooms() - 1)
+                {
+                    createDespawn = true;
+                }
                 for (int i = 0; i < room.SizeOf(); i++)
                 {
                     string structure = room.GetBlock(i);
                     if (structure != null)
                     {
                         Vector3 position = room.GetPosition(i);
-                        string path = "";
-                        if (structure.Equals("SPAWN"))
+                        path = "";
+                        if (structure.Equals(SPAWN))
                         {
-                            if (spawnPoint.x == 0 && spawnPoint.y == 0)
+                            if (createDespawn)
+                            {
+                                createDespawn = false;
+                                path = DESPAWN + DIVIDER + styles[roomStyle];
+                            }
+                            else if (spawnPoint.x == 0 && spawnPoint.y == 0)
                             {
                                 path = structure + DIVIDER + styles[roomStyle];
                                 spawnPoint = position;
@@ -273,13 +224,14 @@ public class ProceduralMapBuilder : MonoBehaviour
                         }
                     }
                 }
+                roomsCounter++;
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
+            levelRenderer.RenderElements();
+            levelRenderer.RenderColliders(map.GetRoomsCollider());
             player.transform.position = spawnPoint;
             //remover isso depois (apenas para testes)
             GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
-            levelRenderer.RenderElements();
-            levelRenderer.RenderColliders(map.GetRoomsCollider());
             status = true;
         }
         catch (System.Exception e)
@@ -287,6 +239,66 @@ public class ProceduralMapBuilder : MonoBehaviour
             Debug.LogException(e);
         }
         return status;
+    }
+
+    /**
+     * Ler iniciadores para os tilemaps definidos dentro da pasta do bioma
+     * Executtinga apenas uma vez no inicio do object lifecycle
+     */
+    void ReadTilesRegistred(string path)
+    {
+        stylesIni.Clear();
+        TextAsset iniFile = Resources.Load<TextAsset>(FOLDER + path);
+        string[] lines = iniFile.text.Split('\n');
+        plainsSize = 0;
+        groundsSize = 0;
+        wallsSize = new int[8];
+        for (int i = 0; i < lines.Length; i++)
+        {
+            lines[i] = lines[i].TrimEnd('\r', '\n');
+            if (lines[i].Contains(GROUND))
+            {
+                groundsSize++;
+                if (lines[i].Contains(PLAIN))
+                {
+                    plainsSize++;
+                }
+            }
+            else if (lines[i].Contains(WALL))
+            {
+                switch (lines[i].Substring(5, 2).Replace("_", ""))
+                {
+                    case "SE":
+                        wallsSize[0]++;
+                        break;
+                    case "NE":
+                        wallsSize[1]++;
+                        break;
+                    case "SW":
+                        wallsSize[2]++;
+                        break;
+                    case "NW":
+                        wallsSize[3]++;
+                        break;
+                    case "S":
+                        wallsSize[4]++;
+                        break;
+                    case "E":
+                        wallsSize[5]++;
+                        break;
+                    case "W":
+                        wallsSize[6]++;
+                        break;
+                    case "N":
+                        wallsSize[7]++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        groundsSize -= plainsSize;
+        stylesIni.AddRange(lines);
     }
 
     /**
@@ -324,84 +336,68 @@ public class ProceduralMapBuilder : MonoBehaviour
     }
 
     /**
-     * Função de mapeamento para gerar posi��es das salas em uma grade
-     * de mapa para 4x4 matricial
+     * Função de mapeamento para gerar posicoes das salas em uma grade
+     * de mapa para 4x4 matricial (16 salas) utilizando corte de arestas
      */
     Task<int[]> GenerateMapIndexes()
     {
         int[] matrix = new int[numOfRooms];
         int index = 1, selected = 0;
-        List<int> conj = new List<int>();
-        List<int> escolhas = new List<int> { 0, 1, 2, 3 };
+        List<int> cuttingPool = new List<int>();
+        List<int> sideChoices = new List<int> { 0, 1, 2, 3 };
         bool ignore = false;
         pathRooms.Clear();
         origin = (origin != -1 ? origin : UnityEngine.Random.Range(0, 15));
         matrix[0] = origin;
-        conj.Add(origin);
-        int conjElement = conj[0], op = 0, realSize = 1;
+        cuttingPool.Add(origin);
+        int cuttingElement = cuttingPool[0], op = 0, realSize = 1;
         do
         {
-            op = escolhas[Random.Range(0, escolhas.Count)];
+            op = sideChoices[Random.Range(0, sideChoices.Count)];
             ignore = false;
             if (op == 0)
             {
-                if (!MATRIX_LEFT_ELEMENTS.Contains(conjElement))
-                {
-                    selected = conjElement - 1;
-                }
+                if (!MATRIX_LEFT_ELEMENTS.Contains(cuttingElement))
+                    selected = cuttingElement - 1;
                 else
-                {
                     ignore = true;
-                }
             }
             else if (op == 1)
             {
-                if (!MATRIX_RIGHT_ELEMENTS.Contains(conjElement))
-                {
-                    selected = conjElement + 1;
-                }
+                if (!MATRIX_RIGHT_ELEMENTS.Contains(cuttingElement))
+                    selected = cuttingElement + 1;
                 else
-                {
                     ignore = true;
-                }
             }
             else if (op == 2)
-            {
-                selected = conjElement + 4;
-            }
+                selected = cuttingElement + 4;
             else
-            {
-                selected = conjElement - 4;
-            }
+                selected = cuttingElement - 4;
             if (!ignore && index != numOfRooms && (selected >= 0 && selected <= 15) && !System.Array.Exists(matrix, element => element == selected))
             {
                 matrix[index] = selected;
-                conj.Add(selected);
-                pathRooms.Add((conjElement, selected));
-                conjElement = conj[Random.Range(0, conj.Count)];
+                cuttingPool.Add(selected);
+                pathRooms.Add((cuttingElement, selected));
+                cuttingElement = cuttingPool[Random.Range(0, cuttingPool.Count)];
                 realSize++;
-                if (conjElement == matrix[index] && escolhas.Count == 1)
-                {
-                    conjElement = selected;
-                }
+                if (cuttingElement == matrix[index] && sideChoices.Count == 1)
+                    cuttingElement = selected;
                 else
-                {
-                    escolhas = new List<int> { 0, 1, 2, 3 };
-                }
+                    sideChoices = new List<int> { 0, 1, 2, 3 };
                 index++;
             }
             else
             {
-                if (escolhas.Count > 0)
+                if (sideChoices.Count > 0)
                 {
-                    escolhas.Remove(op);
-                    if (escolhas.Count == 0)
+                    sideChoices.Remove(op);
+                    if (sideChoices.Count == 0)
                     {
-                        conj.Remove(conjElement);
-                        if (conj.Count > 0)
+                        cuttingPool.Remove(cuttingElement);
+                        if (cuttingPool.Count > 0)
                         {
-                            conjElement = conj[Random.Range(0, conj.Count)];
-                            escolhas = new List<int> { 0, 1, 2, 3 };
+                            cuttingElement = cuttingPool[Random.Range(0, cuttingPool.Count)];
+                            sideChoices = new List<int> { 0, 1, 2, 3 };
                         }
                         else
                         {
@@ -444,42 +440,18 @@ public class ProceduralMapBuilder : MonoBehaviour
             if (path.Item1 < path.Item2)
             {
                 diff = path.Item2 - path.Item1;
-                if (diff == 1)
-                {
-                    intersection = 1;
-                }
-                else if (diff == -1)
-                {
-                    intersection = 2;
-                }
-                else if (diff == 4)
-                {
-                    intersection = 3;
-                }
-                else if (diff == -4)
-                {
-                    intersection = 4;
-                }
+                intersection = (diff == 1) ? 1 :
+                               (diff == -1) ? 2 :
+                               (diff == 4) ? 3 :
+                               (diff == -4) ? 4 : 0;
             }
             else
             {
                 diff = path.Item1 - path.Item2;
-                if (diff == 1)
-                {
-                    intersection = 2;
-                }
-                else if (diff == -1)
-                {
-                    intersection = 1;
-                }
-                else if (diff == 4)
-                {
-                    intersection = 4;
-                }
-                else if (diff == -4)
-                {
-                    intersection = 3;
-                }
+                intersection = (diff == 1) ? 2 :
+                               (diff == -1) ? 1 :
+                               (diff == 4) ? 4 :
+                               (diff == -4) ? 3 : 0;
             }
             Room room1 = map.GetRoom(indexes.IndexOf(path.Item1));
             Room room2 = map.GetRoom(indexes.IndexOf(path.Item2));
@@ -524,14 +496,15 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     /**
      * Definir portas usando regras e listas de MAX definidos na classe ROOM
-     * Encontrar posições semelhantes para remover walls e adicionar grounds
+     * Encontrar posições semelhantes para remover walls e adicionar doors
+     * Pesquisando por interseções entre as salas que contem mesmo indice na ordem de inserção
      */
-    List<(int, int)> GetTargetDoors(List<(int, int)> max1, List<(int, int)> max2)
+    List<(int, int)> GetTargetDoors(List<(int, int)> maxElementsRoom1, List<(int, int)> maxElementsRoom2)
     {
         List<(int, int)> targets = new List<(int, int)>();
-        foreach ((int, int) target in max1)
+        foreach ((int, int) target in maxElementsRoom1)
         {
-            foreach ((int, int) target2 in max2)
+            foreach ((int, int) target2 in maxElementsRoom2)
             {
                 if (target.Item2 == target2.Item2)
                 {
@@ -542,5 +515,4 @@ public class ProceduralMapBuilder : MonoBehaviour
         }
         return targets;
     }
-
 }
