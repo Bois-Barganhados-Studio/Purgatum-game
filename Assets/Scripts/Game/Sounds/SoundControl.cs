@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,31 @@ public class SoundControl : MonoBehaviour
     public static float globalSongVolume = 1f;
 
     public AudioClip[] soundEffects;
-    public AudioClip[] songs;
+    public string[] soundEffectNames;
+
+
+    public AudioClip[] songs;    
+    public string[] songNames;
 
     private AudioSource audioSource  = null;
-
+    private AudioSource ambience  = null;
+    private AudioSource battleSong  = null;
     public void Start() {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+        ambience = gameObject.AddComponent<AudioSource>();
+        battleSong = gameObject.AddComponent<AudioSource>();
+        PlayAmbience();
+    }
+
+    public void PlaySoundEffect(string name)
+    {
+        int index = System.Array.IndexOf(soundEffectNames, name);
+        if (index < 0)
+        {
+            Debug.LogError("SoundEffect name not found: " + name);
+            return;
+        }
+        PlaySoundEffectAt(index, new Vector3(0, 0, 0));
     }
 
     public void PlaySoundEffect(int index)
@@ -30,6 +50,18 @@ public class SoundControl : MonoBehaviour
         }
 
         AudioSource.PlayClipAtPoint(soundEffects[index], position, globalSoundVolume);
+    }
+
+    public void PlaySong(string name, bool loop = false)
+    {
+        int index = System.Array.IndexOf(songNames, name);
+        if (index < 0)
+        {
+            Debug.LogError("SoundEffect name not found: " + name);
+            return;
+        }
+        print("PlaySong: " + name);
+        PlaySong(index, loop);
     }
 
     public void PlaySong(int index, bool loop = false)
@@ -52,4 +84,63 @@ public class SoundControl : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PlayAmbience(bool loop = true)
+    {
+        AudioClip ambienceClip = songs[0];
+        if (ambienceClip == null)
+        {
+            Debug.LogError("Ambience clip not found");
+            return;
+        }
+        if(!ambience.isPlaying){   
+        ambience.clip = ambienceClip;
+        ambience.volume = globalSongVolume;
+        ambience.loop = loop;
+        ambience.Play();
+        }
+    }
+
+    public void StopAmbience()
+    {
+        ambience.Stop();
+    }
+
+    public void PlayBattleSong(bool loop = true)
+    {
+        AudioClip battle = songs[1];
+        if (battle == null)
+        {
+            Debug.LogError("BattleSong clip not found");
+            return;
+        }
+        if(!battleSong.isPlaying){
+            battleSong.clip = battle;
+            battleSong.volume = 0.0f;
+            battleSong.loop = loop;
+            battleSong.Play();
+            StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, globalSongVolume));
+        }
+        
+    }
+    public void StopBattleSong()
+    {
+        StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, 0.0f));
+        //battleSong.Stop();
+    }
+
+}
+
+public static class FadeAudioSource {
+    public static IEnumerator StartFade(AudioSource audioSource, float duration, float targetVolume)
+    {
+        float currentTime = 0;
+        float start = audioSource.volume;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
+            yield return null;
+        }
+        yield break;
+    }
 }

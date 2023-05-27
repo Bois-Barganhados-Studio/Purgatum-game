@@ -14,35 +14,31 @@ public class MainMenuManager : MonoBehaviour
     public void Start()
     {
         soundController = FindObjectOfType<SoundControl>();
-        if (soundController != null)
-        {
-            soundController.PlaySong(menuSong, loop: true);
-        }
     }
 
     public void Jogar()
     {
-        soundController.PlaySoundEffect(0);
+        soundController.PlaySoundEffect("click");
         SceneManager.LoadScene(nomeCenaJogo);
     }
 
     public void AbrirOpcoes()
     {
-        soundController.PlaySoundEffect(0);
+        soundController.PlaySoundEffect("click");
         painelMenuInicial.SetActive(false);
         painelOpcoes.SetActive(true);
     }
 
     public void FecharOpcoes()
     {
-        soundController.PlaySoundEffect(0);
+        soundController.PlaySoundEffect("click");
         painelOpcoes.SetActive(false);
         painelMenuInicial.SetActive(true);
     }
 
     public void Sair()
     {
-        soundController.PlaySoundEffect(0);
+        soundController.PlaySoundEffect("click");
         Debug.Log("Sair do Jogo");
         Application.Quit();
     }
