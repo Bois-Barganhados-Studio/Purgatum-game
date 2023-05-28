@@ -9,7 +9,7 @@ public class RogueLikeController : MonoBehaviour
     [SerializeField] private int mainScene;
     [SerializeField] private int hubScene;
 
-
+    
     void Start()
     {
         rogueLogic = new RogueLogic();

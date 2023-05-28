@@ -5,7 +5,7 @@ using System;
 public class Layer{
     int numberOfInputs;     //Number of neurons that are inputing in the layer
     int numberOfOutputs;        //Number of neurons that are outputing in the layer
-    double learningRate;  //Learning rate of the layer
+    public double learningRate;  //Learning rate of the layer
 
     double[] inputs;    //Inputs of the layer
     public double[] outputs;   //Outputs of the layer

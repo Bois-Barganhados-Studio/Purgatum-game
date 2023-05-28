@@ -21,12 +21,24 @@ public class RogueLogic
     private int actualScene = 0, mainScene, hubScene;
     private LoadingScreen loading;
 
-    //private AI ia = null;
+    private RogueData rogueData = null;
 
-    public RogueLogic()
+    private AIController aiController = null;
+
+    public RogueLogic(RogueData rogueData = null)
     {
-        //ia = new AI();
+        if(rogueData == null)
+        {
+            rogueData = new RogueData();
+        }
+
         state = States.STARTING;
+        this.rogueData = rogueData;
+        this.rogueData.CreateSampleData();
+        aiController = new AIController();
+        aiController.SetData(this.rogueData);
+        aiController.Train();
+        aiController.TestAI();
     }
 
     #region Acoes do RogueLike
@@ -38,7 +50,9 @@ public class RogueLogic
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
         //gerar dados da IA ou passar dados gerados aqui!
-        mapBuilder.SetLevelData(new LevelData(numOfRooms: 4, roomStyle: 0, origin: 0, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 }));
+        WorldData wd = aiController.GenerateWorldParams();
+        Debug.Log("Gerando novo level proceduralmente: " + wd.ToString());
+        mapBuilder.SetLevelData(wd.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
         if (response)
         {
@@ -89,6 +103,13 @@ public class RogueLogic
         state = States.RESTART;
         return await NewLevel();
     }
+
+    public void InsertData(RogueData rogueData)
+    {
+        this.rogueData = rogueData;
+        aiController.SetData(this.rogueData);
+    }
+
     #endregion
 
     #region Metodos do RogueLike

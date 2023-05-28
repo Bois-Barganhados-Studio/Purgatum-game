@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SoundControl : MonoBehaviour
 {
-    public static float globalSoundVolume = 1f;
-    public static float globalSongVolume = 1f;
+    public static float globalSoundVolume = 0f;
+    public static float globalSongVolume = 0f;
 
     public AudioClip[] soundEffects;
     public string[] soundEffectNames;
