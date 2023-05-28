@@ -45,11 +45,11 @@ public class LevelData
     {
         if (numOfRooms > MAX_ROOMS)
         {
-            numOfRooms = MAX_ROOMS;
+            this.numOfRooms = MAX_ROOMS;
         }
         else if (numOfRooms < MIN_ROOMS)
         {
-            numOfRooms = MIN_ROOMS;
+            this.numOfRooms = MIN_ROOMS;
         }
         else
         {
@@ -61,11 +61,11 @@ public class LevelData
     {
         if (roomStyle > SZ_ROOM_STYLE)
         {
-            roomStyle = SZ_ROOM_STYLE - 1;
+            this.roomStyle = SZ_ROOM_STYLE - 1;
         }
         else if (roomStyle < 0)
         {
-            roomStyle = 0;
+            this.roomStyle = 0;
         }
         else
         {
@@ -77,11 +77,11 @@ public class LevelData
     {
         if (origin > MAX_ORIGIN)
         {
-            origin = MAX_ORIGIN;
+            this.origin = MAX_ORIGIN;
         }
         else if (origin < MIN_ORIGIN)
         {
-            origin = MIN_ORIGIN;
+            this.origin = MIN_ORIGIN;
         }
         else
         {
@@ -93,11 +93,11 @@ public class LevelData
     {
         if (randFactor < MIN_RAND_FACTOR)
         {
-            randFactor = MIN_RAND_FACTOR;
+            this.randFactor = MIN_RAND_FACTOR;
         }
         else if (randFactor > MAX_RAND_FACTOR)
         {
-            randFactor = MAX_RAND_FACTOR;
+            this.randFactor = MAX_RAND_FACTOR;
         }
         else
         {
