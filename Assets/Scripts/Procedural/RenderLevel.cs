@@ -6,6 +6,7 @@ using System.Collections.Generic;
  */
 public class RenderLevel
 {
+    #region Variaveis
     private static List<GameObject> level = new List<GameObject>();
     private static List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
     private static Dictionary<string, GameObject> loadedTiles = new Dictionary<string, GameObject>();
@@ -13,7 +14,9 @@ public class RenderLevel
     private const string ROOM_COLLIDER = "RoomCollider";
     public static GameObject renderLevels = null;
     public float x_min = 9999999, y_min = 9999999, x_max = -9999999, y_max = -9999999;
+    #endregion
 
+    #region Contrutores e getters
     public RenderLevel()
     {
         renderLevels = GameObject.Find("renderLevels");
@@ -28,6 +31,23 @@ public class RenderLevel
         return level[index];
     }
 
+    /**
+    * Adicionando chunks para load de objetos da pasta resources 
+    */
+    public void AddChunks(List<string> chunkPaths, List<Vector3> chunkPositions)
+    {
+        for (int i = 0; i < chunkPaths.Count; i++)
+        {
+            if (!loadedTiles.ContainsKey(chunkPaths[i]))
+            {
+                loadedTiles.Add(chunkPaths[i], Resources.Load<GameObject>(chunkPaths[i]));
+            }
+            chunks.Add((loadedTiles[chunkPaths[i]], chunkPositions[i]));
+        }
+    }
+    #endregion
+
+    #region Cleaners
     /**
      * Limpa os chunks salvos na memoria
      */
@@ -55,22 +75,9 @@ public class RenderLevel
         x_max = -9999999;
         y_max = -9999999;
     }
+    #endregion
 
-    /**
-     * Adicionando chunks para load de objetos da pasta resources 
-     */
-    public void AddChunks(List<string> chunkPaths, List<Vector3> chunkPositions)
-    {
-        for (int i = 0; i < chunkPaths.Count; i++)
-        {
-            if (!loadedTiles.ContainsKey(chunkPaths[i]))
-            {
-                loadedTiles.Add(chunkPaths[i], Resources.Load<GameObject>(chunkPaths[i]));
-            }
-            chunks.Add((loadedTiles[chunkPaths[i]], chunkPositions[i]));
-        }
-    }
-
+    #region Renderizadores
     /**
      * Renderizando elementos na tela do jogo
      */
@@ -89,11 +96,10 @@ public class RenderLevel
             GameObject.Instantiate(ROOM_COLLIDER_PREFAB, position, Quaternion.identity, renderLevels.transform);
         }
     }
-
     /**
-     * Renderiza��o do tilemap no object de renderLevels
+     * Renderizacao do tilemap no object de renderLevels
      */
-    GameObject GenGameTileMap(GameObject obj, Vector3 pos)
+    private GameObject GenGameTileMap(GameObject obj, Vector3 pos)
     {
         if (pos.x < x_min)
         {
@@ -115,4 +121,6 @@ public class RenderLevel
         tilemap.transform.parent = renderLevels.transform;
         return tilemap;
     }
+    #endregion
+    
 }
