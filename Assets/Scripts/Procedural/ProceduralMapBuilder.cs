@@ -9,11 +9,13 @@ using Pathfinding;
  */
 public class ProceduralMapBuilder : MonoBehaviour
 {
-    //pametros públicos para uso do script (valores default estão definidos)
+    #region Variaveis publicas
     public int[] blueprints;
-    //aberto para testes
     public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = -1;
-    //parametros internos do sistema de criação do mapa do jogo
+    [SerializeField] public bool debugWorld = false;
+    #endregion
+    
+    #region Variaveis de configuracao
     private RenderLevel levelRenderer = null;
     private BluePrintReader blueprintsReader = null;
     private static List<string> stylesIni = new List<string>();
@@ -30,28 +32,35 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly string[] styles = { "STONE" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
-    //utils
     private int groundCounter = 1;
     private int groundsSize = 0, plainsSize = 0;
-    int[] wallsSize = new int[8];
-
+    private int[] wallsSize = new int[8];
+    #endregion
+    
+    #region Funcoes de configuracao
     public ProceduralMapBuilder()
     {
-        Debug.Log("INICIANDO MUNDO PROCEDURAL...");
+        Debug.Log("Procedural Map Builder Started (Geração de mapas procedurais)");
         blueprintsReader = new BluePrintReader();
+    }
+
+    async void Awake()
+    {
+        await BootFields();
     }
 
     /**
     * Iniciar o novo nivel e limpar renderizador
     */
-    public async Task<bool> NewLevel(bool isStarting = false)
+    public async Task<bool> NewLevel(bool isBooting = true)
     {
         bool status = true;
-        if (!isStarting)
+        if (!isBooting)
         {
             levelRenderer.UnloadMemory();
             levelRenderer.ClearGameObject();
         }
+        Debug.Log("NEW LEVEL STARTED");
         if (await BuildTerrainAsync())
         {
             Debug.Log("MAPA GERADO COM SUCESSO");
@@ -70,19 +79,27 @@ public class ProceduralMapBuilder : MonoBehaviour
     /**
      * Iniciar a build do mapa na primeira run
      */
-    private async Task BuildMap()
+    private async Task BootFields()
     {
         player = GameObject.Find("Player");
         targetObject = GameObject.Find("Pathfinding");
         levelRenderer = new RenderLevel();
         ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());
-        if (await BuildTerrainAsync())
+        Debug.Log("Booted");
+        if (debugWorld)
         {
-            Debug.Log("MAPA GERADO COM SUCESSO");
-        }
-        else
-        {
-            Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+            Debug.Log("DEBUG STARTED");
+            if (await BuildTerrainAsync())
+            {
+                Debug.Log("DEBUG DE MAPA GERADO COM SUCESSO");
+            }
+            else
+            {
+                Debug.Log("ERRO AO GERAR MAPA DO JOGO");
+            }
+            CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
+                          (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
+                          (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
         }
     }
 
@@ -101,13 +118,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         ast.data.gridGraph.Scan();
     }
 
-    async void Start()
-    {
-        await BuildMap();
-        CenterGraph(new Vector3((levelRenderer.x_max + levelRenderer.x_min) / 2, (levelRenderer.y_max + levelRenderer.y_min) / 2, 0),
-                       (int)(2.6 * (Mathf.Abs(levelRenderer.x_max) + Mathf.Abs(levelRenderer.x_min))),
-                       (int)(2.6 * (Mathf.Abs(levelRenderer.y_max) + Mathf.Abs(levelRenderer.y_min))));
-    }
 
     /**
      * Codigo para escolher automaticamente blueprints aleatorias para o mapa
@@ -124,6 +134,7 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     /**
      * Novos parametros para o novo nivel do jogo
+     * @param levelData dados do nivel advindos da IA
      */
     public void SetLevelData(LevelData levelData)
     {
@@ -134,6 +145,9 @@ public class ProceduralMapBuilder : MonoBehaviour
         this.blueprints = levelData.GetBlueprints();
     }
 
+    #endregion
+
+    #region Build do mapa procedural
     /**
      * Inicia a construção de um nível da torre
      * @args roomStyle estilo da sala (STONE, GRASS, FIRE etc)
@@ -241,6 +255,9 @@ public class ProceduralMapBuilder : MonoBehaviour
         return status;
     }
 
+    #endregion
+
+    #region Numeradores de tiles
     /**
      * Ler iniciadores para os tilemaps definidos dentro da pasta do bioma
      * Executtinga apenas uma vez no inicio do object lifecycle
@@ -335,6 +352,9 @@ public class ProceduralMapBuilder : MonoBehaviour
          Random.Range(randFactor, wallsSize[direction]) : Random.Range(1, wallsSize[direction]);
     }
 
+    #endregion
+
+    #region Geracao de matrix do mapa
     /**
      * Função de mapeamento para gerar posicoes das salas em uma grade
      * de mapa para 4x4 matricial (16 salas) utilizando corte de arestas
@@ -414,6 +434,10 @@ public class ProceduralMapBuilder : MonoBehaviour
         numOfRooms = realSize;
         return Task.FromResult(matrix);
     }
+
+    #endregion
+
+    #region Geracao de portas
     /*
      * Gerar posição das portas nas salas globalmente
      * intersections: (RL - 1, LR - 2, DU - 3, UD - 4)
@@ -515,4 +539,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         }
         return targets;
     }
+
+    #endregion
 }

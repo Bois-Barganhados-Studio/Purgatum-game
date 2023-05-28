@@ -5,22 +5,27 @@ using System;
 
 public class BluePrintReader
 {
-    //constantes
+    #region Constantes
     private const string FOLDER = "Blueprints/";
     public const int SIZE_OF_CHUNK = 10;
     public static readonly int SIZE_OF_ROOM = 20;
     public const double W_PIXELS = 3.2;
     public const double H_PIXELS = 3.2;
-    private static readonly List<char> WALLS = new List<char> { (char)TileType.WALL_NW, (char)TileType.WALL_NE, (char)TileType.WALL_SW, (char)TileType.WALL_SE, (char)TileType.WALL_N, (char)TileType.WALL_E, (char)TileType.WALL_S, (char)TileType.WALL_W };
     public static readonly int BLUEPRINTS_TOTAL = 5;
     public static readonly int[] BPS = { 0, 1, 2, 3, 4, 5, 6 };
+    #endregion
+    
+    #region Variaveis privadas
+    private static readonly List<char> WALLS = new List<char> { (char)TileType.WALL_NW, (char)TileType.WALL_NE, (char)TileType.WALL_SW, (char)TileType.WALL_SE, (char)TileType.WALL_N, (char)TileType.WALL_E, (char)TileType.WALL_S, (char)TileType.WALL_W };
     private static readonly List<TextAsset> BPS_DATA = new List<TextAsset>();
     //utils
     private List<string> blueprint = new List<string>();
     private List<Room> rooms = new List<Room>();
     private Room decodedRoom;
     private int numOfRooms = 0;
-
+    #endregion
+    
+    #region enums
     public enum TileType
     {
         GROUND = 'g',
@@ -47,6 +52,9 @@ public class BluePrintReader
         EGG = 6,
     }
 
+    #endregion
+    
+    #region configs
     public BluePrintReader()
     { }
 
@@ -56,6 +64,13 @@ public class BluePrintReader
         this.numOfRooms = numOfRooms;
     }
 
+    public List<Room> RoomsLoaded()
+    {
+        return rooms;
+    }
+    #endregion
+    
+    #region Manipulacao de Blueprint
     /**
      * Define um blueprint para gerar a sala
      */
@@ -175,7 +190,9 @@ public class BluePrintReader
         }
         return status;
     }
-
+    #endregion
+    
+    #region Manipulacao de Salas
     /**
      * Gera um vector com a posição dos elementos dentro da sala
      */
@@ -183,11 +200,6 @@ public class BluePrintReader
     {
         (double, double) tuple = ToIsometric(indexOfLine, indexOfCol);
         return new Vector3((float)tuple.Item1, (float)tuple.Item2, 0);
-    }
-
-    public List<Room> RoomsLoaded()
-    {
-        return rooms;
     }
 
     /**
@@ -199,5 +211,5 @@ public class BluePrintReader
         double ny = (x * 0.25 * (H_PIXELS)) + (y * 0.25 * (H_PIXELS));
         return (nx, ny);
     }
-
+    #endregion
 }
