@@ -341,7 +341,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             groundCounter = 1;
         }
         //Debug.Log(plainsSize);
-        return (true, Random.Range(1, plainsSize + 1));
+        return (true, Random.Range(1, plainsSize));
     }
 
     /**
