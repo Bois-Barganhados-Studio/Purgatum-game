@@ -180,27 +180,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_36
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 128
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3555285b10ef94f4281457c15455f79c
-      internalID: -286557495
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: 32x32_37
       rect:
         serializedVersion: 2
@@ -1839,27 +1818,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_26
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 160
-        width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d7ffc3557cfe0694d868a8f201d52c1d
-      internalID: -953991905
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: 32x32_27
       rect:
         serializedVersion: 2
@@ -1881,6 +1839,27 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: 32x32_26
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36939dbc0a8503b4394827542b6d32d8
+      internalID: -953991905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: 32x32_35
       rect:
         serializedVersion: 2
@@ -1895,8 +1874,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4f1848429dcfb346818d6f50793b4c4
+      spriteID: d35bf392dac1f8b4ebaf9d6bfb0916c6
       internalID: 949714112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 32x32_36
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 128
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e780a57a55f193a4bbfd0a569aa3c4ba
+      internalID: -286557495
       vertices: []
       indices: 
       edges: []
