@@ -12,9 +12,9 @@ public class ProceduralMapBuilder : MonoBehaviour
     #region Variaveis publicas
     public int[] blueprints;
     public int roomStyle = 0, randFactor = 6, numOfRooms = 5, origin = -1;
-    [SerializeField] public bool debugWorld = false;
+    [SerializeField] public bool debugWorld = false, disableVariation = false;
     #endregion
-    
+
     #region Variaveis de configuracao
     private RenderLevel levelRenderer = null;
     private BluePrintReader blueprintsReader = null;
@@ -36,7 +36,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     private int groundsSize = 0, plainsSize = 0;
     private int[] wallsSize = new int[8];
     #endregion
-    
+
     #region Funcoes de configuracao
     public ProceduralMapBuilder()
     {
@@ -267,50 +267,53 @@ public class ProceduralMapBuilder : MonoBehaviour
         stylesIni.Clear();
         TextAsset iniFile = Resources.Load<TextAsset>(FOLDER + path);
         string[] lines = iniFile.text.Split('\n');
-        plainsSize = 0;
-        groundsSize = 0;
-        wallsSize = new int[8];
+        plainsSize = 1;
+        groundsSize = 1;
+        wallsSize = new int[8]{0,0,0,0,0,0,0,0};
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i] = lines[i].TrimEnd('\r', '\n');
-            if (lines[i].Contains(GROUND))
+            if (!disableVariation)
             {
-                groundsSize++;
-                if (lines[i].Contains(PLAIN))
+                if (lines[i].Contains(GROUND))
                 {
-                    plainsSize++;
+                    groundsSize++;
+                    if (lines[i].Contains(PLAIN))
+                    {
+                        plainsSize++;
+                    }
                 }
-            }
-            else if (lines[i].Contains(WALL))
-            {
-                switch (lines[i].Substring(5, 2).Replace("_", ""))
+                else if (lines[i].Contains(WALL))
                 {
-                    case "SE":
-                        wallsSize[0]++;
-                        break;
-                    case "NE":
-                        wallsSize[1]++;
-                        break;
-                    case "SW":
-                        wallsSize[2]++;
-                        break;
-                    case "NW":
-                        wallsSize[3]++;
-                        break;
-                    case "S":
-                        wallsSize[4]++;
-                        break;
-                    case "E":
-                        wallsSize[5]++;
-                        break;
-                    case "W":
-                        wallsSize[6]++;
-                        break;
-                    case "N":
-                        wallsSize[7]++;
-                        break;
-                    default:
-                        break;
+                    switch (lines[i].Substring(5, 2).Replace("_", ""))
+                    {
+                        case "SE":
+                            wallsSize[0]++;
+                            break;
+                        case "NE":
+                            wallsSize[1]++;
+                            break;
+                        case "SW":
+                            wallsSize[2]++;
+                            break;
+                        case "NW":
+                            wallsSize[3]++;
+                            break;
+                        case "S":
+                            wallsSize[4]++;
+                            break;
+                        case "E":
+                            wallsSize[5]++;
+                            break;
+                        case "W":
+                            wallsSize[6]++;
+                            break;
+                        case "N":
+                            wallsSize[7]++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -338,7 +341,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             groundCounter = 1;
         }
         //Debug.Log(plainsSize);
-        return (true, Random.Range(1, plainsSize + 1));
+        return (true, Random.Range(1, plainsSize));
     }
 
     /**
