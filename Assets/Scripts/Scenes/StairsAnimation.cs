@@ -4,53 +4,44 @@ using UnityEngine;
 
 public class StairsAnimation : MonoBehaviour
 {
-    public float speed = 1.0f;
-    public float movementDistance = 2.0f; // Adjust the distance the stairs will move
+    public float offsetX = 1.0f;
+    public float offsetY = 1.0f;
+    public float movementSpeed = 1.0f;
 
     private Vector3 originalPosition;
-    private float movementProgress = 0.0f;
-    private bool isMovingDown = true;
 
     private void Start()
     {
+
         originalPosition = transform.position;
+        StartCoroutine(LoopMovement());
     }
 
-    private void Update()
+    private IEnumerator LoopMovement()
     {
-        if (isMovingDown)
+        while (true)
         {
-            movementProgress += speed * Time.deltaTime;
+            Vector3 targetPosition = originalPosition + new Vector3(offsetX, offsetY, 0f);
 
-            // Calculate the new position using Lerp
-            Vector3 newPosition = originalPosition + Vector3.down * movementDistance * movementProgress +
-                Vector3.left * movementDistance * movementProgress;
-
-            // Apply the new position
-            transform.position = newPosition;
-
-            if (movementProgress >= 1.0f)
-            {
-                isMovingDown = false;
-                movementProgress = 0.0f;
-            }
+            yield return MoveObject(targetPosition);
+            transform.position = originalPosition;
         }
-        else
+    }
+
+    private IEnumerator MoveObject(Vector3 targetPosition)
+    {
+        float distance = Vector3.Distance(transform.position, targetPosition);
+        float duration = distance / movementSpeed;
+        float startTime = Time.time;
+        Vector3 startPosition = transform.position;
+
+        while (Time.time < startTime + duration)
         {
-            movementProgress += speed * Time.deltaTime;
-
-            // Calculate the new position using Lerp
-            Vector3 newPosition = originalPosition + Vector3.up * movementDistance * movementProgress +
-                Vector3.right * movementDistance * movementProgress;
-
-            // Apply the new position
-            transform.position = newPosition;
-
-            if (movementProgress >= 1.0f)
-            {
-                isMovingDown = true;
-                movementProgress = 0.0f;
-            }
+            float t = (Time.time - startTime) / duration;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            yield return null;
         }
+
+        transform.position = targetPosition;
     }
 }
