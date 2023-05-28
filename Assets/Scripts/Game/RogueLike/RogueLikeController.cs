@@ -12,11 +12,10 @@ public class RogueLikeController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("RogueLikeController iniciou");
         rogueLogic = new RogueLogic();
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
-        //carregar dados da IA e estatisticas do jogador da memoria
+        rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
     }
 
     private void Awake()
@@ -32,12 +31,30 @@ public class RogueLikeController : MonoBehaviour
         }
     }
 
+    #region Eventos
+
     public void OnGameStart()
     {
-        Debug.Log("Iniciando o jogo");
+        rogueLogic.DoAction();
+    }
+    public void OnGoingToNextLevel()
+    {
+        rogueLogic.SetState(RogueLogic.States.NEW_LEVEL);
         rogueLogic.DoAction();
     }
 
-    //Criar eventos para cada ação do jogador
+    public void OnGameRestart()
+    {
+        rogueLogic.SetState(RogueLogic.States.RESTART);
+        rogueLogic.DoAction();
+    }
+
+    public void OnGameExit()
+    {
+        rogueLogic.SetState(RogueLogic.States.EXIT);
+        rogueLogic.DoAction();
+    }
+
+    #endregion
 
 }

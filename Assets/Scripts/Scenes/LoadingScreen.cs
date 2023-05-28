@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public delegate void SceneLoadedDelegate(Scene scene, LoadSceneMode mode);
+
 public class LoadingScreen : MonoBehaviour
 {
     public GameObject LoadingScreenPanel;
@@ -11,17 +13,17 @@ public class LoadingScreen : MonoBehaviour
     public float speed;
     public float delayDuration = 10f;
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void LoadScene(int sceneId)
     {
         StartCoroutine(LoadSceneAsync(sceneId));
     }
 
-    IEnumerator LoadSceneAsync(int sceneId)
+    public void LoadScene(int sceneId, SceneLoadedDelegate onSceneLoaded)
+    {
+        StartCoroutine(LoadSceneAsync(sceneId, onSceneLoaded));
+    }
+
+    IEnumerator LoadSceneAsync(int sceneId, SceneLoadedDelegate onSceneLoaded = null)
     {
         LoadingScreenPanel.SetActive(true);
 
@@ -29,6 +31,13 @@ public class LoadingScreen : MonoBehaviour
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
 
+        if (onSceneLoaded != null)
+        {
+            operation.completed += (asyncOperation) =>
+            {
+                onSceneLoaded?.Invoke(SceneManager.GetSceneByBuildIndex(sceneId), LoadSceneMode.Single);
+            };
+        }
 
         while (!operation.isDone)
         {
