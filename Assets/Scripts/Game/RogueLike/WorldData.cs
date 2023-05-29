@@ -4,18 +4,18 @@ using UnityEngine;
 using System;
 public class WorldData
 {
-    public const int MAX_ENEMY_TYPE = 3, MIN_ENEMY_TYPE = 0, NUMBER_OF_INPUTS = 6, NUMBER_OF_BLUEPRINTS = 7;
+    public const int MAX_ENEMY_TYPE = 3, MIN_ENEMY_TYPE = 0, NUMBER_OF_INPUTS = 6, NUMBER_OF_BLUEPRINTS = 7, QTD_OF_ENEMYS = 4;
     public LevelData levelData;
-    public int enemyType;
+    public int[] enemyType;
 
 
     public WorldData()
     {
         SetLevelData(levelData = new LevelData(numOfRooms: 4, roomStyle: 0, origin: 0, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 }));
-        SetEnemyType(0);
+        SetEnemyType(new int[] { 0, 0, 0, 0 });
     }
 
-    public WorldData(LevelData levelData, int enemyType)
+    public WorldData(LevelData levelData, int[] enemyType)
     {
         SetLevelData(levelData);
         SetEnemyType(enemyType);
@@ -30,19 +30,16 @@ public class WorldData
         this.levelData = levelData;
     }
 
-    public int GetEnemyType()
+    public int[] GetEnemyType()
     {
         return enemyType;
     }
-    public void SetEnemyType(int enemyType)
+    public void SetEnemyType(int[] enemyType)
     {
-        if (enemyType > MAX_ENEMY_TYPE)
+        //Fitra os valores para o intervalo permitido
+        for(int i = 0; i < enemyType.Length; i++)
         {
-            enemyType = MAX_ENEMY_TYPE;
-        }
-        else if (enemyType < MIN_ENEMY_TYPE)
-        {
-            enemyType = MIN_ENEMY_TYPE;
+            enemyType[i] = enemyType[i] % QTD_OF_ENEMYS;
         }
         
         this.enemyType = enemyType;
@@ -75,7 +72,15 @@ public class WorldData
 
         levelData.SetBlueprints(blueprint);
 
-        WorldData worldData = new WorldData(levelData, (int)doubleArray[5]);
+        int[] enemyType = new int[QTD_OF_ENEMYS];
+        for (int i = 0; i < QTD_OF_ENEMYS; i++)
+        {
+           enemyType[i] = ((int)doubleArray[5] % 10) -1;
+            doubleArray[5] /= 10;
+
+        }
+
+        WorldData worldData = new WorldData(levelData, enemyType);
 
         return worldData;
 
@@ -95,7 +100,12 @@ public class WorldData
 
     public override string ToString()
     {
-        return "LevelData: " + levelData.ToString() + ", EnemyType: " + enemyType;
+        string s = "LevelData: " + levelData.ToString() + ", EnemyType: ";
+        for(int i = 0; i < enemyType.Length; i++)
+        {
+            s += enemyType[i] + ", ";
+        }
+        return s;
     }
     
 }

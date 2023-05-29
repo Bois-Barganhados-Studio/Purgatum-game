@@ -46,35 +46,35 @@ public class AIController
 
 
         #region Cria os dados de teste
-        sample[0] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 0, origin: 4, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 }), 0);
+        sample[0] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 0, origin: 4, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 }), new int[] { 0, 1, 1, 3 });
         sampleResult[0] = false;
-        sample[1] = new WorldData(new LevelData(numOfRooms: 5, roomStyle: 1, origin: 3, randFactor: 1, blueprints: new int[] { 4, 3, 2, 1, 5 }), 2);
+        sample[1] = new WorldData(new LevelData(numOfRooms: 5, roomStyle: 1, origin: 3, randFactor: 0, blueprints: new int[] { 4, 3, 2, 1, 5 }), new int[] { 4, 2, 0, 1 });
         sampleResult[1] = true;
-        sample[2] = new WorldData(new LevelData(numOfRooms: 8, roomStyle: 2, origin: 3, randFactor: 3, blueprints: new int[] { 1, 1, 4, 3, 2, 3, 5, 1 }), 1);
+        sample[2] = new WorldData(new LevelData(numOfRooms: 8, roomStyle: 2, origin: 3, randFactor: 0, blueprints: new int[] { 1, 1, 4, 3, 2, 3, 5, 1 }), new int[] { 4, 1, 1, 3 });
         sampleResult[2] = false;
-        sample[3] = new WorldData(new LevelData(numOfRooms: 3, roomStyle: 3, origin: 3, randFactor: 5, blueprints: new int[] { 0, 1, 0 }), 1);
+        sample[3] = new WorldData(new LevelData(numOfRooms: 3, roomStyle: 3, origin: 3, randFactor: 0, blueprints: new int[] { 0, 1, 0 }), new int[] { 0, 1, 0, 0 });
         sampleResult[3] = true;
-        sample[4] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 4, origin: 2, randFactor: 6, blueprints: new int[] { 1, 4, 2, 0 }), 1);
+        sample[4] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 4, origin: 2, randFactor: 0, blueprints: new int[] { 1, 4, 2, 0 }), new int[] { 2, 3, 1, 1 });
         sampleResult[4] = false;
-        sample[5] = new WorldData(new LevelData(numOfRooms: 5, roomStyle: 5, origin: 1, randFactor: 1, blueprints: new int[] { 0, 1, 0, 1, 0 }), 3);
+        sample[5] = new WorldData(new LevelData(numOfRooms: 5, roomStyle: 5, origin: 1, randFactor: 0, blueprints: new int[] { 0, 1, 0, 1, 0 }), new int[] { 1, 2, 1, 1 });
         sampleResult[5] = false;
-        sample[6] = new WorldData(new LevelData(numOfRooms: 9, roomStyle: 2, origin: 4, randFactor: 2, blueprints: new int[] { 0, 2, 3, 4, 1, 0, 5, 1, 2 }), 1);
+        sample[6] = new WorldData(new LevelData(numOfRooms: 9, roomStyle: 2, origin: 4, randFactor: 0, blueprints: new int[] { 0, 2, 3, 4, 1, 0, 5, 1, 2 }), new int[] { 1, 2, 2, 3 });
         sampleResult[6] = false;
-        sample[7] = new WorldData(new LevelData(numOfRooms: 2, roomStyle: 2, origin: 5, randFactor: 4, blueprints: new int[] { 0, 5 }), 1);
+        sample[7] = new WorldData(new LevelData(numOfRooms: 2, roomStyle: 2, origin: 5, randFactor: 0, blueprints: new int[] { 0, 5 }), new int[] { 2, 3, 4, 3 });
         sampleResult[7] = true;
-        sample[8] = new WorldData(new LevelData(numOfRooms: 3, roomStyle: 3, origin: 6, randFactor: 3, blueprints: new int[] { 2, 4, 3 }), 3);
+        sample[8] = new WorldData(new LevelData(numOfRooms: 3, roomStyle: 3, origin: 6, randFactor: 0, blueprints: new int[] { 2, 4, 3 }), new int[] { 1, 2, 3, 4 });
         sampleResult[8] = true;
-        sample[9] = new WorldData(new LevelData(numOfRooms: 7, roomStyle: 4, origin: 7, randFactor: 2, blueprints: new int[] { 2, 2, 3, 1, 4, 5, 1 }), 5);
+        sample[9] = new WorldData(new LevelData(numOfRooms: 7, roomStyle: 4, origin: 7, randFactor: 0, blueprints: new int[] { 2, 2, 3, 1, 4, 5, 1 }), new int[] { 2, 2, 2, 3 });
         sampleResult[9] = true;
-        sample[10] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 1, origin: 3, randFactor: 6, blueprints: new int[] { 1, 2, 3, 5 }), 4);
+        sample[10] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 1, origin: 3, randFactor: 0, blueprints: new int[] { 1, 2, 3, 5 }), new int[] { 1, 1, 1, 1 });
         sampleResult[10] = false;
-        sample[11] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 2, origin: 4, randFactor: 3, blueprints: new int[] { 4, 3, 2, 1 }), 3);
+        sample[11] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 2, origin: 4, randFactor: 0, blueprints: new int[] { 4, 3, 2, 1 }), new int[] { 4, 1, 2, 4 });
         sampleResult[11] = false;
-        sample[12] = new WorldData(new LevelData(numOfRooms: 6, roomStyle: 3, origin: 5, randFactor: 2, blueprints: new int[] { 3, 3, 3, 2, 1, 5 }), 3);
+        sample[12] = new WorldData(new LevelData(numOfRooms: 6, roomStyle: 3, origin: 5, randFactor: 0, blueprints: new int[] { 3, 3, 3, 2, 1, 5 }), new int[] { 4, 3, 2, 3 });
         sampleResult[12] = true;
-        sample[13] = new WorldData(new LevelData(numOfRooms: 7, roomStyle: 5, origin: 9, randFactor: 0, blueprints: new int[] { 3, 2, 1, 1, 1, 2, 4 }), 0);
+        sample[13] = new WorldData(new LevelData(numOfRooms: 7, roomStyle: 5, origin: 9, randFactor: 0, blueprints: new int[] { 3, 2, 1, 1, 1, 2, 4 }), new int[] { 3, 2, 4, 4 });
         sampleResult[13] = true;
-        sample[14] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 3, origin: 7, randFactor: 0, blueprints: new int[] { 0, 0, 0, 0 }), 2);
+        sample[14] = new WorldData(new LevelData(numOfRooms: 4, roomStyle: 3, origin: 7, randFactor: 0, blueprints: new int[] { 0, 0, 0, 0 }), new int[] { 2, 3, 4, 4 });
         sampleResult[14] = false;
 
         #endregion
@@ -164,24 +164,25 @@ public class AIController
         //Converte o fator de aleatoriedade
         worldDataDouble[3] = (double)(worldData.levelData.GetRandFactor());
         //Converte a lista de blueprints
-        worldDataDouble[4] = this.BlueprintArrayToDouble(worldData.levelData.GetBlueprints());
+        worldDataDouble[4] = this.intArrayToDouble(worldData.levelData.GetBlueprints());
         //Converte o tipo de inimigo
-        worldDataDouble[5] = (double)(worldData.enemyType);
+        worldDataDouble[5] = this.intArrayToDouble(worldData.enemyType);
 
         return worldDataDouble;
     }
 
     //Converte a lista de blueprints para um dado em double
-    private double BlueprintArrayToDouble(int[] blueprints)
+    private double intArrayToDouble(int[] intArray)
     {
-        double blueprint = 0;
-        for (int i = blueprints.Length - 1; i >= 0; i--)
+        double arrayUnificado = 0;
+        for (int i = intArray.Length - 1; i >= 0; i--)
         {
-            blueprint += (1 + (double)(blueprints[i])) * MathF.Pow(10, blueprints.Length - i - 1);
+            arrayUnificado += (1 + (double)(intArray[i])) * MathF.Pow(10, intArray.Length - i - 1);
         }
-        blueprint /= MathF.Pow(10, blueprints.Length);
-        return blueprint;
+        arrayUnificado /= MathF.Pow(10, intArray.Length);
+        return arrayUnificado;
     }
+
 
     //Converte os dados de criação do mundo para um dados em double
     private void convertPlayerRunsData()
@@ -287,17 +288,6 @@ public class AIController
 
         double[][] input = this.normalizeData(playerRunsDataArray);
 
-        //imprime os dados normalizados
-        // for (int i = 0; i < input.Length; i++)
-        // {
-        //     string s = "Input: ";
-        //     for (int j = 0; j < input[i].Length; j++)
-        //     {
-        //         s += input[i][j] + " ";
-        //     }
-        //     Debug.Log(s);
-        // }
-
         neuralNetwork.train(input, output, log: true);
     }
 
@@ -337,7 +327,7 @@ public class AIController
 
     #region GenerateParams
 
-    
+
     public WorldData GenerateRandomParams()
     {
         LevelData levelData = new LevelData(numOfRooms: 4, roomStyle: 0, origin: 0, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 });
@@ -354,7 +344,12 @@ public class AIController
         levelData.SetBlueprints(blueprints);
         System.Console.Write("Params = NumOfRooms: " + levelData.GetNumOfRooms() + ", RoomStyle: " + levelData.GetRoomStyle() + ", Origin: " + levelData.GetOrigin() + ", RandFactor: " + levelData.GetRandFactor() + ", Blueprints: " + string.Join(", ", blueprints));
 
-        int enemyType = 0;
+        int[] enemyType = new int[WorldData.QTD_OF_ENEMYS];
+        for (int i = 0; i < enemyType.Length; i++)
+        {
+            enemyType[i] = UnityEngine.Random.Range(WorldData.MIN_ENEMY_TYPE, WorldData.MAX_ENEMY_TYPE + 1);
+        }
+
         WorldData worldData = new WorldData(levelData, enemyType);
         return worldData;
     }
@@ -364,7 +359,7 @@ public class AIController
         WorldData worldData = new WorldData();
         int attempt = 0;
 
-        while(attempt < MAX_GENERATIONS_ATTEMPTS)
+        while (attempt < MAX_GENERATIONS_ATTEMPTS)
         {
             shuffle(playerDeathsDataArray);
             worldData = this.GetNewWorldParams();
@@ -385,7 +380,7 @@ public class AIController
             }
 
             double result = neuralNetwork.FeedFoward(worldDataArray)[0];
-            //SE MENOR QUE 0.5, OU SEJA {{{PRÓXIMO DE ZEEEEROOOOO}}} É PQ ELE VAI MORRER
+            //Se menor que 0.5, prevê que o player deve morrer
             if (result < 0.5)
             {
                 Debug.Log("Player should run: " + result + " attempt: " + attempt);
@@ -393,10 +388,9 @@ public class AIController
             }
             else
             {
-                Debug.Log("Player should not run: " + result);
-                if(attempt == MAX_GENERATIONS_ATTEMPTS - 1)
+                if (attempt == MAX_GENERATIONS_ATTEMPTS - 1)
                 {
-                    Debug.Log("Player should not run: " + result + " attempt: " + attempt);
+                    Debug.Log("World randomly generated :(");
                     worldData = this.GenerateRandomParams();
                 }
             }
@@ -412,26 +406,28 @@ public class AIController
         //Filtra Room Style valor 1 do array
         int maxRoomStyle = 0;
         int minRoomStyle = 0;
-        if(worldData.GetLevelData().GetRoomStyle() < minRoomStyle)
+        if (worldData.GetLevelData().GetRoomStyle() < minRoomStyle)
         {
             worldData.GetLevelData().SetRoomStyle(minRoomStyle);
         }
-        else if(worldData.GetLevelData().GetRoomStyle() > maxRoomStyle)
+        else if (worldData.GetLevelData().GetRoomStyle() > maxRoomStyle)
         {
             worldData.GetLevelData().SetRoomStyle(maxRoomStyle);
         }
 
-        int maxEnemyType = 0;
-        int minEnemyType = 0;
-        if(worldData.GetEnemyType() < minEnemyType)
+        //Filtra os tipos de inimigos
+        int[] enemyType = worldData.GetEnemyType();
+        for (int i = 0; i < enemyType.Length; i++)
         {
-            worldData.SetEnemyType(minEnemyType);
+            if (enemyType[i] < WorldData.MIN_ENEMY_TYPE)
+            {
+                enemyType[i] = WorldData.MIN_ENEMY_TYPE;
+            }
+            else if (enemyType[i] > WorldData.MAX_ENEMY_TYPE)
+            {
+                enemyType[i] = WorldData.MAX_ENEMY_TYPE;
+            }
         }
-        else if(worldData.GetEnemyType() > maxEnemyType)
-        {
-            worldData.SetEnemyType(maxEnemyType);
-        }
-
 
 
         //Filtra as blueprints
@@ -456,7 +452,7 @@ public class AIController
         levelData.SetRandFactor((int)this.getMean(playerDeathsDataArray, 3));
         levelData.SetBlueprints(this.desconvertBlueprint(this.getMean(playerDeathsDataArray, 4), levelData.GetNumOfRooms()));
         worldData.SetLevelData(levelData);
-        worldData.SetEnemyType((int)this.getMode(playerDeathsDataArray, 5));
+        worldData.SetEnemyType(this.desconvertEnemyType(this.getMean(playerDeathsDataArray, 5)));
 
         return worldData;
     }
@@ -544,6 +540,19 @@ public class AIController
             blueprint = blueprint - ((int)blueprint);       //pega a parte decimal
         }
         return blueprintArray;
+    }
+
+    private int[] desconvertEnemyType(double enemyType)
+    {
+        int[] enemyTypeArray = new int[WorldData.QTD_OF_ENEMYS];
+        enemyType = (double)MathF.Round((float)enemyType, WorldData.QTD_OF_ENEMYS);
+        for (int i = 0; i < WorldData.QTD_OF_ENEMYS; i++)
+        {
+            enemyType = (enemyType * 10) % (WorldData.QTD_OF_ENEMYS);
+            enemyTypeArray[i] = (int)enemyType;
+            enemyType = enemyType - ((int)enemyType);       //pega a parte decimal
+        }
+        return enemyTypeArray;
     }
 
     #endregion
