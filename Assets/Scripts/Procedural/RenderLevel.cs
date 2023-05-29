@@ -102,7 +102,7 @@ public class RenderLevel
             {
                 Spawner spawn = level[spawnPoint].AddComponent<Spawner>();
                 spawn.SetEnemyType(enemiesType[Random.Range(0, enemiesType.Count)]);
-                spawn.SetSpawnTime(2f);
+                spawn.SetSpawnTime(0.1f);
                 spawnsCreated.Add(spawn);
             }
             spawnsCreatedPerRoom.Add(entry.Key, spawnsCreated);

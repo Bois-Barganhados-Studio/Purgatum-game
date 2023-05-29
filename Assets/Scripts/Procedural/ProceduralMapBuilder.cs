@@ -29,8 +29,8 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const float G_NODE_SIZE = 0.4f;
     private const string FOLDER = "Maps/";
     private const int DOORS_LIMIT = 10, DELAY_SPAWN = 30;
-    private static readonly string[] styles = { "STONE" };
-    private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
+    private static readonly string[] styles = { "STONE", "FIRE" };
+    private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR_VERTICAL = "DOOR_VERTICAL", DOOR_HORIZONTAL = "DOOR_HORIZONTAL", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
     private int groundCounter = 1;
     private int groundsSize = 0, plainsSize = 0;
@@ -520,19 +520,55 @@ public class ProceduralMapBuilder : MonoBehaviour
                 for (int i = divider; i < targets.Count - divider; i++)
                 {
                     (int, int) block = targets[i];
-                    room1.UpdateBlock(DOOR, block.Item1);
-                    room2.UpdateBlock(DOOR, block.Item2);
+                    if (intersection == 1)
+                    {
+                        room1.UpdateBlock(DOOR_VERTICAL, block.Item1);
+                        room2.UpdateBlock(GROUND, block.Item2);
+
+                    }
+                    else if (intersection == 2)
+                    {
+                        room1.UpdateBlock(GROUND, block.Item1);
+                        room2.UpdateBlock(DOOR_VERTICAL, block.Item2);
+                    }
+                    else if (intersection == 3)
+                    {
+                        room1.UpdateBlock(GROUND, block.Item1);
+                        room2.UpdateBlock(DOOR_HORIZONTAL, block.Item2);
+                    }
+                    else
+                    {
+                        room1.UpdateBlock(DOOR_HORIZONTAL, block.Item1);
+                        room2.UpdateBlock(GROUND, block.Item2);
+                    }
                 }
             }
             else
             {
                 foreach ((int, int) block in targets)
                 {
-                    room1.UpdateBlock(DOOR, block.Item1);
-                    room2.UpdateBlock(DOOR, block.Item2);
+                    if (intersection == 1)
+                    {
+                        room1.UpdateBlock(DOOR_VERTICAL, block.Item1);
+                        room2.UpdateBlock(GROUND, block.Item2);
+                    }
+                    else if (intersection == 2)
+                    {
+                        room1.UpdateBlock(GROUND, block.Item1);
+                        room2.UpdateBlock(DOOR_VERTICAL, block.Item2);
+                    }
+                    else if (intersection == 3)
+                    {
+                        room1.UpdateBlock(GROUND, block.Item1);
+                        room2.UpdateBlock(DOOR_HORIZONTAL, block.Item2);
+                    }
+                    else
+                    {
+                        room1.UpdateBlock(DOOR_HORIZONTAL, block.Item1);
+                        room2.UpdateBlock(GROUND, block.Item2);
+                    }
                 }
             }
-
         }
     }
 

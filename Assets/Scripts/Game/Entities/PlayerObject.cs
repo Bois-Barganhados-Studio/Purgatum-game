@@ -52,7 +52,7 @@ public class PlayerObject : MonoBehaviour
     {
         if(player.CurrentMoveState == Entity.MoveState.MOVING)
         {
-            Debug.Log("Player is moving");
+            //Debug.Log("Player is moving");
             player.soundController.PlaySoundEffect("player_step");            
         }
     }

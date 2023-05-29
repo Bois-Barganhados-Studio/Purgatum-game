@@ -12,6 +12,9 @@ public class Spawner : MonoBehaviour
     private bool isSpawning = false;
     public event System.Action<Spawner> OnSpawnsFinished;
 
+    private const int MAX_RANGE = 15, MIN_RANGE = -15;
+    private Vector2 rangeEnemyPos = Vector2.zero;
+
     #endregion
 
     #region Controladores
@@ -53,8 +56,14 @@ public class Spawner : MonoBehaviour
         while (counter != waves)
         {
             yield return new WaitForSeconds(spawnTime);
-            int sz = RenderEnemies(spawnLogic.GetSpawnableEnemies());
-            yield return StartCoroutine(WaitForEnemiesDestroyed(transform.childCount - sz));
+            List<GameObject> enemies = spawnLogic.GetSpawnableEnemies();
+            int sz = enemies.Count;
+            foreach (GameObject enemy in enemies)
+            {
+                RenderEnemy(enemy);
+                yield return new WaitForSeconds(spawnTime);
+            }
+            yield return StartCoroutine(WaitForEnemiesDestroyed());
             counter++;
             Debug.Log("SPAWNING MORE ENEMIES. WAVES: " + counter + " / " + waves);
         }
@@ -64,9 +73,9 @@ public class Spawner : MonoBehaviour
         Destroy(this);
     }
 
-    private IEnumerator WaitForEnemiesDestroyed(int removeCount = 1)
+    private IEnumerator WaitForEnemiesDestroyed()
     {
-        while (transform.childCount - removeCount > 0)
+        while (transform.childCount - 1 > 0)
         {
             yield return null;
         }
@@ -76,15 +85,10 @@ public class Spawner : MonoBehaviour
     //<sumary>
     // Renderiza o inimigo individual na tela
     //</sumary>
-    private int RenderEnemies(List<GameObject> enemies)
+    private void RenderEnemy(GameObject enemy)
     {
-        // float multiplier = 0.2f;
-        foreach (GameObject enemy in enemies)
-        {
-            GameObject.Instantiate(enemy, spawnPosition, Quaternion.identity, transform);
-            //multiplier += 0.1f;
-        }
-        return enemies.Count;
+        rangeEnemyPos = new Vector2((Random.Range(MIN_RANGE, MAX_RANGE) / 10), (Random.Range(MIN_RANGE, MAX_RANGE) / 10));
+        GameObject.Instantiate(enemy, spawnPosition + rangeEnemyPos, Quaternion.identity, transform);
     }
     #endregion
 

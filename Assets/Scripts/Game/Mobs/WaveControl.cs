@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaveControl
 {
     #region Variaveis/Gettters/Setters
-    public static readonly int MAX_WAVES = 5, MIN_WAVES = 1,
+    public static readonly int MAX_WAVES = 6, MIN_WAVES = 2,
     MIN_ENEMIES = 4, MAX_ENEMIES = 12;
     private int currentWave = 1;
     private static List<GameObject> loadedEnemiesObjects = new List<GameObject>();
