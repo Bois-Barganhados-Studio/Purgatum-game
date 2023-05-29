@@ -10,6 +10,9 @@ public class RenderLevel
     private static List<GameObject> level = new List<GameObject>();
     private static List<(GameObject, Vector3)> chunks = new List<(GameObject, Vector3)>();
     private static Dictionary<string, GameObject> loadedTiles = new Dictionary<string, GameObject>();
+    private Dictionary<int, List<int>> spawnsPerRoom;
+    private Dictionary<int, List<Spawner>> spawnsCreatedPerRoom = new Dictionary<int, List<Spawner>>();
+    private static List<Spawner> spawnsCreated = new List<Spawner>();
     public static GameObject ROOM_COLLIDER_PREFAB = null;
     private const string ROOM_COLLIDER = "RoomCollider";
     public static GameObject renderLevels = null;
@@ -23,12 +26,9 @@ public class RenderLevel
         ROOM_COLLIDER_PREFAB = Resources.Load<GameObject>("Maps/" + ROOM_COLLIDER);
     }
 
-    /*
-    * Busca o gameobject da Sala em questão
-    */
-    public static GameObject GetRoomObject(int index)
+    public void SetSpawnsPerRoom(Dictionary<int, List<int>> spawnsPerRoom)
     {
-        return level[index];
+        this.spawnsPerRoom = spawnsPerRoom;
     }
 
     /**
@@ -89,13 +89,39 @@ public class RenderLevel
         }
     }
 
+    /**
+     * Renderizacao de spawns no mapa
+     */
+    public void RenderSpawns(List<int> enemiesType)
+    {
+        spawnsCreated.Clear();
+        foreach (KeyValuePair<int, List<int>> entry in spawnsPerRoom)
+        {
+            Debug.Log(entry.Key + " " + entry.Value.Count);
+            foreach (int spawnPoint in entry.Value)
+            {
+                Spawner spawn = level[spawnPoint].AddComponent<Spawner>();
+                spawn.SetEnemyType(enemiesType[Random.Range(0, enemiesType.Count)]);
+                spawn.SetSpawnTime(2f);
+                spawnsCreated.Add(spawn);
+            }
+            spawnsCreatedPerRoom.Add(entry.Key, spawnsCreated);
+            spawnsCreated = new List<Spawner>();
+        }
+        Debug.Log("sp ct: " + spawnsCreated.Count);
+    }
     public void RenderColliders(List<Vector3> positions)
     {
+        int roomIndex = 0;
         foreach (Vector3 position in positions)
         {
-            GameObject.Instantiate(ROOM_COLLIDER_PREFAB, position, Quaternion.identity, renderLevels.transform);
+            GameObject gobj = GameObject.Instantiate(ROOM_COLLIDER_PREFAB, position, Quaternion.identity, renderLevels.transform);
+            RoomEvents room = gobj.GetComponent<RoomEvents>();
+            room.ROOM = roomIndex++;
+            room.SetAvaliableSpawns(spawnsCreatedPerRoom[room.ROOM]);
         }
     }
+
     /**
      * Renderizacao do tilemap no object de renderLevels
      */
@@ -122,5 +148,5 @@ public class RenderLevel
         return tilemap;
     }
     #endregion
-    
+
 }

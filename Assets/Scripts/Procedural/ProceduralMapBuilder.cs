@@ -28,7 +28,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string DIVIDER = "_";
     private const float G_NODE_SIZE = 0.4f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10;
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 30;
     private static readonly string[] styles = { "STONE" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR = "GROUND", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
@@ -85,7 +85,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         targetObject = GameObject.Find("Pathfinding");
         levelRenderer = new RenderLevel();
         ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());
-        Debug.Log("Booted");
         if (debugWorld)
         {
             Debug.Log("DEBUG STARTED");
@@ -156,7 +155,7 @@ public class ProceduralMapBuilder : MonoBehaviour
      */
     async Task<bool> BuildTerrainAsync()
     {
-        bool status = false, createDespawn = false;
+        bool status = false, createDespawn = false, isSpawnPoint = false;
         string path = "";
         Vector3 spawnPoint = new Vector3(0, 0, 0);
         int roomsCounter = 0;
@@ -167,9 +166,10 @@ public class ProceduralMapBuilder : MonoBehaviour
             {
                 blueprints = ChooseBlueprints();
             }
-
+            Dictionary<int, List<int>> spawnsPerRoom = new Dictionary<int, List<int>>();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
+            List<int> spawnPoints = new List<int>();
             blueprintsReader.SetNumOfRooms(numOfRooms);
             blueprintsReader.DefineBp(blueprints);
             Map map = new Map(blueprintsReader.RoomsLoaded(), matrixIndexes);
@@ -180,6 +180,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 {
                     createDespawn = true;
                 }
+                int numberOfSpawns = Random.Range(Room.MIN_SPAWNS, Room.MAX_SPAWNS), delaySpawn = DELAY_SPAWN;
                 for (int i = 0; i < room.SizeOf(); i++)
                 {
                     string structure = room.GetBlock(i);
@@ -210,9 +211,17 @@ public class ProceduralMapBuilder : MonoBehaviour
                             if (structure.Equals(GROUND))
                             {
                                 (bool, int) groundChoice = NextGroundEnumerate();
+                                if (delaySpawn > 0)
+                                    delaySpawn--;
                                 if (groundChoice.Item1)
                                 {
                                     path = PLAIN + DIVIDER + styles[roomStyle];
+                                    if (numberOfSpawns > 0 && delaySpawn == 0 && Random.Range(0, 4) == 1)
+                                    {
+                                        isSpawnPoint = true;
+                                        numberOfSpawns--;
+                                        delaySpawn = DELAY_SPAWN;
+                                    }
                                 }
                                 path += DIVIDER + groundChoice.Item2;
                             }
@@ -233,19 +242,26 @@ public class ProceduralMapBuilder : MonoBehaviour
                         }
                         if (stylesIni.Contains(path))
                         {
+                            if (isSpawnPoint)
+                            {
+                                spawnPoints.Add(chunkPaths.Count);
+                                isSpawnPoint = false;
+                            }
                             chunkPaths.Add(FOLDER + styles[roomStyle] + "/" + path);
                             chunkPositions.Add(position);
                         }
                     }
                 }
+                spawnsPerRoom.Add(roomsCounter, spawnPoints);
+                spawnPoints = new List<int>();
                 roomsCounter++;
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
+            levelRenderer.SetSpawnsPerRoom(spawnsPerRoom);
             levelRenderer.RenderElements();
+            levelRenderer.RenderSpawns(new List<int>() { 0 });
             levelRenderer.RenderColliders(map.GetRoomsCollider());
             player.transform.position = spawnPoint;
-            //remover isso depois (apenas para testes)
-            GameObject.Find("Enemy").transform.position = spawnPoint + new Vector3(1.5f, 1.0f, 0);
             status = true;
         }
         catch (System.Exception e)
@@ -269,7 +285,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         string[] lines = iniFile.text.Split('\n');
         plainsSize = 1;
         groundsSize = 1;
-        wallsSize = new int[8]{0,0,0,0,0,0,0,0};
+        wallsSize = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i] = lines[i].TrimEnd('\r', '\n');
@@ -340,7 +356,6 @@ public class ProceduralMapBuilder : MonoBehaviour
         {
             groundCounter = 1;
         }
-        //Debug.Log(plainsSize);
         return (true, Random.Range(1, plainsSize));
     }
 
@@ -350,7 +365,6 @@ public class ProceduralMapBuilder : MonoBehaviour
      */
     int NextWallEnumerate(int direction)
     {
-        //Debug.Log(direction);
         return randFactor < wallsSize[direction] ?
          Random.Range(randFactor, wallsSize[direction]) : Random.Range(1, wallsSize[direction]);
     }
@@ -499,6 +513,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 default:
                     break;
             }
+            //usar intersection para escolher doors
             if (targets.Count >= DOORS_LIMIT)
             {
                 int divider = targets.Count / 3;

@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class RoomEvents : MonoBehaviour
 {
-    bool visited = false;
+    private bool visited = false;
+    public int ROOM = 0;
+    private List<Spawner> avaliableSpawns;
+    private SpawnManager spawnManager;
+    private const string DOOR = "DOOR";
+    public void SetAvaliableSpawns(List<Spawner> avaliableSpawns)
+    {
+        this.avaliableSpawns = avaliableSpawns;
+    }
     private void OnTriggerEnter2D(Collider2D colliderElement)
     {
         Debug.Log("Something entered the room! " + colliderElement.gameObject.name + " " + colliderElement.gameObject.layer + "!");
@@ -28,16 +36,36 @@ public class RoomEvents : MonoBehaviour
     private void TurnOnDoors()
     {
         Debug.Log("Fechou Portas!");
-        GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
+        GameObject[] doors = GameObject.FindGameObjectsWithTag(DOOR);
         foreach (GameObject door in doors)
         {
             door.GetComponent<Doors>().SetState(true);
         }
     }
 
+    private void TurnOffDoors()
+    {
+        Debug.Log("Abriu Portas!");
+        GameObject[] doors = GameObject.FindGameObjectsWithTag(DOOR);
+        foreach (GameObject door in doors)
+        {
+            door.GetComponent<Doors>().SetState(false);
+        }
+    }
+
     private void SpawnMobs()
     {
-        Debug.Log("Spawnou Mobs!");
+        Debug.Log("AV spawns: " + avaliableSpawns.Count);
+        if (avaliableSpawns != null)
+        {
+            foreach (Spawner spawn in avaliableSpawns)
+            {
+                spawn.StartSpawner();
+            }
+            spawnManager = new SpawnManager(avaliableSpawns);
+            spawnManager.OnAllSpawnsFinished += TurnOffDoors;
+            Debug.Log("Spawnou Mobs!");
+        }
     }
 
     private void TurnOnLights()
