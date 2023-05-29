@@ -109,14 +109,7 @@ public class LevelData
     {
         int[] filtredBlueprints = new int[GetNumOfRooms()];
         int diff = numOfRooms - blueprints.Length;
-        if (blueprints.Length < numOfRooms)
-        {
-            for (int i = 0; i < diff; i++)
-            {
-                filtredBlueprints[i] = Random.Range(0, BluePrintReader.BPS.Length - 1);
-            }
-        }
-        for (int i = blueprints.Length - diff, bp = 0; i < blueprints.Length; i++, bp = blueprints[i])
+        for (int i = 0, bp = 0; i < blueprints.Length;bp = blueprints[i], i++ )
         {
             if (bp < 0)
             {
@@ -135,6 +128,20 @@ public class LevelData
                 filtredBlueprints[i] = blueprints[i];
             }
         }
+        if (blueprints.Length < numOfRooms)
+        {
+            for (int i = blueprints.Length; i < numOfRooms; i++)
+            {
+                filtredBlueprints[i] = Random.Range(0, BluePrintReader.BPS.Length - 1);
+            }
+        }
+        
         this.blueprints = filtredBlueprints;
     }
+
+    public override string ToString()
+    {
+        return "NumOfRooms: " + numOfRooms + ", RoomStyle: " + roomStyle + ", Origin: " + origin + ", RandFactor: " + randFactor + ", Blueprints: " + string.Join(", ", blueprints);
+    }
+
 }

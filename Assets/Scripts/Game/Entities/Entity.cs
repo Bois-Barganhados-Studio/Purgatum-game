@@ -158,12 +158,22 @@ public abstract class Entity
     }
     #endregion
 
+    #region Sounds
+
+    public SoundControl soundController = null;
+    
+
+    #endregion
+
     protected Entity()
     {
         CurrentDirection = Vector2.zero;
         CurrentMoveState = MoveState.IDLE;
         IsAttacking = false;
         IsDead = false;
+        soundController = GameObject.FindObjectOfType<SoundControl>();
         FacingDirection = new Vector2(0, 1);
     }
+   
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public class NeuralNetwork
 {
@@ -11,6 +12,8 @@ public class NeuralNetwork
     int randomSeed;
     double bias;
     int maxAttempts;
+    public double learningRate;
+    private double originalLearningRate;
     public NeuralNetwork(int[] layer, int epochs = 100, int randomSeed = -1, double learningRate = 0.001, double bias = 1, double tolerate = 0.001, int maxAttempts = 5)
     {
         if(randomSeed == -1){
@@ -21,6 +24,8 @@ public class NeuralNetwork
         this.epochs = epochs;
         this.tolerate = tolerate;
         this.randomSeed = randomSeed;
+        this.learningRate = learningRate;
+        this.originalLearningRate = learningRate;
         //Deep copy	of layer array, the array of the number of neurons in each layer
         this.layer = new int[layer.Length];
         for (int i = 0; i < layer.Length; i++)
@@ -74,49 +79,80 @@ public class NeuralNetwork
 
     public void train(double[][] inputs, double[][] outputs, double reiniciate = 0.1,bool log = false){
         double totalError = 0;
+        double errorAnt = 0;
         int attempt = 0;
+
         if(inputs.Length != outputs.Length)
             throw new Exception("The number of inputs and outputs must be the same");
         for (int i = 0; i < epochs; i++){
             totalError = 0;
             for (int j = 0; j < inputs.Length; j++){
+
+                // Debug.Log("Alimentando com: ");
+                // string s = "";
+                // for (int k = 0; k < inputs[j].Length; k++){
+                //     s += inputs[j][k] + " ";
+                // }
+                // Debug.Log(s);
+
+
                 FeedFoward(inputs[j]);
                 totalError += BackPropagation(outputs[j]);
-                // if(totalError < tolerate){
-                //     i = epochs;
-                //     j = inputs.Length;
-                // }
+                if(totalError < tolerate){
+                    i = epochs;
+                    j = inputs.Length;
+                }
             }
+            //Adapta o learning rate de acordo com o erro
+            // Debug.Log("Aprendeu: " + (Math.Abs(Math.Abs(totalError) - Math.Abs(errorAnt))));
+            // if(Math.Abs(Math.Abs(totalError) - Math.Abs(errorAnt)) < this.learningRate){
+            //     this.learningRate *= 0.5;
+            //     for (int k = 0; k < layers.Length; k++){
+            //         Debug.Log("Mudando a taxa de aprendizado de " + layers[k].learningRate + " para " + layers[k].learningRate*0.5);
+            //         layers[k].learningRate *= 0.5;
+            //     }
+            // }
+            // else{
+            //     this.learningRate *= 1.05;
+            //     for (int k = 0; k < layers.Length; k++){
+            //         Debug.Log("Mudando a taxa de aprendizado de " + layers[k].learningRate + " para " + layers[k].learningRate*1.05);
+            //         layers[k].learningRate *= 1.05;
+            //     }
+            // }
+
+            errorAnt = totalError;
             //Shuffle the inputs and outputs to avoid overfitting
             shuffle(inputs, outputs);
             
             if(i % 100 == 0 && log)
-                Console.WriteLine("Epoch: " + i + " Error: " + totalError + " executado: " + (((double)i)/epochs)*100 + "%");
+                Debug.Log("Epoch: " + i + " Error: " + totalError + " executado: " + (((double)i)/epochs)*100 + "%");
             
             if(Math.Abs(totalError) < tolerate && log){
-                System.Console.WriteLine("Stoped at epoch: " + i + " Error: " + totalError);
+                Debug.Log("Stoped at epoch: " + i + " Error: " + totalError);
                 i = epochs;
             }
 
-            if(Math.Abs(totalError) > 100 && (((double)i)/epochs) > reiniciate){
-                int seed = (int)DateTime.Now.Ticks;
+            if(Math.Abs(totalError) > 1 && (((double)i)/epochs) > reiniciate){
+                long seed = (long)DateTime.Now.Ticks;
+                Debug.Log("Nova SEED: " + seed);
                 //Caso o erro seja muito grande, reinitialize os pesos da rede e treine novamente
                 for (int k = 0; k < layers.Length; k++){
-                    layers[k].InitializeWeights(randomSeed:seed,bias:bias);
+                    layers[k].learningRate = this.originalLearningRate;
+                    layers[k].InitializeWeights(randomSeed:(int)seed,bias:bias);
                 }
-                System.Console.WriteLine("Explode at epoch: " + i + " Error: " + totalError + " attempt " + attempt + " of " + maxAttempts);
+                Debug.Log("Explode at epoch: " + i + " Error: " + totalError + " attempt " + attempt + " of " + maxAttempts);
                 i = 0;
                 attempt++;
             }
             if(attempt > maxAttempts){
-                System.Console.WriteLine("Max attempts reached, please change the parameters and try again");
+                Debug.Log("Max attempts reached, please change the parameters and try again");
                 i = epochs;
             }
         }
     }
 
     public void shuffle(double[][] inputs, double[][] outputs){
-        Random rnd = new Random(Seed:randomSeed);
+        System.Random rnd = new System.Random(Seed:randomSeed);
         for (int i = 0; i < inputs.Length; i++){
             int index = rnd.Next(inputs.Length);
             double[] temp = inputs[i];
