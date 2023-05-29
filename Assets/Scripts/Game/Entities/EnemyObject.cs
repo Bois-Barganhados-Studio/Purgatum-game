@@ -20,7 +20,7 @@ public class EnemyObject : MonoBehaviour
     private Rigidbody2D rb;
 
 
-    public void Start()
+    public void Awake()
     {
         
         enemy = new Enemy()
