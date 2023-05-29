@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class SoundControl : MonoBehaviour
 {
-    public static float globalSoundVolume = 0f;
-    public static float globalSongVolume = 0f;
+    public static float globalSoundVolume = 0.0f;
+    public static float globalSongVolume = 0.0f;
 
     public AudioClip[] soundEffects;
     public string[] soundEffectNames;
-
+    private AudioSource[] audioSources; 
 
     public AudioClip[] songs;    
     public string[] songNames;
@@ -23,9 +23,29 @@ public class SoundControl : MonoBehaviour
         ambience = gameObject.AddComponent<AudioSource>();
         battleSong = gameObject.AddComponent<AudioSource>();
         PlayAmbience();
+
+        //Adiciona um AudioSource para cada efeito sonoro
+        audioSources = new AudioSource[soundEffects.Length];
+        for (int i = 0; i < soundEffects.Length; i++)
+        {
+            audioSources[i] = gameObject.AddComponent<AudioSource>();
+            audioSources[i].clip = soundEffects[i];
+        }
     }
 
-    public void PlaySoundEffect(string name)
+    public void PlayEffect(int index, bool loop=false){
+        if (index < 0 || index >= songs.Length)
+        {
+            Debug.LogError("Song index out of range: " + index);
+            return;
+        }
+        audioSource.clip = soundEffects[index];
+        audioSource.loop = loop;
+        audioSource.volume = globalSoundVolume;
+        audioSource.Play();
+    }
+
+    public void PlaySoundEffect(string name, bool loop = false)
     {
         int index = System.Array.IndexOf(soundEffectNames, name);
         if (index < 0)
@@ -33,7 +53,16 @@ public class SoundControl : MonoBehaviour
             Debug.LogError("SoundEffect name not found: " + name);
             return;
         }
-        PlaySoundEffectAt(index, new Vector3(0, 0, 0));
+
+
+        if(!audioSources[index].isPlaying)
+        {
+            audioSources[index].loop = loop;
+            audioSources[index].volume = globalSoundVolume;
+            audioSources[index].Play();
+        }       
+
+        //PlaySoundEffectAt(index, new Vector3(0, 0, 0));
     }
 
     public void PlaySoundEffect(int index)
@@ -41,6 +70,18 @@ public class SoundControl : MonoBehaviour
         PlaySoundEffectAt(index, new Vector3(0, 0, 0));
     }
 
+    public void PlaySoundEffectAt(string name, Vector3 position)
+    {
+        int index = System.Array.IndexOf(soundEffectNames, name);
+        if (index < 0)
+        {
+            Debug.LogError("SoundEffect name not found: " + name);
+            return;
+        }
+        PlaySoundEffectAt(index, position);
+        
+    }
+    
     public void PlaySoundEffectAt(int index, Vector3 position)
     {
         if (index < 0 || index >= soundEffects.Length)
@@ -48,8 +89,12 @@ public class SoundControl : MonoBehaviour
             Debug.LogError("SoundEffect index out of range: " + index);
             return;
         }
-
-        AudioSource.PlayClipAtPoint(soundEffects[index], position, globalSoundVolume);
+        if(!audioSources[index].isPlaying){
+            audioSources[index].volume = globalSoundVolume;
+            audioSources[index].loop = false;
+            audioSources[index].Play();
+        }
+        
     }
 
     public void PlaySong(string name, bool loop = false)
@@ -150,6 +195,8 @@ public static class FadeAudioSource {
             audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
+        if(targetVolume == 0.0f)
+            audioSource.Stop();
         yield break;
     }
 }

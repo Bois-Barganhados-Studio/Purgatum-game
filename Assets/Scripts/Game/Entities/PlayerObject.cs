@@ -7,7 +7,7 @@ using UnityEngine.Analytics;
 
 public class PlayerObject : MonoBehaviour
 {
-    private Player player;
+    public Player player;
     public LayerMask enemyLayer;
     public LayerMask itemLayer;
     public GameObject[] actionPoints;
@@ -46,6 +46,15 @@ public class PlayerObject : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         pAnim = FindObjectOfType<PlayerAnimation>();
+    }
+
+    void Update()
+    {
+        if(player.CurrentMoveState == Entity.MoveState.MOVING)
+        {
+            Debug.Log("Player is moving");
+            player.soundController.PlaySoundEffect("player_step");            
+        }
     }
 
     public Vector2 MoveVelocity()
@@ -96,6 +105,7 @@ public class PlayerObject : MonoBehaviour
 
     public void Move(Vector2 dir)
     {
+        
         if (player.CurrentMoveState != Entity.MoveState.DODGING) {
             if (dir == idleDir)
                 player.CurrentMoveState = Entity.MoveState.IDLE;
@@ -135,8 +145,9 @@ public class PlayerObject : MonoBehaviour
 
     public void EndDeath()
     {
+        Debug.Log("Player is dead");
         // TODO - Game Over
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void Attack()
@@ -180,6 +191,8 @@ public class PlayerObject : MonoBehaviour
                 rb.simulated = false;
                 isUpdateDisabled = true;
                 pAnim.SetDyingDirection(player.CurrentDirection);
+                this.EndDeath();
+
             } else
             {
                 StartCoroutine(blinkSprite());

@@ -19,7 +19,6 @@ public class EnemyObject : MonoBehaviour
     private TextMesh textMesh;
     private Rigidbody2D rb;
 
-    SoundControl soundController = null;
 
     public void Start()
     {
@@ -42,7 +41,6 @@ public class EnemyObject : MonoBehaviour
         p = FindObjectOfType <PlayerObject>();
         textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        soundController = GameObject.FindObjectOfType<SoundControl>();
     }
 
     public void FixedUpdate()
@@ -65,7 +63,7 @@ public class EnemyObject : MonoBehaviour
                 pathfinder.canMove = false;
                 eAnim.idle(target);
                 
-                soundController.StopBattleSong();
+                enemy.soundController.StopBattleSong();
                 break;
 
             case Enemy.MachineState.CHASING:
@@ -74,7 +72,7 @@ public class EnemyObject : MonoBehaviour
                 pathfinder.destination = target.position;
                 eAnim.moving(target);
                 
-                soundController.PlayBattleSong();
+                enemy.soundController.PlayBattleSong();
                 break;
 
             case Enemy.MachineState.ATTACKING:
@@ -97,7 +95,7 @@ public class EnemyObject : MonoBehaviour
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
                 
-                soundController.StopBattleSong();
+                enemy.soundController.StopBattleSong();
                 Die();
                 break;
 
