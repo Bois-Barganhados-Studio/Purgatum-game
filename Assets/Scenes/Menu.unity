@@ -616,10 +616,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1362173035}
     - target: {fileID: 1020762960033452663, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1020762960033452663, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1648454439}
@@ -627,13 +623,9 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1478660538}
-    - target: {fileID: 1020762960033452663, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnGameStart
-      objectReference: {fileID: 0}
-    - target: {fileID: 1020762960033452663, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: RogueLikeController, Assembly-CSharp
+    - target: {fileID: 1020762960062728526, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.4605713
       objectReference: {fileID: 0}
     - target: {fileID: 1020762960476698309, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -735,18 +727,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1648454436}
-    - target: {fileID: 2437961733458560290, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: speed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2437961733458560290, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: movementDistance
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509995688491362309, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
 --- !u!1001 &5414773514023622047
