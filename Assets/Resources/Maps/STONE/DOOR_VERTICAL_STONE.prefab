@@ -306,7 +306,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 83232
+  m_InstanceId: 69230
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -2694,7 +2694,7 @@ MonoBehaviour:
   - {x: 0.9611037, y: 0.5595214, z: 0}
   m_ShapePathHash: 1233748852
   m_Mesh: {fileID: 0}
-  m_InstanceId: 83184
+  m_InstanceId: 69182
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0

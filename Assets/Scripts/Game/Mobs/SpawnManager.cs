@@ -11,9 +11,13 @@ public class SpawnManager
     {
         foreach (Spawner spawn in spawns)
         {
-            spawn.OnSpawnsFinished += HandleSpawnFinished;
-            activeSpawns.Add(spawn);
+            if (spawn.IsCommander())
+            {
+                spawn.OnSpawnsFinished += HandleSpawnFinished;
+                activeSpawns.Add(spawn);
+            }
         }
+        Debug.Log("Active spawns: " + activeSpawns.Count);
     }
 
     private void HandleSpawnFinished(Spawner spawn)

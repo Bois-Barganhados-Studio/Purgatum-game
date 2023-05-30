@@ -28,7 +28,7 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string DIVIDER = "_";
     private const float G_NODE_SIZE = 0.4f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 30;
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20;
     private static readonly string[] styles = { "STONE", "FIRE" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR_VERTICAL = "DOOR_VERTICAL", DOOR_HORIZONTAL = "DOOR_HORIZONTAL", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
@@ -513,7 +513,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                 default:
                     break;
             }
-            //usar intersection para escolher doors
+            //Quando por portas first e last adicionar paredes adjacentes (SE,SW,NE,NW)
             if (targets.Count >= DOORS_LIMIT)
             {
                 int divider = targets.Count / 3;
