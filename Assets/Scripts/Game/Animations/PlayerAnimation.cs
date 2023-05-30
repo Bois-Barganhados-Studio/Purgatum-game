@@ -10,6 +10,7 @@ public class PlayerAnimation : MonoBehaviour
     public string[] staticDirections = { "Idling N", "Idling NW", "Idling W", "Idling SW", "Idling S", "Idling SE", "Idling E", "Idling NE" };
     public string[] runDirections = { "Running N", "Running NW", "Running W", "Running SW", "Running S", "Running SE", "Running E", "Running NE" };
     //public string[] dodgeDirections = ;
+    public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
 
     int lastDirection;
 
@@ -48,26 +49,26 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     public void SetDodgeDirection(Vector2 _direction)
-    {
+    { 
         string[] animDirection = { "Rolling N", "Rolling NW", "Rolling W", "Rolling SW", "Rolling S", "Rolling SE", "Rolling E", "Rolling NE" };
         anim.Play(animDirection[DirectionToIndex(_direction)]);
     }
 
     public void SetAttackDirection(Vector2 _direction)
     {
-        string[] directionArray = { "Slashing N", "Slashing NW", "Slashing W", "Slashing SW", "Slashing S", "Slashing SE", "Slashing E", "Slashing NE" };
+        string[] directionArray = null;
 
-        // if (_direction.magnitude < 0.01)//MARKER Character is static. And his velocity is close to zero
-        // {
-        //     directionArray = staticDirections;
-        // }
-        // else
-        // {
-        //     //directionArray = AttackDirections;
+        if (_direction.magnitude < 0.01)//MARKER Character is static. And his velocity is close to zero
+        {
+            directionArray = staticDirections;
+        }
+        else
+        {
+            directionArray = AttackDirections;
 
-        //     lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
-
-        // }
+            lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
+           
+        }
         anim.Play(directionArray[lastDirection]);
     }
 
@@ -82,14 +83,14 @@ public class PlayerAnimation : MonoBehaviour
     {
         Vector2 norDir = _direction.normalized;//MARKER return this vector with a magnitude of 1 and get the normalized to an index
 
-        float step = 360 / 8;//MARKER 45 one circle and 8 slices//Calcuate how many degrees one slice is
+        float step = 360 / 8;//MARKER 45 one circle and 8 slices//Calcuate how many degrees one slice is 
         float offset = step / 2;//MARKER 22.5//OFFSET help us easy to calcuate and get the correct index of the string array
 
         float angle = Vector2.SignedAngle(Vector2.up, norDir);//MARKER returns the signed angle in degrees between A and B
 
         angle += offset;//Help us easy to calcuate and get the correct index of the string array
 
-        if (angle < 0)//avoid the negative number
+        if (angle < 0)//avoid the negative number 
         {
             angle += 360;
         }
