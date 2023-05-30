@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Player : Entity
 {
     public static readonly float BASE_COOLDOWN = 0.2f;
@@ -58,8 +57,7 @@ public class Player : Entity
         return (!IsAttacking && CurrentMoveState == Entity.MoveState.IDLE);
     }
 
-
-    public int takeAttack(Weapon eWeapon)
+    public int TakeAttack(Weapon eWeapon)
     {
         int dmg = Random.Range((int)(eWeapon.BaseDmg - eWeapon.BaseDmg * 0.2f), (int)(eWeapon.BaseDmg + eWeapon.BaseDmg * 0.2f));
         if (dmg > 0)
@@ -69,14 +67,36 @@ public class Player : Entity
         return dmg;
     }
 
-    public void DropWeapon()
-    {
-        MainWeapon = subWeapon;
-        subWeapon = null;
-    }
-
     public void Heal(float healPct)
     {
-        Hp += (int)((float) MaxHp * healPct);
+        int tmp = Hp + (int)((float)MaxHp * healPct);
+        Hp += System.Math.Min(tmp, MaxHp);
+    }
+
+    internal void BoostSpeed(float boostPct, float duration)
+    {
+        MoveSpeed *= boostPct;
+        CoolDown(() =>
+        {
+            Speed = Speed;
+        }, duration);
+    }
+
+    internal void BoostDamage(float boostPct, float duration)
+    {
+        DamageMultiplier *= boostPct;
+        CoolDown(() =>
+        {
+            Strength = Strength;
+        }, duration);
+    }
+
+    internal void BoostDefense(float boostPct, float duration)
+    {
+        DamageMultiplier *= boostPct;
+        CoolDown(() =>
+        {
+            Strength = Strength;
+        }, duration);
     }
 }

@@ -23,15 +23,17 @@ public class PlayerController : MonoBehaviour
     {
         if (player.IsUpdateDisabled)
             return;
-        if (player.getMoveState() == Entity.MoveState.MOVING || player.getMoveState() == Entity.MoveState.IDLE) {
+        if (player.GetMoveState() == Entity.MoveState.MOVING || player.GetMoveState() == Entity.MoveState.IDLE) {
             player.rb.velocity = player.MoveVelocity();
-            FindObjectOfType<PlayerAnimation>().SetMoveDirection(player.getDirection());
-        } else if (player.getMoveState() == Entity.MoveState.DODGING) {
+            if (!player.IsAttacking())
+                player.pAnim.SetMoveDirection(player.GetDirection());
+        } else if (player.GetMoveState() == Entity.MoveState.DODGING) {
             player.rb.velocity = player.DodgeVelocity();
-            FindObjectOfType<PlayerAnimation>().SetDodgeDirection(player.getFacingDir());
+            player.pAnim.SetDodgeDirection(player.GetFacingDir());
         }
-        //if (player.isAttacking()) {
-        //    //FindObjectOfType<PlayerAnimation>().SetAttackDirection(player.getDirection());
+        //if (player.IsAttacking())
+        //{
+        //    player.pAnim.SetAttackDirection(player.GetDirection());
         //}
     }
 
@@ -73,12 +75,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSwap(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            player.SwapWeapon();
+        }
+    }
+
     public void OnTest(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
             // Add whatever you want
             // test by pressing 'T'
+            player.Test();
             
         }
     }

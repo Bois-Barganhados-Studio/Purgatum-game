@@ -21,7 +21,7 @@ public class Enemy : Entity
 
     public Enemy()
     {
-        MainWeapon = new Weapon(3.0f, 0.1f, 2.0f);
+        MainWeapon = new Weapon(0, 3.0f, 0.1f, 2.0f);
         State = MachineState.IDLE;
     }
 

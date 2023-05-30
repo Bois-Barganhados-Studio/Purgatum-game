@@ -13,10 +13,10 @@ public class PlayerObject : MonoBehaviour
     public GameObject[] actionPoints;
     public Rigidbody2D rb;
     private Vector2 idleDir;
-    private WeaponObject mw;
-    private WeaponObject sw;
+    private WeaponObject mainWeapon;
+    private WeaponObject subWeapon;
     private SpriteRenderer sr;
-    private PlayerAnimation pAnim;
+    public PlayerAnimation pAnim;
 
     private bool isUpdateDisabled;
     public bool IsUpdateDisabled
@@ -40,12 +40,15 @@ public class PlayerObject : MonoBehaviour
         };
         idleDir = Vector2.zero;
         isUpdateDisabled = false;
-        mw = transform.Find("Weapon1").GetComponent<WeaponObject>();
-        sw = transform.Find("Weapon2").GetComponent<WeaponObject>();
+        mainWeapon = transform.Find("mainWeapon").GetComponent<WeaponObject>();
+        subWeapon = transform.Find("subWeapon").GetComponent<WeaponObject>();
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
+        Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         pAnim = FindObjectOfType<PlayerAnimation>();
+        mainWeapon.gameObject.SetActive(false);
+        subWeapon.gameObject.SetActive(false);
     }
 
     void Update()
@@ -67,32 +70,32 @@ public class PlayerObject : MonoBehaviour
         return player.DodgeVelocity();
     }
 
-    public Vector2 getDirection()
+    public Vector2 GetDirection()
     {
         return player.CurrentDirection;
     }
 
-    public void setDirection(Vector2 dir)
+    public void SetDirection(Vector2 dir)
     {
         player.CurrentDirection = dir;
     }
 
-    public Vector2 getFacingDir()
+    public Vector2 GetFacingDir()
     {
         return player.FacingDirection;
     }
 
-    public Entity.MoveState getMoveState()
+    public Entity.MoveState GetMoveState()
     {
         return player.CurrentMoveState;
     }
 
-    public void setMoveState(Entity.MoveState state)
+    public void SetMoveState(Entity.MoveState state)
     {
         player.CurrentMoveState = state;
     }
 
-    public bool isAttacking()
+    public bool IsAttacking()
     {
         return player.IsAttacking;
     }
@@ -112,7 +115,7 @@ public class PlayerObject : MonoBehaviour
             else 
                 player.CurrentMoveState = Entity.MoveState.MOVING;
         }
-        setDirection(dir);
+        SetDirection(dir);
     }
 
     //public void EndMove()
@@ -155,13 +158,14 @@ public class PlayerObject : MonoBehaviour
         if (player.CanAttack()) {
             player.IsAttacking = true;
             int idx = pAnim.DirectionToIndex(player.FacingDirection);
+            pAnim.SetAttackDirection(player.FacingDirection);
             Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
             foreach (var e in enemies) {
                 e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
             }
-            StartCoroutine(player.CoolDown(() => {
-                EndAttack();
-            }, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
+            //StartCoroutine(player.CoolDown(() => {
+            //    EndAttack();
+            //}, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
         }
     }
 
@@ -178,11 +182,11 @@ public class PlayerObject : MonoBehaviour
         player.IsAttacking = false;
     }
 
-    public void takeAttack(Weapon eWeapon)
+    public void TakeAttack(Weapon eWeapon)
     {
         if (player.CurrentMoveState == Entity.MoveState.DODGING || player.IsDead)
             return;
-        int dmg = player.takeAttack(eWeapon);
+        int dmg = player.TakeAttack(eWeapon);
         if (dmg > 0)
         {
             UpdateHealthBar();
@@ -195,7 +199,7 @@ public class PlayerObject : MonoBehaviour
 
             } else
             {
-                StartCoroutine(blinkSprite());
+                StartCoroutine(BlinkSprite());
             }
         }
     }
@@ -205,7 +209,7 @@ public class PlayerObject : MonoBehaviour
         return player.IsDead;
     }
 
-    public IEnumerator blinkSprite()
+    public IEnumerator BlinkSprite()
     {
         Color lastColor = sr.color;
         sr.color = new Color(255, 255, 255, 0.5f);
@@ -232,43 +236,39 @@ public class PlayerObject : MonoBehaviour
         var col = Physics2D.OverlapCircle(actionPoints[idx].transform.position, 0.05f, itemLayer);
         if (col != null)
         {
-            var item = col.GetComponent<ItemObject>();
-            if (item != null)
-                CollectItem(item);
-            else
+            if (col.TryGetComponent<ItemObject>(out var item))
             {
-                var weapon = col.GetComponent<WeaponObject>();
-                if (weapon != null)
-                {
-                    CollectWeapon(weapon);
-                }
+                CollectItem(item);
+            }
+            else if (col.TryGetComponent<WeaponObject>(out var weapon))
+            {
+                CollectWeapon(weapon);
             }
         }
     }
 
     private void CollectWeapon(WeaponObject newWeapon)
     {
-        DropWeapon();
-        mw = newWeapon;
-        player.MainWeapon = mw.weapon;
+        // Drop
+        mainWeapon.gameObject.transform.parent = null;
+        mainWeapon.gameObject.transform.position = this.transform.position;
+        mainWeapon.gameObject.SetActive(true);
+        StartCoroutine(mainWeapon.Drop(10));
+
+        // Collect
+        newWeapon.gameObject.transform.SetParent(this.transform);
+        mainWeapon = newWeapon;
+        player.MainWeapon = mainWeapon.weapon;
+        mainWeapon.gameObject.SetActive(false);
         UpdateHotBar();
-    }
-    
-    public void DropWeapon()
-    {
-        WeaponObject tmp = mw;
-        mw = null;
-        player.DropWeapon();
-        UpdateHotBar();
-        Instantiate(tmp, this.transform.position, Quaternion.identity);
-        // TODO - Move drop away from the player
     }
 
     public void SwapWeapon()
     {
-        var tmp = player.MainWeapon;
-        player.MainWeapon = sw.weapon;
-        player.SubWeapon = mw.weapon;
+        if (subWeapon == null)
+            return;
+        (mainWeapon, subWeapon) = (subWeapon, mainWeapon);
+        (player.MainWeapon, player.SubWeapon) = (mainWeapon.weapon, subWeapon.weapon);
         UpdateHotBar();
     }
 
@@ -286,6 +286,46 @@ public class PlayerObject : MonoBehaviour
     public void Heal(float healPct)
     {
         player.Heal(healPct);
+    }
+
+    public void BoostSpeed(float BoostPct, float duration)
+    {
+        player.BoostSpeed(BoostPct, duration);
+    }
+
+    public void BoostDamage(float BoostPct, float duration)
+    {
+        player.BoostDamage(BoostPct, duration);
+    }
+
+    public void BoostDefense(float BoostPct, float duration)
+    {
+        player.BoostDefense(BoostPct, duration);
+    }
+
+    public int GetLuck()
+    {
+        return player.Luck;
+    }
+
+    public void Test()
+    {
+        // Working potion spawn test
+        //var prefab = Resources.Load<GameObject>("Prefab/Game/Entities/Item");
+        //if (prefab != null)
+        //{
+        //    var item = Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
+        //    item.GetComponent<ItemObject>().Init(new HealPotion(Potion.LEVEL.BASIC), null);
+        //}
+
+        //var prefab = Resources.Load<GameObject>("Prefab/Game/Entities/Weapon");
+        //if (prefab != null)
+        //{
+        //    var weapon = Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
+        //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
+        //}
+
+        DropGenerator.GenerateDrop(69, 69, 1);
     }
 
 }   
