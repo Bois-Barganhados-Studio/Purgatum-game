@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerObject : MonoBehaviour
 {
+    private static PlayerObject instance;
     public Player player;
     public LayerMask enemyLayer;
     public LayerMask itemLayer;
@@ -51,6 +52,16 @@ public class PlayerObject : MonoBehaviour
         subWeapon.gameObject.SetActive(false);
         UpdateWeaponVFX(ItemSprites.WEAPON_VFX_BASE);
         attackFactor = 1f;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            //Caso duplique os gameobjects mantem apenas o original
+            Destroy(gameObject);
+        }
     }
 
     void Update()
@@ -124,11 +135,12 @@ public class PlayerObject : MonoBehaviour
 
     public void Move(Vector2 dir)
     {
-        
-        if (player.CurrentMoveState != Entity.MoveState.DODGING) {
+
+        if (player.CurrentMoveState != Entity.MoveState.DODGING)
+        {
             if (dir == idleDir)
                 player.CurrentMoveState = Entity.MoveState.IDLE;
-            else 
+            else
                 player.CurrentMoveState = Entity.MoveState.MOVING;
         }
         SetDirection(dir);
@@ -136,7 +148,8 @@ public class PlayerObject : MonoBehaviour
 
     public void Dodge()
     {
-        if (player.CanDodge()) {
+        if (player.CanDodge())
+        {
             if (player.IsAttacking)
                 EndAttack();
             player.CurrentMoveState = Entity.MoveState.DODGING;
@@ -153,7 +166,8 @@ public class PlayerObject : MonoBehaviour
         animator.SetBool("isRolling", false);
 
         // TODO - COOLDOWN SCALE LOGIC
-        StartCoroutine(player.CoolDown(() => {
+        StartCoroutine(player.CoolDown(() =>
+        {
             player.DodgingCD = false;
         }, Player.BASE_COOLDOWN));
     }
@@ -174,7 +188,8 @@ public class PlayerObject : MonoBehaviour
 
     public void Attack()
     {
-        if (player.CanAttack()) {
+        if (player.CanAttack())
+        {
             attackFactor = 0.2f;
             player.IsAttacking = true;
             player.LockDir();
@@ -227,7 +242,7 @@ public class PlayerObject : MonoBehaviour
 
     public void TakeAttack(Weapon eWeapon, Vector2 enemyFacingDir)
     {
-        
+
         if (player.CurrentMoveState == Entity.MoveState.DODGING || player.IsDead || player.IsInvincible)
             return;
         int dmg = player.TakeAttack(eWeapon);
@@ -251,7 +266,8 @@ public class PlayerObject : MonoBehaviour
                 rb.simulated = false;
                 isUpdateDisabled = true;
                 animator.SetBool("isDying", true);
-            } else
+            }
+            else
             {
                 StartCoroutine(BlinkSprite());
             }
@@ -413,4 +429,4 @@ public class PlayerObject : MonoBehaviour
         return Mathf.FloorToInt(stepCount);
     }
 
-}   
+}
