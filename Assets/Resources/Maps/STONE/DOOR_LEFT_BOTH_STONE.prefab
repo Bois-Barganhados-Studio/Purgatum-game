@@ -466,7 +466,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 109718
+  m_InstanceId: 103164
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 2032566955745865115}
   - component: {fileID: 3595077904967181560}
   - component: {fileID: 3236862270299870246}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Roof
   m_TagString: DOOR
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 109636
+  m_InstanceId: 103082
 --- !u!50 &3595077904967181560
 Rigidbody2D:
   serializedVersion: 4
@@ -2288,7 +2288,7 @@ GameObject:
   - component: {fileID: 2038208103578924262}
   - component: {fileID: 5832209688265056831}
   - component: {fileID: 4608199634571930452}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Door Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2731,7 +2731,7 @@ MonoBehaviour:
   - {x: 0.9611037, y: 0.5595214, z: 0}
   m_ShapePathHash: -32510177
   m_Mesh: {fileID: 0}
-  m_InstanceId: 109666
+  m_InstanceId: 103112
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0

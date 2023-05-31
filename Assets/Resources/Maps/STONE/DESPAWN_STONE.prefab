@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 2352300380865188152}
   - component: {fileID: 51393713268583282}
   - component: {fileID: 5529857107002249148}
+  - component: {fileID: 7598954621307685359}
   m_Layer: 0
   m_Name: Door
   m_TagString: DOOR
@@ -1302,11 +1303,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.81399083, y: -0.31493616}
+    - - {x: -0.8290439, y: -0.34504235}
       - {x: -0.9684832, y: -0.40221328}
-      - {x: -1.0644718, y: -0.4534316}
-      - {x: -0.42858005, y: -0.7734889}
-      - {x: -0.1598517, y: -0.64321554}
+      - {x: -1.2451091, y: -0.4835378}
+      - {x: -0.4737394, y: -0.8788606}
+      - {x: -0.22006407, y: -0.64321554}
 --- !u!50 &51393713268583282
 Rigidbody2D:
   serializedVersion: 4
@@ -1338,7 +1339,7 @@ CompositeCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1348,25 +1349,37 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 2352300380865188152}
     m_ColliderPaths:
-    - - X: -8139908
-        Y: -3149361
+    - - X: -8290439
+        Y: -3450423
       - X: -9684832
         Y: -4022132
-      - X: -10644718
-        Y: -4534316
-      - X: -4285800
-        Y: -7734889
-      - X: -1598517
+      - X: -12451091
+        Y: -4835378
+      - X: -4737394
+        Y: -8788606
+      - X: -2200640
         Y: -6432155
   m_CompositePaths:
     m_Paths:
-    - - {x: -0.42859152, y: -0.77348304}
-      - {x: -0.1599146, y: -0.6431841}
-      - {x: -0.8140031, y: -0.3149431}
-      - {x: -0.96848303, y: -0.4022131}
-      - {x: -1.0644128, y: -0.45346132}
+    - - {x: -0.4737566, y: -0.87885183}
+      - {x: -0.2201059, y: -0.6431951}
+      - {x: -0.82905483, y: -0.34504682}
+      - {x: -0.9684837, y: -0.4022133}
+      - {x: -1.2450278, y: -0.4835794}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &7598954621307685359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312591305702444126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aea6ad74122e8f429278f7f0f90fe63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2758945948941887065
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,7 +3396,7 @@ MonoBehaviour:
   - {x: -0.3085969, y: -0.8893045, z: 0}
   m_ShapePathHash: -892921076
   m_Mesh: {fileID: 0}
-  m_InstanceId: 110250
+  m_InstanceId: 103472
 --- !u!1 &6161273081866168499
 GameObject:
   m_ObjectHideFlags: 0

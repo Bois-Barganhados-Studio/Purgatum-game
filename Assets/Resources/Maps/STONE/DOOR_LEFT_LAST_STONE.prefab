@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8896761056984979533}
   - component: {fileID: 7617875194987524611}
   - component: {fileID: 2703326032861225641}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Door
   m_TagString: DOOR
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111118
+  m_InstanceId: 101670
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 2032566955745865115}
   - component: {fileID: 3595077904967181560}
   - component: {fileID: 3236862270299870246}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Roof
   m_TagString: DOOR
   m_Icon: {fileID: 0}
@@ -940,7 +940,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111044
+  m_InstanceId: 101596
 --- !u!50 &3595077904967181560
 Rigidbody2D:
   serializedVersion: 4
@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 5649142951030567339}
   - component: {fileID: 343121926746649148}
   - component: {fileID: 7973899135637100051}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2277,7 +2277,7 @@ GameObject:
   - component: {fileID: 2038208103578924262}
   - component: {fileID: 5832209688265056831}
   - component: {fileID: 4608199634571930452}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Door Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2736,7 +2736,7 @@ MonoBehaviour:
   - {x: 1.1326543, y: 0.6407821, z: 0}
   m_ShapePathHash: -1348520408
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111070
+  m_InstanceId: 101622
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,7 +2751,7 @@ GameObject:
   - component: {fileID: 3045090927626160009}
   - component: {fileID: 6098651537189161850}
   - component: {fileID: 4797191826423271678}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall SW
   m_TagString: Untagged
   m_Icon: {fileID: 0}

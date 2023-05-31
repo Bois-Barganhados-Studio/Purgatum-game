@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1857280797665723373}
   - component: {fileID: 2070268528154671780}
   - component: {fileID: 6386247063721732940}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 5649142951030567339}
   - component: {fileID: 343121926746649148}
   - component: {fileID: 7973899135637100051}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1578,7 +1578,7 @@ GameObject:
   - component: {fileID: 8132406248632827179}
   - component: {fileID: 5646194280058426435}
   - component: {fileID: 2233833525342105169}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Door Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,7 +1887,7 @@ MonoBehaviour:
   - {x: 0.796754, y: -0.1651986, z: 0}
   m_ShapePathHash: 493289915
   m_Mesh: {fileID: 0}
-  m_InstanceId: 116890
+  m_InstanceId: 102564
 --- !u!60 &1775044778289787593
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2080,7 +2080,7 @@ GameObject:
   - component: {fileID: 577814459200569667}
   - component: {fileID: 9027925911622571094}
   - component: {fileID: 8259036225646185657}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall NE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2734,7 +2734,7 @@ GameObject:
   - component: {fileID: 6209459179157102186}
   - component: {fileID: 7039604377536846153}
   - component: {fileID: 5796910591552393863}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Door
   m_TagString: DOOR
   m_Icon: {fileID: 0}
