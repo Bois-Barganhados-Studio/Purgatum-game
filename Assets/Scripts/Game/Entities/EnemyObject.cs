@@ -41,7 +41,6 @@ public class EnemyObject : MonoBehaviour
         p = FindObjectOfType <PlayerObject>();
         textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(Enemy.LAYER, IItem.LAYER);
     }
 
     public void FixedUpdate()
@@ -87,7 +86,7 @@ public class EnemyObject : MonoBehaviour
                     {
                         enemy.IsAttacking = false;
                     }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
-                    p.TakeAttack(enemy.MainWeapon);
+                    p.takeAttack(enemy.MainWeapon);
 
                 }
                 break;
