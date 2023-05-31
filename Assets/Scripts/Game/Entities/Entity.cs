@@ -13,7 +13,7 @@ public abstract class Entity
         get => currentDirection;
         set
         {
-            if (value != Vector2.zero && !LockedDir) 
+            if (value != Vector2.zero && !LockedDir)
             {
                 FacingDirection = value;
             }
@@ -44,6 +44,10 @@ public abstract class Entity
         }
     }
 
+    public float DamageReduction { get; set; }
+
+    public float DamageMultiplier { get; set; }
+
     public float MoveSpeed { get; set; }
 
     public float DodgeSpeed { get; set; }
@@ -63,7 +67,8 @@ public abstract class Entity
     public void UnlockDir()
     {
         LockedDir = false;
-        FacingDirection = CurrentDirection;
+        if (currentDirection != Vector2.zero)
+            FacingDirection = CurrentDirection;
     }
 
 
@@ -97,7 +102,16 @@ public abstract class Entity
         }
     }
 
-    public int Strength { get; set; }
+    private int strength;
+    public int Strength
+    {
+        get => strength;
+        set
+        {
+            strength = value;
+            DamageMultiplier = 1 + 0.005f * strength;
+        }
+    }
 
     private int agility;
     public int Agility
@@ -110,7 +124,16 @@ public abstract class Entity
         }
     }
 
-    public int Defense { get; set; }
+    private int defense;
+    public int Defense
+    {
+        get => defense;
+        set
+        {
+            defense = value;
+            DamageReduction = 1 - 0.005f * defense;
+        }
+    }
     public int Luck { get; set; }
 
     private int speed;

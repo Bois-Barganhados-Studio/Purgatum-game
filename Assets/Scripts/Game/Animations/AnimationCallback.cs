@@ -16,15 +16,20 @@ public class AnimationCallback : MonoBehaviour
         po.EndDeath();
     }
 
+    void EndAttack()
+    {
+        po.EndAttack();
+    }
+
+    void DealDamage()
+    {
+        po.DealDamage();
+    }
+
     // Initializing
     void Awake()
     {
         po = gameObject.transform.parent.GetComponent<PlayerObject>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
