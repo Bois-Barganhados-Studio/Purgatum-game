@@ -8,7 +8,9 @@ public class Room
     private List<string> blocks;
     private List<Vector3> positions;
     private List<(int, int)> maxUp, maxDown, maxLeft, maxRight;
-    public static readonly int MAX_SPAWNS = 30, MIN_SPAWNS = 20, MAX_COMMANDERS = 6, MIN_COMMANDERS = 4;
+
+    public static readonly int MAX_SPAWNS = 18, MIN_SPAWNS = 10;
+
     public Room()
     {
         blocks = new List<string>();

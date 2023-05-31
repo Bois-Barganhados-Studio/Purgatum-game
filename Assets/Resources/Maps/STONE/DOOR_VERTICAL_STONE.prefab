@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8896761056984979533}
   - component: {fileID: 7617875194987524611}
   - component: {fileID: 2703326032861225641}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door
   m_TagString: DOOR
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 82054
+  m_InstanceId: 83232
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 1620617074614014167}
   - component: {fileID: 3550683348677036051}
   - component: {fileID: 105968151577106984}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Inside Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,7 +857,7 @@ GameObject:
   - component: {fileID: 5649142951030567339}
   - component: {fileID: 343121926746649148}
   - component: {fileID: 7973899135637100051}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 2038208103578924262}
   - component: {fileID: 5832209688265056831}
   - component: {fileID: 4608199634571930452}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Inside Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2694,7 +2694,7 @@ MonoBehaviour:
   - {x: 0.9611037, y: 0.5595214, z: 0}
   m_ShapePathHash: 1233748852
   m_Mesh: {fileID: 0}
-  m_InstanceId: 82006
+  m_InstanceId: 83184
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,7 +2709,7 @@ GameObject:
   - component: {fileID: 3045090927626160009}
   - component: {fileID: 6098651537189161850}
   - component: {fileID: 4797191826423271678}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall SW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3362,7 +3362,7 @@ GameObject:
   - component: {fileID: 1967822118182764869}
   - component: {fileID: 4573722030034661594}
   - component: {fileID: 5074130613066888585}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall NE
   m_TagString: Untagged
   m_Icon: {fileID: 0}

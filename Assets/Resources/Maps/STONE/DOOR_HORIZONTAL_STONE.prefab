@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 204966360271698271}
   - component: {fileID: 4637061486934988999}
   - component: {fileID: 3212713452101063965}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Inner Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 5649142951030567339}
   - component: {fileID: 343121926746649148}
   - component: {fileID: 7973899135637100051}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1875,7 +1875,7 @@ GameObject:
   - component: {fileID: 577814459200569667}
   - component: {fileID: 9027925911622571094}
   - component: {fileID: 8259036225646185657}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall NE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2526,7 +2526,7 @@ GameObject:
   - component: {fileID: 1784806238510167237}
   - component: {fileID: 800960394107374996}
   - component: {fileID: 257971685124208821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Inner Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2913,7 +2913,7 @@ MonoBehaviour:
   - {x: -0.6346823, y: 0.40528095, z: 0}
   m_ShapePathHash: 1449401159
   m_Mesh: {fileID: 0}
-  m_InstanceId: 81720
+  m_InstanceId: 82894
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2928,7 +2928,7 @@ GameObject:
   - component: {fileID: 3045090927626160009}
   - component: {fileID: 6098651537189161850}
   - component: {fileID: 4797191826423271678}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall SW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3621,7 +3621,7 @@ GameObject:
   - component: {fileID: 6209459179157102186}
   - component: {fileID: 7039604377536846153}
   - component: {fileID: 5796910591552393863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door
   m_TagString: DOOR
   m_Icon: {fileID: 0}

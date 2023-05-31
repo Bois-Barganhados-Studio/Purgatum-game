@@ -16,7 +16,7 @@ public class RogueLikeController : MonoBehaviour
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
         rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
-        //Invoke("OnGoingToNextLevel", 70f);
+        //Invoke("OnGoingToNextLevel",15f);
     }
 
     private void Awake()
@@ -40,7 +40,6 @@ public class RogueLikeController : MonoBehaviour
     }
     public void OnGoingToNextLevel()
     {
-        Debug.Log("GOING TO NEXT LEVEL");
         rogueLogic.SetState(RogueLogic.States.NEW_LEVEL);
         rogueLogic.DoAction();
     }

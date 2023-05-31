@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelData
 {
-    public const int MAX_ROOMS = 16, MIN_ROOMS = 2, SZ_ROOM_STYLE = 5, MAX_ORIGIN = 15, MIN_ORIGIN = 0, MAX_RAND_FACTOR = 20, MIN_RAND_FACTOR = 1;
+    private const int MAX_ROOMS = 16, MIN_ROOMS = 2, SZ_ROOM_STYLE = 5, MAX_ORIGIN = 15, MIN_ORIGIN = 0, MAX_RAND_FACTOR = 20, MIN_RAND_FACTOR = 0;
     private int numOfRooms, roomStyle, origin, randFactor;
     private int[] blueprints;
     public LevelData(int numOfRooms, int roomStyle, int origin, int randFactor, int[] blueprints)

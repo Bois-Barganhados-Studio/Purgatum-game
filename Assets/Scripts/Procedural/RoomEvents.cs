@@ -39,7 +39,7 @@ public class RoomEvents : MonoBehaviour
         GameObject[] doors = GameObject.FindGameObjectsWithTag(DOOR);
         foreach (GameObject door in doors)
         {
-            door.GetComponent<Doors>().SetState(false);
+            door.GetComponent<Doors>().SetState(true);
         }
     }
 
@@ -49,7 +49,7 @@ public class RoomEvents : MonoBehaviour
         GameObject[] doors = GameObject.FindGameObjectsWithTag(DOOR);
         foreach (GameObject door in doors)
         {
-            door.GetComponent<Doors>().SetState(true);
+            door.GetComponent<Doors>().SetState(false);
         }
     }
 

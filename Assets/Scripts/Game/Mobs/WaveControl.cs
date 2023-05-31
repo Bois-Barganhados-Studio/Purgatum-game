@@ -5,18 +5,17 @@ using UnityEngine;
 public class WaveControl
 {
     #region Variaveis/Gettters/Setters
-    private int currentWave = 1, max_waves, min_waves,
-    min_enemies, max_enemies;
+    public static readonly int MAX_WAVES = 6, MIN_WAVES = 2,
+    MIN_ENEMIES = 4, MAX_ENEMIES = 12;
+    private int currentWave = 1;
     private static List<GameObject> loadedEnemiesObjects = new List<GameObject>();
     private static List<int> loadedEnemiesIndexes = new List<int>();
     private List<(int, string)> avaliableEnemies = new List<(int, string)> { (0, "Prefab/Game/Entities/Enemy"), (1, "Assets/Prefabs/Enemies/Enemy2") };
 
-    public WaveControl(int max_waves, int min_waves, int min_enemies, int max_enemies)
+    public WaveControl()
     {
-        this.max_waves = max_waves;
-        this.min_waves = min_waves;
-        this.min_enemies = min_enemies;
-        this.max_enemies = max_enemies;
+        // Carrega os inimigos previamente 
+        // (pode ser custoso e pode blockar a thread principal)
         if (loadedEnemiesObjects.Count == 0)
         {
             Debug.Log("LOADING ENEMY FROM DISK");
@@ -39,7 +38,7 @@ public class WaveControl
     public List<GameObject> GetEnemies(int enemyType)
     {
         List<GameObject> enemies = new List<GameObject>();
-        int enemiesCount = Random.Range(min_enemies, GetmaxEnemies()), targetEnemy = 0;
+        int enemiesCount = Random.Range(MIN_ENEMIES, GetMaxEnemies()), targetEnemy = 0;
         if (loadedEnemiesIndexes.Contains(enemyType))
         {
             targetEnemy = loadedEnemiesIndexes.IndexOf(enemyType);
@@ -60,18 +59,18 @@ public class WaveControl
     }
 
     //<sumary>
-    // maximo de inimigos por wave que podem ser spawnados
+    // Maximo de inimigos por wave que podem ser spawnados
     //</sumary>
-    public int GetmaxEnemies()
+    public int GetMaxEnemies()
     {
         int prob = Random.Range(1, currentWave);
-        if (prob == max_waves)
+        if (prob == MAX_WAVES)
         {
-            return max_enemies;
+            return MAX_ENEMIES;
         }
         else
         {
-            return (max_enemies - prob) < min_enemies ? min_enemies : (max_enemies - prob);
+            return (MAX_ENEMIES - prob) < MIN_ENEMIES ? MIN_ENEMIES : (MAX_ENEMIES - prob);
         }
     }
 
