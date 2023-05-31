@@ -466,7 +466,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 103164
+  m_InstanceId: 115918
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -536,13 +536,12 @@ GameObject:
   - component: {fileID: 5659482464161235371}
   - component: {fileID: 3924156742442498308}
   - component: {fileID: 4469709201389140452}
-  - component: {fileID: 6002802031062342352}
   - component: {fileID: 2032566955745865115}
   - component: {fileID: 3595077904967181560}
   - component: {fileID: 3236862270299870246}
   m_Layer: 0
   m_Name: Roof
-  m_TagString: DOOR
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -912,18 +911,6 @@ PolygonCollider2D:
       - {x: -0.16421366, y: 0.16268077}
       - {x: -0.00067430735, y: 0.08315748}
       - {x: 0.64264333, y: 0.40310562}
---- !u!114 &6002802031062342352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5668950998804681713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43b53233ef57bf418bed191bc8a8e2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2032566955745865115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,7 +937,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 103082
+  m_InstanceId: 115836
 --- !u!50 &3595077904967181560
 Rigidbody2D:
   serializedVersion: 4
@@ -2731,7 +2718,7 @@ MonoBehaviour:
   - {x: 0.9611037, y: 0.5595214, z: 0}
   m_ShapePathHash: -32510177
   m_Mesh: {fileID: 0}
-  m_InstanceId: 103112
+  m_InstanceId: 115866
 --- !u!1 &8883121206807870121
 GameObject:
   m_ObjectHideFlags: 0
