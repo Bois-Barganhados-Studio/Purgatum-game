@@ -1,38 +1,37 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public PlayerObject player;
-    
+    public Animator animator;
+
 
     private void Awake()
     {
-        player = GetComponent<PlayerObject>();
-    }
-
-    void Start()
-    {
-        
+        //player = GetComponent<PlayerObject>();
     }
 
     private void FixedUpdate()
     {
         if (player.IsUpdateDisabled)
             return;
-        if (player.getMoveState() == Entity.MoveState.MOVING || player.getMoveState() == Entity.MoveState.IDLE) {
-            player.rb.velocity = player.MoveVelocity();
-            FindObjectOfType<PlayerAnimation>().SetMoveDirection(player.getDirection());
-        } else if (player.getMoveState() == Entity.MoveState.DODGING) {
-            player.rb.velocity = player.DodgeVelocity();
-            FindObjectOfType<PlayerAnimation>().SetDodgeDirection(player.getFacingDir());
+        if (player.IsAttacking())
+        {
+            player.rb.MovePosition(player.rb.position + player.AttackVelocity() * Time.deltaTime);
         }
-        //if (player.isAttacking()) {
-        //    //FindObjectOfType<PlayerAnimation>().SetAttackDirection(player.getDirection());
-        //}
+        else if (player.GetMoveState() == Entity.MoveState.MOVING || player.GetMoveState() == Entity.MoveState.IDLE)
+        {
+            player.rb.MovePosition(player.rb.position + player.MoveVelocity() * Time.deltaTime);
+
+        }
+        else if (player.GetMoveState() == Entity.MoveState.DODGING)
+        {
+            player.rb.MovePosition(player.rb.position + player.DodgeVelocity() * Time.deltaTime);
+        }
+        animator.SetFloat("Horizontal", player.GetFacingDir().x);
+        animator.SetFloat("Vertical", player.GetFacingDir().y);
+        animator.SetFloat("Speed", player.MoveVelocity().sqrMagnitude);
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -55,7 +54,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) {
+        if (ctx.performed)
+        {
             player.Attack();
         }
     }
@@ -73,13 +73,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSwap(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            player.SwapWeapon();
+        }
+    }
+
     public void OnTest(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
             // Add whatever you want
             // test by pressing 'T'
-            
+            player.Test();
+
         }
     }
 }
