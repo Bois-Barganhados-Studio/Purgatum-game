@@ -574,7 +574,7 @@ TilemapRenderer:
   m_SortOrder: 3
   m_Mode: 1
   m_DetectChunkCullingBounds: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!50 &7470586908316895686
 Rigidbody2D:
   serializedVersion: 4
