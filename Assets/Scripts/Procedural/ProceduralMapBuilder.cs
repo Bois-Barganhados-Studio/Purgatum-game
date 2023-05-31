@@ -26,9 +26,9 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
     private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
     private const string DIVIDER = "_";
-    private const float G_NODE_SIZE = 0.4f;
+    private const float G_NODE_SIZE = 0.55f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20;
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20, SPAWN_CHANCE = 3;
     private static readonly string[] styles = { "STONE", "FIRE" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR_VERTICAL = "DOOR_VERTICAL", DOOR_HORIZONTAL = "DOOR_HORIZONTAL", PLAIN = "PLAIN_GROUND";
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
@@ -216,7 +216,7 @@ public class ProceduralMapBuilder : MonoBehaviour
                                 if (groundChoice.Item1)
                                 {
                                     path = PLAIN + DIVIDER + styles[roomStyle];
-                                    if (numberOfSpawns > 0 && delaySpawn == 0 && Random.Range(0, 4) == 1)
+                                    if (numberOfSpawns > 0 && delaySpawn == 0 && Random.Range(0, SPAWN_CHANCE) == 1)
                                     {
                                         isSpawnPoint = true;
                                         numberOfSpawns--;

@@ -192,7 +192,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: 84378
+  m_InstanceId: 84750
 --- !u!1 &1743739245387541135
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.19
+  radius: 0.2
   height: 2
   canMove: 1
   maxSpeed: 0.8
