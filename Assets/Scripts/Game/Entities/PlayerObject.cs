@@ -57,7 +57,7 @@ public class PlayerObject : MonoBehaviour
     {
         if (player.CurrentMoveState == Entity.MoveState.MOVING)
         {
-            player.soundController.PlaySoundEffect("player_step");            
+            player.soundController.PlaySoundEffect("player_step");
         }
     }
 
@@ -224,13 +224,6 @@ public class PlayerObject : MonoBehaviour
             player.AttackingCD = false;
         }, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
     }
-
-    private void FixedUpdate()
-    {
-        
-    }
-
-    private static bool teste = false;
 
     public void TakeAttack(Weapon eWeapon, Vector2 enemyFacingDir)
     {

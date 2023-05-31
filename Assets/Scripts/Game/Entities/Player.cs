@@ -6,6 +6,7 @@ public class Player : Entity
     public const int LAYER = 6;
 
     public Player()
+        : base()
     {
         MainWeapon = new Weapon(0, 300f, 0.25f, 3f);
         SubWeapon = null;
