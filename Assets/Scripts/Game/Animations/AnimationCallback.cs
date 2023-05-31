@@ -16,11 +16,6 @@ public class AnimationCallback : MonoBehaviour
         po.EndDeath();
     }
 
-    void EndAttack()
-    {
-        po.EndAttack();
-    }
-
     // Initializing
     void Awake()
     {

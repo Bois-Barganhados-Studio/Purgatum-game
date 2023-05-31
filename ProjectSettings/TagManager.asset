@@ -42,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: shadows
+    uniqueID: 4081816161
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
