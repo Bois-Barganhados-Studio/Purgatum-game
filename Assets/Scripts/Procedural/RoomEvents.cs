@@ -72,4 +72,8 @@ public class RoomEvents : MonoBehaviour
     {
         Debug.Log("Acendeu Luzes!");
     }
+
+    public bool IsVisited(){
+        return visited;
+    }
 }

@@ -13,6 +13,13 @@ public class Despawner : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        foreach(RoomEvents room in GameObject.FindObjectsOfType<RoomEvents>()){
+            if(!room.IsVisited()){
+                Debug.Log("Sala não completa ainda!");
+                return;
+            }
+        }
+        Debug.Log("Todas as salas foram completas!");
         if (other.gameObject.CompareTag("Player"))
         {
             //todo: perguntar se o player quer sair
@@ -24,6 +31,6 @@ public class Despawner : MonoBehaviour
     private IEnumerator DespawnPlayer()
     {
         yield return new WaitForSeconds(this.timeToDespawn);
-        RogueLikeController.OnGoingToNextLevel();
+        GameObject.FindObjectOfType<RogueLikeController>().OnGoingToNextLevel();
     }
 }
