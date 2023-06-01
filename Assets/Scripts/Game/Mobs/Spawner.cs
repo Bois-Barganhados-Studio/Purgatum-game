@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     private float spawnTime = 6f;
     private bool isSpawning = false;
     public event System.Action<Spawner> OnSpawnsFinished;
-    private const int MAX_SPAWN_RANGE = 20, MIN_SPAWN_RANGE = -20;
+    private const int MAX_SPAWN_RANGE = 15, MIN_SPAWN_RANGE = -15;
     private Vector2 rangeEnemyPos = Vector2.zero;
     private bool isCommander = false;
 

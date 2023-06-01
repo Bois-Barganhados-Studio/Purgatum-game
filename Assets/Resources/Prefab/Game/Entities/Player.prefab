@@ -292,7 +292,7 @@ MonoBehaviour:
   - {x: -0.07737065, y: -0.24630079, z: 0}
   m_ShapePathHash: -1259489887
   m_Mesh: {fileID: 0}
-  m_InstanceId: 97206
+  m_InstanceId: 41616
 --- !u!1 &4928372898166009846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 61924bf3
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
