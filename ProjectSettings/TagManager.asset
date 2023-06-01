@@ -8,7 +8,7 @@ TagManager:
   - Enemy
   - HUD
   - DOOR
-  - LIGHTS
+  - LIGHT
   layers:
   - Default
   - TransparentFX

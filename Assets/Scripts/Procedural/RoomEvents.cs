@@ -15,7 +15,6 @@ public class RoomEvents : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D colliderElement)
     {
-        Debug.Log("Something entered the room! " + colliderElement.gameObject.name + " " + colliderElement.gameObject.layer + "!");
         if (!visited && Player.LAYER == colliderElement.gameObject.layer)
         {
             Debug.Log("Player entered the room!");
