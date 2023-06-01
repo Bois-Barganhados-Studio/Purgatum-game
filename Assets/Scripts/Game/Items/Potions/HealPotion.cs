@@ -13,7 +13,7 @@ public class HealPotion : Potion, IItem
         HealPct = Potion.BASE_PCT * ((int)lvl);
     }
 
-    public virtual void Effect(PlayerObject p)
+    public override void Effect(PlayerObject p)
     {
         p.Heal(HealPct);
     }

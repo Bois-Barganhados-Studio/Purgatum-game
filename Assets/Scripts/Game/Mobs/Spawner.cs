@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     private float spawnTime = 6f;
     private bool isSpawning = false;
     public event System.Action<Spawner> OnSpawnsFinished;
-    private const int MAX_SPAWN_RANGE = 15, MIN_SPAWN_RANGE = -15;
+    private const int MAX_SPAWN_RANGE = 20, MIN_SPAWN_RANGE = -20;
     private Vector2 rangeEnemyPos = Vector2.zero;
     private bool isCommander = false;
 
@@ -37,7 +37,6 @@ public class Spawner : MonoBehaviour
     public void SetCommander(bool isCommander)
     {
         this.isCommander = isCommander;
-        Debug.Log(isCommander ? "COMMANDER" : "DEFAULT");
     }
 
     public bool IsCommander()
@@ -90,7 +89,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator WaitForEnemiesDestroyed()
     {
-        while (transform.childCount - 1 > 0)
+        while (transform.childCount - 2 > 0)
         {
             yield return null;
         }
