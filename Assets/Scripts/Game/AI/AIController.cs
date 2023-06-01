@@ -351,6 +351,7 @@ public class AIController
         }
 
         WorldData worldData = new WorldData(levelData, enemyType);
+        worldData = this.FilterWorldData(worldData);
         return worldData;
     }
 
