@@ -8,7 +8,7 @@ public class RoomEvents : MonoBehaviour
     public int ROOM = 0;
     private List<Spawner> avaliableSpawns;
     private SpawnManager spawnManager;
-    private const string DOOR = "DOOR";
+    private const string DOOR = "DOOR", LIGHT = "LIGHT";
     public void SetAvaliableSpawns(List<Spawner> avaliableSpawns)
     {
         this.avaliableSpawns = avaliableSpawns;
@@ -69,6 +69,11 @@ public class RoomEvents : MonoBehaviour
     private void TurnOnLights()
     {
         Debug.Log("Acendeu Luzes!");
+        GameObject[] lights = GameObject.FindGameObjectsWithTag(LIGHT);
+        foreach (GameObject light in lights)
+        {
+            light.GetComponent<Torch>().TurnTorch(true);
+        }
     }
 
     public bool IsVisited()

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Torch : MonoBehaviour
 {
-  public void turnOn()
-  {
-    gameObject.transform.GetChild(1).gameObject.SetActive(true);
+  private float timer = 1.2f;
+  private bool state = false;
+  public void TurnTorch(bool state){
+    this.state = state;
+    StartCoroutine(SetTorch(state));
   }
-
-  public void turnOff()
-  {
-    gameObject.transform.GetChild(1).gameObject.SetActive(false);
+  private IEnumerator SetTorch(bool state){
+    yield return new WaitForSeconds(timer);
+    gameObject.transform.GetChild(1).gameObject.SetActive(state);
   }
+  
 }

@@ -700,18 +700,22 @@ CompositeCollider2D:
         Y: -2408933
   - m_Collider: {fileID: 106696295601623598}
     m_ColliderPaths:
-    - - X: 16016484
-        Y: 2005096
+    - - X: 15596312
+        Y: 2355240
       - X: 16090704
         Y: 1575860
       - X: 17761930
         Y: 977419
       - X: 18269022
         Y: 1103074
-      - X: 19393248
-        Y: 2368634
-      - X: 17773504
-        Y: 1331483
+      - X: 19347770
+        Y: 1665866
+      - X: 18447856
+        Y: 3243996
+      - X: 18999606
+        Y: 1861177
+      - X: 17528402
+        Y: 1261455
   - m_Collider: {fileID: 4697106060596527120}
     m_ColliderPaths:
     - - X: 10098622
@@ -732,11 +736,13 @@ CompositeCollider2D:
       - {x: 0.8608749, y: 0.6554109}
       - {x: 0.8663026, y: 0.606389}
     - - {x: 1.7761856, y: 0.0977445}
-      - {x: 1.8269074, y: 0.1103134}
-      - {x: 1.939057, y: 0.236692}
-      - {x: 1.777338, y: 0.133153}
-      - {x: 1.6016585, y: 0.2004516}
-      - {x: 1.609085, y: 0.1575807}
+      - {x: 1.8269048, y: 0.1103089}
+      - {x: 1.934762, y: 0.1666133}
+      - {x: 1.8450357, y: 0.3237733}
+      - {x: 1.8999338, y: 0.1861069}
+      - {x: 1.7528291, y: 0.1261518}
+      - {x: 1.5597174, y: 0.2353882}
+      - {x: 1.6090788, y: 0.15758291}
     - - {x: -0.0036712, y: 0.0799494}
       - {x: 0.1543522, y: 0.1593759}
       - {x: 0.004724, y: 0.16864501}
@@ -789,7 +795,7 @@ MonoBehaviour:
   - {x: -0.0037481785, y: 0.077154696, z: 0}
   m_ShapePathHash: -1780162242
   m_Mesh: {fileID: 0}
-  m_InstanceId: 116242
+  m_InstanceId: 98516
 --- !u!60 &106696295601623598
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -815,12 +821,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.6016484, y: 0.20050961}
+    - - {x: 1.5596312, y: 0.23552404}
       - {x: 1.6090704, y: 0.15758607}
       - {x: 1.7761929, y: 0.0977419}
       - {x: 1.8269023, y: 0.110307485}
-      - {x: 1.9393249, y: 0.23686348}
-      - {x: 1.7773504, y: 0.13314837}
+      - {x: 1.934777, y: 0.16658661}
+      - {x: 1.8447857, y: 0.3243996}
+      - {x: 1.8999605, y: 0.18611771}
+      - {x: 1.7528403, y: 0.12614551}
 --- !u!60 &4697106060596527120
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -875,7 +883,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4454434806130677324}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.039727114, w: 0.9992106}
   m_LocalPosition: {x: 0.189, y: 0.254, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -951,7 +959,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.093996786
-  m_PointLightOuterRadius: 0.51
+  m_PointLightOuterRadius: 0.47067398
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
