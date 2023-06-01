@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6170829040715721058}
   - component: {fileID: 3005586358267864944}
   - component: {fileID: 1638595391889789727}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 8828695845500779630}
   - component: {fileID: 6891443465993236909}
   - component: {fileID: 3514949726412242781}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colums
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 6200281362548655492}
   - component: {fileID: 1254182187358101910}
   - component: {fileID: 8755313278452185499}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3396,7 +3396,7 @@ MonoBehaviour:
   - {x: -0.3085969, y: -0.8893045, z: 0}
   m_ShapePathHash: -892921076
   m_Mesh: {fileID: 0}
-  m_InstanceId: 126478
+  m_InstanceId: 47142
 --- !u!1 &6161273081866168499
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,7 +3459,7 @@ GameObject:
   - component: {fileID: 6559533637835416742}
   - component: {fileID: 8477409669892390375}
   - component: {fileID: 8061186909073149249}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
