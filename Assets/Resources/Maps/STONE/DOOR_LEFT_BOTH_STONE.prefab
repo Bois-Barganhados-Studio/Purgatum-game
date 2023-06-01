@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6482792271060820859}
   - component: {fileID: 8501183819083479207}
   - component: {fileID: 1143706014353770932}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ MonoBehaviour:
   - {x: 0.956244, y: 0.55992985, z: 0}
   m_ShapePathHash: 1591828511
   m_Mesh: {fileID: 0}
-  m_InstanceId: 151544
+  m_InstanceId: 47562
 --- !u!50 &8501183819083479207
 Rigidbody2D:
   serializedVersion: 4
@@ -887,7 +887,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 151570
+  m_InstanceId: 47588
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4
@@ -2577,7 +2577,7 @@ GameObject:
   - component: {fileID: 3045090927626160009}
   - component: {fileID: 6098651537189161850}
   - component: {fileID: 4797191826423271678}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall SW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3230,7 +3230,7 @@ GameObject:
   - component: {fileID: 1967822118182764869}
   - component: {fileID: 4573722030034661594}
   - component: {fileID: 5074130613066888585}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall NE
   m_TagString: Untagged
   m_Icon: {fileID: 0}

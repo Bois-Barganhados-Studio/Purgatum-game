@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3601962969558455191}
   - component: {fileID: 7775186821039510994}
   m_Layer: 10
-  m_Name: Barrel
+  m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00052534044, y: -0.07265045}
+  m_Offset: {x: 0.047899514, y: -0.03954166}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -59,7 +59,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.17372629, y: 0.06659179}
+  m_Size: {x: 0.54290015, y: 0.46607208}
   m_EdgeRadius: 0
 --- !u!114 &7775186821039510994
 MonoBehaviour:
@@ -146,7 +146,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2112437302, guid: 29ee93a926337b840b90411dec49a978, type: 3}
+  m_Sprite: {fileID: -441170478, guid: d5e4190e5842a1b47ae2b6fa57892981, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

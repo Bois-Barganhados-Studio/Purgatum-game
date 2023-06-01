@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3203139729509904198}
   - component: {fileID: 1853971084664782242}
   - component: {fileID: 5170082486969765839}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   - {x: 0.956244, y: 0.55992985, z: 0}
   m_ShapePathHash: 1591828511
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47910
+  m_InstanceId: 48322
 --- !u!50 &1853971084664782242
 Rigidbody2D:
   serializedVersion: 4
@@ -941,7 +941,7 @@ MonoBehaviour:
   - {x: 0.6425647, y: 0.40309018, z: 0}
   m_ShapePathHash: -448651470
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47954
+  m_InstanceId: 48358
 --- !u!50 &7617875194987524611
 Rigidbody2D:
   serializedVersion: 4

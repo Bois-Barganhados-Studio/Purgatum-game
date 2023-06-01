@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 5649142951030567339}
   - component: {fileID: 343121926746649148}
   - component: {fileID: 7973899135637100051}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2576,7 +2576,7 @@ MonoBehaviour:
   - {x: 0.16024418, y: -0.31904432, z: 0}
   m_ShapePathHash: -1249884254
   m_Mesh: {fileID: 0}
-  m_InstanceId: 114630
+  m_InstanceId: 50880
 --- !u!114 &8336747796558547419
 MonoBehaviour:
   m_ObjectHideFlags: 0
