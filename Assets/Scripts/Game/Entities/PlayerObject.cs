@@ -213,7 +213,7 @@ public class PlayerObject : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
         foreach (var e in enemies)
         {
-            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
+            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.FacingDirection);
         }
         // TODO - Get exact functions to call
         //Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
@@ -355,12 +355,12 @@ public class PlayerObject : MonoBehaviour
 
     public void UpdateWeaponVFX(Sprite[] newvfx)
     {
-        if (actionPointsSR[0].sprite == newvfx[0])
-            return;
-        for (int i = 0; i < actionPointsSR.Length; i++)
-        {
-            actionPointsSR[i].sprite = newvfx[i];
-        }
+        //if (actionPointsSR[0].sprite == newvfx[0])
+        //    return;
+        //for (int i = 0; i < actionPointsSR.Length; i++)
+        //{
+        //    actionPointsSR[i].sprite = newvfx[i];
+        //}
     }
 
     private void CollectItem(ItemObject item)
@@ -396,8 +396,8 @@ public class PlayerObject : MonoBehaviour
 
     public void Test()
     {
-        player.Hp = 100;
-        UpdateHealthBar();
+        // player.Hp = 100;
+        // UpdateHealthBar();
         // Working potion spawn test
         //var prefab = Resources.Load<GameObject>("Prefab/Game/Entities/Item");
         //if (prefab != null)
@@ -414,6 +414,12 @@ public class PlayerObject : MonoBehaviour
         //}
 
         //DropGenerator.GenerateDrop(69, 1);
+        // var items = DropGenerator.GenerateDrop(69, 1);
+        // foreach (var i in items)
+        // {
+        //     i.gameObject.transform.position = this.transform.position;
+        //     i.gameObject.SetActive(true);
+        // }
     }
 
     public int DirectionToIndex(Vector2 _direction)

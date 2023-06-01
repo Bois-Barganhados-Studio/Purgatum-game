@@ -22,7 +22,6 @@ public class Doors : MonoBehaviour
 
     private void DoAnimation()
     {
-        Debug.Log("Do animation! " + openned);
         if (doorComponent != null)
         {
             doorComponent.GetComponent<PolygonCollider2D>().enabled = !openned;

@@ -180,6 +180,8 @@ public class RogueLogic
             }
             else if (level < MAX_LEVELS)
             {
+                loading = GameObject.FindObjectOfType<LoadingScreen>();
+                loading.LoadNextLevel();
                 await StartNewProceduralLevel(boot: false);
             }
             else if (level == BOSS_INDEX)
