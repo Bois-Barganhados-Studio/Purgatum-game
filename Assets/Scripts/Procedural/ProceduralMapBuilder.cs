@@ -88,7 +88,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         levelRenderer = new RenderLevel();
         if (debugWorld)
         {
-             ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());
+            ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());
             Debug.Log("DEBUG STARTED");
             if (await BuildTerrainAsync())
             {
@@ -348,7 +348,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         if (groundCounter == randFactor)
         {
             groundCounter++;
-            return (false, Random.Range(1, groundsSize));
+            return (false, Random.Range(1, groundsSize + 1));
         }
         if (groundCounter == plainsSize)
         {
