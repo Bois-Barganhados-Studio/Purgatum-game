@@ -8,14 +8,13 @@ public class RoomEvents : MonoBehaviour
     public int ROOM = 0;
     private List<Spawner> avaliableSpawns;
     private SpawnManager spawnManager;
-    private const string DOOR = "DOOR";
+    private const string DOOR = "DOOR", LIGHT = "LIGHT";
     public void SetAvaliableSpawns(List<Spawner> avaliableSpawns)
     {
         this.avaliableSpawns = avaliableSpawns;
     }
     private void OnTriggerEnter2D(Collider2D colliderElement)
     {
-        Debug.Log("Something entered the room! " + colliderElement.gameObject.name + " " + colliderElement.gameObject.layer + "!");
         if (!visited && Player.LAYER == colliderElement.gameObject.layer)
         {
             Debug.Log("Player entered the room!");
@@ -55,7 +54,6 @@ public class RoomEvents : MonoBehaviour
 
     private void SpawnMobs()
     {
-        Debug.Log("AV spawns: " + avaliableSpawns.Count);
         if (avaliableSpawns != null)
         {
             foreach (Spawner spawn in avaliableSpawns)
@@ -64,16 +62,21 @@ public class RoomEvents : MonoBehaviour
             }
             spawnManager = new SpawnManager(avaliableSpawns);
             spawnManager.OnAllSpawnsFinished += TurnOffDoors;
-            Debug.Log("Spawnou Mobs!");
         }
     }
 
     private void TurnOnLights()
     {
         Debug.Log("Acendeu Luzes!");
+        GameObject[] lights = GameObject.FindGameObjectsWithTag(LIGHT);
+        foreach (GameObject light in lights)
+        {
+            light.GetComponent<Torch>().TurnTorch(true);
+        }
     }
 
-    public bool IsVisited(){
+    public bool IsVisited()
+    {
         return visited;
     }
 }

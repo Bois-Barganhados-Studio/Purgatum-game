@@ -3,92 +3,92 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerObject player;
-    public Animator animator;
+  public PlayerObject player;
+  public Animator animator;
 
 
-    private void Awake()
+  private void Awake()
+  {
+    //player = GetComponent<PlayerObject>();
+  }
+
+  private void FixedUpdate()
+  {
+    if (player.IsUpdateDisabled)
+      return;
+    if (player.IsAttacking())
     {
-        //player = GetComponent<PlayerObject>();
+      player.rb.MovePosition(player.rb.position + player.AttackVelocity() * Time.deltaTime);
     }
-
-    private void FixedUpdate()
+    else if (player.GetMoveState() == Entity.MoveState.MOVING || player.GetMoveState() == Entity.MoveState.IDLE)
     {
-        if (player.IsUpdateDisabled)
-            return;
-        if (player.IsAttacking())
-        {
-            player.rb.MovePosition(player.rb.position + player.AttackVelocity() * Time.deltaTime);
-        }
-        else if (player.GetMoveState() == Entity.MoveState.MOVING || player.GetMoveState() == Entity.MoveState.IDLE)
-        {
-            player.rb.MovePosition(player.rb.position + player.MoveVelocity() * Time.deltaTime);
+      player.rb.MovePosition(player.rb.position + player.MoveVelocity() * Time.deltaTime);
 
-        }
-        else if (player.GetMoveState() == Entity.MoveState.DODGING)
-        {
-            player.rb.MovePosition(player.rb.position + player.DodgeVelocity() * Time.deltaTime);
-        }
-        animator.SetFloat("Horizontal", player.GetFacingDir().x);
-        animator.SetFloat("Vertical", player.GetFacingDir().y);
-        animator.SetFloat("Speed", player.MoveVelocity().sqrMagnitude);
     }
-
-    public void OnMove(InputAction.CallbackContext ctx)
+    else if (player.GetMoveState() == Entity.MoveState.DODGING)
     {
-        player.Move(ctx.ReadValue<Vector2>());
+      player.rb.MovePosition(player.rb.position + player.DodgeVelocity() * Time.deltaTime);
     }
+    animator.SetFloat("Horizontal", player.GetFacingDir().x);
+    animator.SetFloat("Vertical", player.GetFacingDir().y);
+    animator.SetFloat("Speed", player.MoveVelocity().sqrMagnitude);
+  }
 
-    public void OnDodge(InputAction.CallbackContext ctx)
+  public void OnMove(InputAction.CallbackContext ctx)
+  {
+    player.Move(ctx.ReadValue<Vector2>());
+  }
+
+  public void OnDodge(InputAction.CallbackContext ctx)
+  {
+    if (ctx.performed)
     {
-        if (ctx.performed)
-        {
-            player.Dodge();
-        }
+      player.Dodge();
     }
+  }
 
-    public void EndDodge()
+  public void EndDodge()
+  {
+    player.EndDodge();
+  }
+
+  public void OnAttack(InputAction.CallbackContext ctx)
+  {
+    if (ctx.performed)
     {
-        player.EndDodge();
+      player.Attack();
     }
+  }
 
-    public void OnAttack(InputAction.CallbackContext ctx)
+  public void EndAttack()
+  {
+    player.EndAttack();
+  }
+
+  public void OnCollect(InputAction.CallbackContext ctx)
+  {
+    if (ctx.performed)
     {
-        if (ctx.performed)
-        {
-            player.Attack();
-        }
+      player.Collect();
     }
+  }
 
-    public void EndAttack()
+  public void OnSwap(InputAction.CallbackContext ctx)
+  {
+    if (ctx.performed)
     {
-        player.EndAttack();
+      player.SwapWeapon();
     }
+  }
 
-    public void OnCollect(InputAction.CallbackContext ctx)
+  public void OnTest(InputAction.CallbackContext ctx)
+  {
+    if (ctx.performed)
     {
-        if (ctx.performed)
-        {
-            player.Collect();
-        }
-    }
+      // Add whatever you want
+      // test by pressing 'T'
+      player.Test();
 
-    public void OnSwap(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            player.SwapWeapon();
-        }
     }
-
-    public void OnTest(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            // Add whatever you want
-            // test by pressing 'T'
-            player.Test();
-
-        }
-    }
+  }
 }

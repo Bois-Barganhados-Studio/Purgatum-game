@@ -8,7 +8,7 @@ public class Player : Entity
     public Player()
         : base()
     {
-        MainWeapon = new Weapon(0, 300f, 0.25f, 3f);
+        MainWeapon = new Weapon(0, 3f, 0.1f, 3f);
         SubWeapon = null;
     }
 
@@ -29,13 +29,6 @@ public class Player : Entity
     {
         set { dodgingCD = value; }
         get { return dodgingCD; }
-    }
-
-    private bool attackingCD;
-    public bool AttackingCD
-    {
-        set { attackingCD = value; }
-        get { return attackingCD; }
     }
 
     private Weapon mainWeapon;
@@ -59,7 +52,7 @@ public class Player : Entity
 
     public bool CanAttack()
     {
-        return (!IsAttacking && !attackingCD && CurrentMoveState != Entity.MoveState.DODGING);
+        return (!IsAttacking && !AttackingCD && CurrentMoveState != Entity.MoveState.DODGING);
     }
 
     public bool CanCollect()
@@ -109,4 +102,11 @@ public class Player : Entity
             Strength = Strength;
         }, duration);
     }
+
+    public void Revive()
+    {
+        Hp = MaxHp;
+        IsDead = false;
+    }   
+
 }

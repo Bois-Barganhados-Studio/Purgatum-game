@@ -83,6 +83,13 @@ public abstract class Entity
         return true;
     }
 
+    private bool attackingCD;
+    public bool AttackingCD
+    {
+        set { attackingCD = value; }
+        get { return attackingCD; }
+    }
+
     #endregion
 
     #region Stats
@@ -196,6 +203,7 @@ public abstract class Entity
         IsDead = false;
         soundController = GameObject.FindObjectOfType<SoundControl>();
         FacingDirection = new Vector2(0, 1);
+        AttackingCD = false;
     }
    
 

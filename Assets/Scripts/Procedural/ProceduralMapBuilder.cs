@@ -28,9 +28,10 @@ public class ProceduralMapBuilder : MonoBehaviour
     private const string DIVIDER = "_";
     private const float G_NODE_SIZE = 0.55f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20, SPAWN_CHANCE = 3;
-    private static readonly string[] styles = { "STONE", "FIRE" };
-    private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", DOOR_VERTICAL = "DOOR_VERTICAL", DOOR_HORIZONTAL = "DOOR_HORIZONTAL", PLAIN = "PLAIN_GROUND";
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20, SPAWN_CHANCE = 2;
+    private static readonly string[] styles = { "STONE", "FIRE", "GRASS" };
+    private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", PLAIN = "PLAIN_GROUND";
+    private static readonly string[] DOORS = new string[8] { "DOOR_LEFT_BOTH", "DOOR_LEFT_FIRST", "DOOR_LEFT_LAST", "DOOR_LEFT_MIDDLE", "DOOR_RIGHT_BOTH", "DOOR_RIGHT_FIRST", "DOOR_RIGHT_LAST", "DOOR_RIGHT_MIDDLE" };
     private static readonly string[] wallsName = { "SE", "NE", "SW", "NW", "S", "E", "W", "N" };
     private int groundCounter = 1;
     private int groundsSize = 0, plainsSize = 0;
@@ -513,6 +514,8 @@ public class ProceduralMapBuilder : MonoBehaviour
                 default:
                     break;
             }
+            bool allSequencial = true;
+            int option = 0;
             //Quando por portas first e last adicionar paredes adjacentes (SE,SW,NE,NW)
             if (targets.Count >= DOORS_LIMIT)
             {
@@ -520,54 +523,298 @@ public class ProceduralMapBuilder : MonoBehaviour
                 for (int i = divider; i < targets.Count - divider; i++)
                 {
                     (int, int) block = targets[i];
-                    if (intersection == 1)
+                    if (i == divider)
                     {
-                        room1.UpdateBlock(DOOR_VERTICAL, block.Item1);
-                        room2.UpdateBlock(GROUND, block.Item2);
-
+                        option = 1;
                     }
-                    else if (intersection == 2)
+                    else if (i == (targets.Count - divider) - 1)
                     {
-                        room1.UpdateBlock(GROUND, block.Item1);
-                        room2.UpdateBlock(DOOR_VERTICAL, block.Item2);
-                    }
-                    else if (intersection == 3)
-                    {
-                        room1.UpdateBlock(GROUND, block.Item1);
-                        room2.UpdateBlock(DOOR_HORIZONTAL, block.Item2);
+                        option = 2;
                     }
                     else
                     {
-                        room1.UpdateBlock(DOOR_HORIZONTAL, block.Item1);
-                        room2.UpdateBlock(GROUND, block.Item2);
+                        option = 3;
                     }
+                    UpdateDoors(room1, room2, intersection, block, option);
                 }
             }
             else
             {
-                foreach ((int, int) block in targets)
+                if (targets.Count == 1)
                 {
-                    if (intersection == 1)
+                    (int, int) block = targets[0];
+                    option = 0;
+                    UpdateDoors(room1, room2, intersection, block, option);
+                }
+                else if (targets.Count == 2)
+                {
+                    option = -1;
+                    for (int i = 0; i < targets.Count; i++)
                     {
-                        room1.UpdateBlock(DOOR_VERTICAL, block.Item1);
-                        room2.UpdateBlock(GROUND, block.Item2);
+                        (int, int) block = targets[i];
+                        UpdateDoors(room1, room2, intersection, block, option, i);
                     }
-                    else if (intersection == 2)
+                }
+                else
+                {
+                    int lastValue = -1;
+                    foreach ((int, int) block in targets)
                     {
-                        room1.UpdateBlock(GROUND, block.Item1);
-                        room2.UpdateBlock(DOOR_VERTICAL, block.Item2);
+                        if (lastValue != -1)
+                        {
+                            if (!((block.Item1 == lastValue + 1) || (block.Item1 == lastValue + 20)))
+                            {
+                                allSequencial = false;
+                                break;
+                            }
+                        }
+
+                        lastValue = block.Item1;
                     }
-                    else if (intersection == 3)
+                    if (!allSequencial)
                     {
-                        room1.UpdateBlock(GROUND, block.Item1);
-                        room2.UpdateBlock(DOOR_HORIZONTAL, block.Item2);
+                        List<int> newTargets = new List<int>();
+                        lastValue = -1;
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            newTargets.Add(i);
+                            (int, int) block = targets[i];
+                            if (lastValue != -1)
+                            {
+                                int difference = block.Item1 - lastValue;
+                                if (difference == 1 || difference == 20)
+                                {
+                                    lastValue = block.Item1;
+                                }
+                                else
+                                {
+                                    ProcessTargets(room1, room2, intersection, targets, newTargets, i);
+                                    newTargets.Clear();
+                                    newTargets.Add(i);
+                                    lastValue = targets[i].Item1;
+                                }
+                            }
+                            else
+                            {
+                                lastValue = block.Item1;
+                            }
+                        }
+                        ProcessTargets(room1, room2, intersection, targets, newTargets, targets.Count);
+                    }
+                }
+                if (allSequencial)
+                {
+                    for (int i = 0; i < targets.Count; i++)
+                    {
+                        (int, int) block = targets[i];
+                        if (i == 0)
+                        {
+                            option = 1;
+                        }
+                        else if (i == targets.Count - 1)
+                        {
+                            option = 2;
+                        }
+                        else
+                        {
+                            option = 3;
+                        }
+                        UpdateDoors(room1, room2, intersection, block, option, option == -1 ? i : -1);
+                    }
+                    allSequencial = false;
+                }
+            }
+        }
+    }
+
+
+    void ProcessTargets(Room room1, Room room2, int intersection, List<(int, int)> targets, List<int> newTargets, int atIndex)
+    {
+        if (targets.Count == atIndex ? newTargets.Count == 1 : newTargets.Count == 2)
+        {
+            int index = newTargets[0];
+            (int, int) block = targets[index];
+            int option = 0;
+            UpdateDoors(room1, room2, intersection, block, option);
+        }
+        else if (targets.Count == atIndex ? newTargets.Count == 2 : newTargets.Count == 3)
+        {
+            int option = -1, sz = targets.Count == atIndex ? newTargets.Count : newTargets.Count - 1;
+            for (int j = 0; j < sz; j++)
+            {
+                int index = newTargets[j];
+                (int, int) block = targets[index];
+                UpdateDoors(room1, room2, intersection, block, option, j);
+            }
+        }
+        else
+        {
+            for (int j = 0; j < newTargets.Count - 1; j++)
+            {
+                int index = newTargets[j];
+                (int, int) block = targets[index];
+                int option;
+                if (j == 0)
+                {
+                    option = 1;
+                }
+                else if (j == newTargets.Count - 2)
+                {
+                    option = 2;
+                }
+                else
+                {
+                    option = 3;
+                }
+                UpdateDoors(room1, room2, intersection, block, option, option == -1 ? j : -1);
+            }
+        }
+    }
+
+    private void UpdateDoors(Room room1, Room room2, int intersection, (int, int) block, int option, int secondIndex = -1)
+    {
+        if (intersection == 1)
+        {
+            switch (option)
+            {
+                case -1:
+                    if (secondIndex == 0)
+                    {
+                        room1.UpdateBlock("WALL_SW", block.Item1);
+                        room2.UpdateBlock(DOORS[2], block.Item2);
                     }
                     else
                     {
-                        room1.UpdateBlock(DOOR_HORIZONTAL, block.Item1);
-                        room2.UpdateBlock(GROUND, block.Item2);
+                        room1.UpdateBlock("WALL_NE", block.Item1);
+                        room2.UpdateBlock(DOORS[1], block.Item2);
                     }
-                }
+                    break;
+                case 0:
+                    room1.UpdateBlock(DOORS[0], block.Item1);
+                    room2.UpdateBlock(DOORS[0], block.Item2);
+                    break;
+                case 1:
+                    room1.UpdateBlock("WALL_SW", block.Item1);
+                    room2.UpdateBlock(DOORS[2], block.Item2);
+                    break;
+                case 2:
+                    room1.UpdateBlock("WALL_NE", block.Item1);
+                    room2.UpdateBlock(DOORS[1], block.Item2);
+                    break;
+                case 3:
+                    room1.UpdateBlock(GROUND, block.Item1);
+                    room2.UpdateBlock(DOORS[3], block.Item2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (intersection == 2)
+        {
+            switch (option)
+            {
+                case -1:
+                    if (secondIndex == 0)
+                    {
+                        room1.UpdateBlock(DOORS[2], block.Item1);
+                        room2.UpdateBlock("WALL_SW", block.Item2);
+                    }
+                    else
+                    {
+                        room1.UpdateBlock(DOORS[1], block.Item1);
+                        room2.UpdateBlock("WALL_NE", block.Item2);
+                    }
+                    break;
+                case 0:
+                    room1.UpdateBlock(DOORS[0], block.Item1);
+                    room2.UpdateBlock(DOORS[0], block.Item2);
+                    break;
+                case 1:
+                    room1.UpdateBlock(DOORS[2], block.Item1);
+                    room2.UpdateBlock("WALL_SW", block.Item2);
+                    break;
+                case 2:
+                    room1.UpdateBlock(DOORS[1], block.Item1);
+                    room2.UpdateBlock("WALL_NE", block.Item2);
+                    break;
+                case 3:
+                    room1.UpdateBlock(DOORS[3], block.Item1);
+                    room2.UpdateBlock(GROUND, block.Item2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (intersection == 3)
+        {
+            switch (option)
+            {
+                case -1:
+                    if (secondIndex == 0)
+                    {
+                        room1.UpdateBlock("WALL_SE", block.Item1);
+                        room2.UpdateBlock(DOORS[6], block.Item2);
+                    }
+                    else
+                    {
+                        room1.UpdateBlock("WALL_NW", block.Item1);
+                        room2.UpdateBlock(DOORS[5], block.Item2);
+                    }
+                    break;
+                case 0:
+                    room1.UpdateBlock(DOORS[4], block.Item1);
+                    room2.UpdateBlock(DOORS[4], block.Item2);
+                    break;
+                case 1:
+                    room1.UpdateBlock("WALL_SE", block.Item1);
+                    room2.UpdateBlock(DOORS[6], block.Item2);
+                    break;
+                case 2:
+                    room1.UpdateBlock("WALL_NW", block.Item1);
+                    room2.UpdateBlock(DOORS[5], block.Item2);
+                    break;
+                case 3:
+                    room1.UpdateBlock(GROUND, block.Item1);
+                    room2.UpdateBlock(DOORS[7], block.Item2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            switch (option)
+            {
+                case -1:
+                    if (secondIndex == 0)
+                    {
+                        room1.UpdateBlock(DOORS[6], block.Item1);
+                        room2.UpdateBlock("WALL_SE", block.Item2);
+                    }
+                    else
+                    {
+                        room1.UpdateBlock(DOORS[5], block.Item1);
+                        room2.UpdateBlock("WALL_NW", block.Item2);
+                    }
+                    break;
+                case 0:
+                    room1.UpdateBlock(DOORS[4], block.Item1);
+                    room2.UpdateBlock(DOORS[4], block.Item2);
+                    break;
+                case 1:
+                    room1.UpdateBlock(DOORS[6], block.Item1);
+                    room2.UpdateBlock("WALL_SE", block.Item2);
+                    break;
+                case 2:
+                    room1.UpdateBlock(DOORS[5], block.Item1);
+                    room2.UpdateBlock("WALL_NW", block.Item2);
+                    break;
+                case 3:
+                    room1.UpdateBlock(DOORS[7], block.Item1);
+                    room2.UpdateBlock(GROUND, block.Item2);
+                    break;
+                default:
+                    break;
             }
         }
     }

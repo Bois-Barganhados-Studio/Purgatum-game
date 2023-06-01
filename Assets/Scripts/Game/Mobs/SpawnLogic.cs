@@ -8,8 +8,8 @@ public class SpawnLogic
     private int enemyType;
     private bool isCommander;
     private WaveControl waveControl;
-    public static readonly int MAX_WAVES_COMMANDER = 6, MAX_WAVES_DEFAULT = 3, MIN_WAVES_COMMANDER = 4, MIN_WAVES_DEFAULT = 1,
-    MIN_ENEMIES_DEFAULT = 2, MAX_ENEMIES_DEFAULT = 6, MIN_ENEMIES_COMMANDER = 8, MAX_ENEMIES_COMMANDER = 12;
+    public static readonly int MAX_WAVES_COMMANDER = 5, MAX_WAVES_DEFAULT = 3, MIN_WAVES_COMMANDER = 3, MIN_WAVES_DEFAULT = 1,
+    MIN_ENEMIES_DEFAULT = 2, MAX_ENEMIES_DEFAULT = 6, MIN_ENEMIES_COMMANDER = 6, MAX_ENEMIES_COMMANDER = 10;
     public SpawnLogic(int enemyType = 0, bool IsCommander = false)
     {
         this.isCommander = IsCommander;

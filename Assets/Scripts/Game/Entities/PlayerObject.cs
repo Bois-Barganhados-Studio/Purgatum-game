@@ -26,11 +26,14 @@ public class PlayerObject : MonoBehaviour
         get { return isUpdateDisabled; }
     }
     private HealthBar HealthBarHud { get; set; }
+    private Inventory HotBar { get; set; }
 
     // Initializing
     void Awake()
     {
         HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
+        HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
+
         player = new Player
         {
             Vitality = 20,
@@ -47,7 +50,8 @@ public class PlayerObject : MonoBehaviour
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
         Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
         sr = GetComponentInChildren<SpriteRenderer>();
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        destructibleLayer = LayerMask.GetMask("Destructables");
         mainWeapon.gameObject.SetActive(false);
         subWeapon.gameObject.SetActive(false);
         UpdateWeaponVFX(ItemSprites.WEAPON_VFX_BASE);
@@ -62,6 +66,7 @@ public class PlayerObject : MonoBehaviour
             //Caso duplique os gameobjects mantem apenas o original
             Destroy(gameObject);
         }
+        UpdateHotBar();
     }
 
     void Update()
@@ -208,14 +213,13 @@ public class PlayerObject : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
         foreach (var e in enemies)
         {
-            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
+            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.FacingDirection);
         }
-        // TODO - Get exact functions to call
-        //Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
-        //foreach (var d in destructibles)
-        //{
-        //    //d.GetComponent<Destructible>().DestroyObject();
-        //}
+        Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
+        foreach (var d in destructibles)
+        {
+            d.GetComponent<Destructable>().DestroyObject();
+        }
     }
 
     // TODO - DELETE THIS ON RELEASE VERSION
@@ -318,17 +322,24 @@ public class PlayerObject : MonoBehaviour
 
     private void CollectWeapon(WeaponObject newWeapon)
     {
-        // Drop
-        mainWeapon.gameObject.transform.parent = null;
-        mainWeapon.gameObject.transform.position = this.transform.position;
-        mainWeapon.gameObject.SetActive(true);
-        StartCoroutine(mainWeapon.Drop(30));
-
-        // Collect
         newWeapon.gameObject.transform.SetParent(this.transform);
-        mainWeapon = newWeapon;
-        player.MainWeapon = mainWeapon.weapon;
-        mainWeapon.gameObject.SetActive(false);
+        if (subWeapon.weapon != null)
+        {
+            mainWeapon.gameObject.transform.parent = null;
+            mainWeapon.gameObject.transform.position = this.transform.position;
+            mainWeapon.gameObject.SetActive(true);
+            mainWeapon.Drop(30);
+            mainWeapon = newWeapon;
+            player.MainWeapon = mainWeapon.weapon;
+            mainWeapon.gameObject.SetActive(false);
+        }
+        else
+        {
+            subWeapon = newWeapon;
+            player.SubWeapon = subWeapon.weapon;
+            subWeapon.gameObject.SetActive(false);
+        }
+
         UpdateHotBar();
         UpdateWeaponVFX(mainWeapon.VfxSprites);
     }
@@ -343,19 +354,19 @@ public class PlayerObject : MonoBehaviour
         UpdateWeaponVFX(mainWeapon.VfxSprites);
     }
 
-    public void UpdateHotBar()
+    public void UpdateHotBar(bool swap = false)
     {
-        // TODO - Update Hot Bar
+        HotBar.setSlots(mainWeapon.getWSprite(), subWeapon.getWSprite(), swap);
     }
 
     public void UpdateWeaponVFX(Sprite[] newvfx)
     {
-        if (actionPointsSR[0].sprite == newvfx[0])
-            return;
-        for (int i = 0; i < actionPointsSR.Length; i++)
-        {
-            actionPointsSR[i].sprite = newvfx[i];
-        }
+        //if (actionPointsSR[0].sprite == newvfx[0])
+        //    return;
+        //for (int i = 0; i < actionPointsSR.Length; i++)
+        //{
+        //    actionPointsSR[i].sprite = newvfx[i];
+        //}
     }
 
     private void CollectItem(ItemObject item)
@@ -406,7 +417,12 @@ public class PlayerObject : MonoBehaviour
         //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
         //}
 
-        DropGenerator.GenerateDrop(69, 1);
+        var items = DropGenerator.GenerateDrop(69, 1);
+        foreach (var i in items)
+        {
+            i.gameObject.transform.position = this.transform.position;
+            i.gameObject.SetActive(true);
+        }
     }
 
     public int DirectionToIndex(Vector2 _direction)

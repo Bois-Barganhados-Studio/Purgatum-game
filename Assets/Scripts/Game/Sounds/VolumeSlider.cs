@@ -10,7 +10,8 @@ public class VolumeSlider : MonoBehaviour
     private void Start()
     {
         slider = GetComponent<Slider>();
-        soundController = soundController = GameObject.FindObjectOfType<SoundControl>();
+        soundController = GameObject.FindObjectOfType<SoundControl>();
+        slider.value = SoundControl.globalSoundVolume;
         slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 

@@ -14,10 +14,11 @@ public class EnemyObject : MonoBehaviour
     public Transform target;
     private bool updateEnabled;
     private SpriteRenderer sr;
-    private EnemyAnimation eAnim;
     private PlayerObject p;
     private TextMesh textMesh;
     private Rigidbody2D rb;
+    private Animator animator;
+    private Vector2 direction;
 
 
     public void Awake()
@@ -37,11 +38,12 @@ public class EnemyObject : MonoBehaviour
         updateEnabled = true;
         target = GameObject.FindGameObjectWithTag("Player").transform;
         sr = GetComponentInChildren<SpriteRenderer>();
-        eAnim = FindObjectOfType<EnemyAnimation>();
         p = FindObjectOfType <PlayerObject>();
         textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(Enemy.LAYER, IItem.LAYER);
+        animator = GetComponentInChildren<Animator>();
+        direction = Vector2.down;
     }
 
     public void FixedUpdate()
@@ -57,62 +59,93 @@ public class EnemyObject : MonoBehaviour
         //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
         //UnityEngine.Debug.Log(enemy.State);
 
+        animator.SetFloat("Horizontal", direction.x);
+        animator.SetFloat("Vertical", direction.y);
+        
+        
+        
+
         switch (enemy.State)
         {
             case Enemy.MachineState.IDLE:
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-                eAnim.idle(target);
-                
+                animator.SetFloat("Speed", 0f);
                 enemy.soundController.StopBattleSong();
                 break;
 
             case Enemy.MachineState.CHASING:
+                direction = Vector2.MoveTowards(direction, p.GetDirection(), Time.deltaTime);
+                animator.SetFloat("Speed", direction.sqrMagnitude);
+
                 pathfinder.canSearch = true;
                 pathfinder.canMove = true;
                 pathfinder.destination = target.position;
-                eAnim.moving(target);
                 
                 enemy.soundController.PlayBattleSong();
                 break;
 
             case Enemy.MachineState.ATTACKING:
-                eAnim.attacking(target);
-                Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
-                if (col != null && !enemy.IsAttacking)
+                if (!enemy.IsAttacking)
                 {
-                    // TODO - make enemy look at player
+                    pathfinder.canMove = false;
+                    animator.SetTrigger("Attack");
                     enemy.IsAttacking = true;
-                    StartCoroutine(enemy.CoolDown(() =>
-                    {
-                        enemy.IsAttacking = false;
-                    }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
-                    p.TakeAttack(enemy.MainWeapon, enemy.FacingDirection);
-
                 }
+
                 break;
 
             case Enemy.MachineState.DYING:
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-                
                 enemy.soundController.StopBattleSong();
                 Die();
+                
+                
                 break;
 
         }
     }
 
+    public bool CanAttack()
+    {
+        return !enemy.IsAttacking && !enemy.AttackingCD;
+    }
+
+    public void DealDamage()
+    {
+        Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
+        if (col != null)
+        {
+            p.TakeAttack(enemy.MainWeapon, direction);
+        }
+    }
+
+    public void EndAttack()
+    {
+        pathfinder.canMove = true;
+        enemy.IsAttacking = false;
+        enemy.AttackingCD = true;
+        StartCoroutine(enemy.CoolDown(() =>
+        {
+            enemy.AttackingCD = false;
+        }, enemy.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
+    }
+
     public void Die()
     {
-        eAnim.die(target, this.EndDeath);
+        animator.SetTrigger("Die");
         rb.simulated = false;
         DisableUpdate();
     }
 
     public void EndDeath()
     {
-        Destroy(this.gameObject);
+        StartCoroutine(enemy.CoolDown(() =>
+        {
+            Destroy(this.gameObject);
+        }, 1));
+        
     }
 
     private void DisableUpdate()
@@ -120,18 +153,21 @@ public class EnemyObject : MonoBehaviour
         updateEnabled = false;
     }
 
-    public void TakeAttack(Weapon pWeapon)
+    public void TakeAttack(Weapon pWeapon, Vector2 playerFacingDir)
     {
+        if (enemy.IsDead)
+            return;
         int dmg = enemy.takeAttack(pWeapon);
         if (dmg != 0) {
+            updateEnabled = false;
+            rb.AddForce(playerFacingDir * pWeapon.Weight * 0.1f, ForceMode2D.Impulse);
+            StartCoroutine(enemy.CoolDown(() =>
+            {
+                updateEnabled = true;
+            }, 0.1f * pWeapon.Weight));
             StartCoroutine(BlinkSprite());
             textMesh.text = dmg.ToString();
             Instantiate(DamageIndicator, transform.position, Quaternion.identity);
-            // if (enemy.IsDead) {
-            //     FindObjectOfType<EnemyAnimation>().die(enemy.FacingDir);
-            //     //Destroy(this);
-            //     // TODO - Destroy whole game object
-            // }
         }
     }
 
@@ -146,7 +182,7 @@ public class EnemyObject : MonoBehaviour
         {
             enemy.State = Enemy.MachineState.DYING;
         }
-        else if(distance > 2)
+        else if (distance > 2)
         {
             enemy.State = Enemy.MachineState.IDLE;
         }
@@ -154,7 +190,7 @@ public class EnemyObject : MonoBehaviour
         {
             enemy.State = Enemy.MachineState.CHASING;
         }
-        else if(distance <= 2 * enemy.MainWeapon.Range)
+        else if(distance <= 2 * enemy.MainWeapon.Range && CanAttack())
         {
             enemy.State = Enemy.MachineState.ATTACKING;
         }
@@ -162,10 +198,9 @@ public class EnemyObject : MonoBehaviour
 
     public IEnumerator BlinkSprite()
     {
-        Color lastColor = sr.color;
-        sr.color = new Color(255, 255, 255, 1);
+        sr.color = Color.red;
         yield return new WaitForSeconds(.15f);
-        sr.color = lastColor;
+        sr.color = Color.white;
     }
 
 

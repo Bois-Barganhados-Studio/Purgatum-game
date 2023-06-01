@@ -20026,6 +20026,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22678790f43ef68479dce570f2f385f5, type: 3}
+--- !u!114 &4492551310706346623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5655343392822258347, guid: 22678790f43ef68479dce570f2f385f5, type: 3}
+  m_PrefabInstance: {fileID: 4492551310706346622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4492551310706346624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7039684357240869978, guid: 22678790f43ef68479dce570f2f385f5, type: 3}
+  m_PrefabInstance: {fileID: 4492551310706346622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4492551310706346625 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2358716843618694608, guid: 22678790f43ef68479dce570f2f385f5, type: 3}
+  m_PrefabInstance: {fileID: 4492551310706346622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5675663170960651731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20033,6 +20054,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3739284572608430416, guid: 94a3bf09610397745b52561ea656fce8, type: 3}
+      propertyPath: stairs
+      value: 
+      objectReference: {fileID: 4492551310706346624}
     - target: {fileID: 5675663170932245370, guid: 94a3bf09610397745b52561ea656fce8, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -20081,5 +20106,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HubManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6070445395246972738, guid: 94a3bf09610397745b52561ea656fce8, type: 3}
+      propertyPath: LoadingScreenPanel
+      value: 
+      objectReference: {fileID: 4492551310706346625}
+    - target: {fileID: 8923502518694389218, guid: 94a3bf09610397745b52561ea656fce8, type: 3}
+      propertyPath: m_Image
+      value: 
+      objectReference: {fileID: 4492551310706346623}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94a3bf09610397745b52561ea656fce8, type: 3}

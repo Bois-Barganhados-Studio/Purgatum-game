@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - HUD
   - DOOR
+  - LIGHT
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Enemy
   - Item
   - Wall
-  - Destrutables
+  - Destructables
   - 
   - 
   - 

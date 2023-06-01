@@ -25,10 +25,11 @@ public class SpawnManager
     {
         Debug.Log("Spawn finished so remove it from active spawns");
         activeSpawns.Remove(spawn);
-        if(UnityEngine.Random.Range(0, 100) <= ITEM_DROP_CHANCE)
+        if (UnityEngine.Random.Range(0, 100) <= ITEM_DROP_CHANCE)
         {
             Debug.Log("Drop item para esse spawn!");
         }
+        Debug.Log("COMMANDERS RESTANTES: " + activeSpawns.Count);
         if (activeSpawns.Count == 0)
         {
             OnAllSpawnsFinished?.Invoke();
