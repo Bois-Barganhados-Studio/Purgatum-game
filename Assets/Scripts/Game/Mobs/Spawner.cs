@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     private float spawnTime = 6f;
     private bool isSpawning = false;
     public event System.Action<Spawner> OnSpawnsFinished;
-    private const int MAX_SPAWN_RANGE = 20, MIN_SPAWN_RANGE = -20;
+    private const int MAX_SPAWN_RANGE = 15, MIN_SPAWN_RANGE = -15;
     private Vector2 rangeEnemyPos = Vector2.zero;
     private bool isCommander = false;
 
@@ -83,6 +83,19 @@ public class Spawner : MonoBehaviour
             OnSpawnsFinished?.Invoke(this);
         }
         yield return null;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.name.Contains("COMMANDER"))
+            {
+                UnityEngine.Rendering.Universal.Light2D spotlight = transform.GetChild(i).gameObject.transform.GetChild(2).gameObject.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+                spotlight.color = Color.green;
+            }
+            else if (transform.GetChild(i).gameObject.name.Contains("DEFAULT"))
+            {
+                UnityEngine.Rendering.Universal.Light2D spotlight = transform.GetChild(i).gameObject.transform.GetChild(2).gameObject.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+                spotlight.intensity = 0;
+            }
+        }
         Debug.Log("SPAWN ENDED");
         Destroy(this);
     }

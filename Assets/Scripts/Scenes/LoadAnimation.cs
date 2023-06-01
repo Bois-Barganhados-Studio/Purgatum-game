@@ -9,13 +9,20 @@ public class LoadAnimation : MonoBehaviour
     public Image m_Image;
 
     public Sprite[] m_SpriteArray;
-    public float m_Speed = .02f;
+    private float m_Speed = .04f;
+    private int count = 0;
 
     private int m_IndexSprite;
     Coroutine m_CorotineAnim;
     bool IsDone;
     public void Func_PlayUIAnim()
     {
+        if (count == 0)
+        {
+            count++;
+        } else {
+            m_Speed = m_Speed + .04f;
+        }
         IsDone = false;
         StartCoroutine(Func_PlayAnimUI());
     }

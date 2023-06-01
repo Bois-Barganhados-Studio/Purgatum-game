@@ -8,15 +8,19 @@ public class RogueData
    public List<WorldData> playerRunsData = null;
    public List<bool> playerRunsResult = null;
 
+   private int deathCount = 0, surviveCount = 0;
+
    public List<WorldData> playerDeathsData = null;
 
-   //Banco inicial para teste
-   public void CreateSampleData() {
 
+   public RogueData()
+   {
       playerRunsData = new List<WorldData>();
       playerRunsResult = new List<bool>();
       playerDeathsData = new List<WorldData>();
-
+   }
+   //Banco inicial para teste
+   public void CreateSampleData() {
       WorldData[] sample = new WorldData[15];
       bool[] sampleResult = new bool[15];
 
@@ -60,15 +64,24 @@ public class RogueData
 
    }
 
-   private void AddPlayerRunData(WorldData worldData, bool result)
+   public void AddPlayerRunData(WorldData worldData, bool result)
    {
       this.playerRunsData.Add(worldData);
       this.playerRunsResult.Add(result);
 
+      
+
       if(result == false)
       {
+         deathCount++;
         this.playerDeathsData.Add(worldData);
       }
+      else
+      {
+         surviveCount++;
+      }
+      Debug.Log("Added run data: " + worldData.ToString() + " Result: " + result.ToString());
+      Debug.Log("Run data count: " + playerRunsData.Count.ToString() + " Death count: " + playerDeathsData.Count.ToString());
    }
 
    public void ClearPlayerRunData()
@@ -89,6 +102,17 @@ public class RogueData
    {
       return playerDeathsData;
    }
+
+   public int GetDeathCount()
+   {
+      return deathCount;
+   }
+
+   public int GetSurviveCount()
+   {
+      return surviveCount;
+   }
+   
 
 
 }

@@ -21,10 +21,11 @@ public class RogueLikeController : MonoBehaviour
 
             
         rogueLogic = new RogueLogic();
+        rogueLogic.rogueData.CreateSampleData();
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
         rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
-        //Invoke("OnGoingToNextLevel", 70f);
+        //Invoke("OnGoingToNextLevel",15f);
     }
 
     private void Awake()
@@ -48,13 +49,16 @@ public class RogueLikeController : MonoBehaviour
     }
     public void OnGoingToNextLevel()
     {
-        Debug.Log("GOING TO NEXT LEVEL");
+        //Adicionar instancias no banco
+        rogueLogic.AddPlayerSuccess();
         rogueLogic.SetState(RogueLogic.States.NEW_LEVEL);
         rogueLogic.DoAction();
     }
 
     public void OnGameRestart()
     {
+        //Adicionar instancias no banco
+        rogueLogic.AddPlayerDeath();
         rogueLogic.SetState(RogueLogic.States.RESTART);
         rogueLogic.DoAction();
     }
