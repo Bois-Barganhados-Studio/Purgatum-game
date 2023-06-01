@@ -91,12 +91,4 @@ public class PlayerController : MonoBehaviour
 
     }
   }
-
-  public void onSwap(InputAction.CallbackContext ctx)
-  {
-    if (ctx.performed)
-    {
-      player.SwapWeapon();
-    }
-  }
 }
