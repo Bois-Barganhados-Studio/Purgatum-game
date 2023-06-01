@@ -180,12 +180,15 @@ public class PlayerObject : MonoBehaviour
     {
         gameObject.SetActive(false);
         // TODO - Go back to hub
-
-        //player.IsDead = false;
-        //rb.simulated = true;
-        //isUpdateDisabled = false;
-        //animator.SetBool("isDying", false);
-        //gameObject.SetActive(true);
+        RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
+        rlc.OnGameRestart();
+        player.IsDead = false;
+        rb.simulated = true;
+        isUpdateDisabled = false;
+        animator.SetBool("isDying", false);
+        player.Hp = player.MaxHp;
+        UpdateHealthBar();
+        gameObject.SetActive(true);
     }
 
     private readonly float WEIGHT_FACTOR = 0.3f;
