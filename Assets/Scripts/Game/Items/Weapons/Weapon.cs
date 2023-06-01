@@ -72,4 +72,9 @@ public class Weapon {
         Range = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_RANGE[type] + 1, (float)level / MAX_LEVEL * MAX_RANGE[type]);
         Weight = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_WEIGHT[type] + 1, (float)level / MAX_LEVEL * MAX_WEIGHT[type]);
     }
+
+    public int GetLevel()
+    {
+        return Level;
+    }
 }
