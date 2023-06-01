@@ -596,7 +596,7 @@ TilemapRenderer:
   m_SortOrder: 3
   m_Mode: 1
   m_DetectChunkCullingBounds: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!60 &368984753425239210
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2448,7 +2448,7 @@ TilemapRenderer:
   m_SortOrder: 3
   m_Mode: 1
   m_DetectChunkCullingBounds: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!60 &3728168280208126358
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2576,7 +2576,7 @@ MonoBehaviour:
   - {x: 0.16024418, y: -0.31904432, z: 0}
   m_ShapePathHash: -1249884254
   m_Mesh: {fileID: 0}
-  m_InstanceId: 120746
+  m_InstanceId: 114630
 --- !u!114 &8336747796558547419
 MonoBehaviour:
   m_ObjectHideFlags: 0

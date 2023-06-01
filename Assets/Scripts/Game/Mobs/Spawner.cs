@@ -37,7 +37,6 @@ public class Spawner : MonoBehaviour
     public void SetCommander(bool isCommander)
     {
         this.isCommander = isCommander;
-        Debug.Log(isCommander ? "COMMANDER" : "DEFAULT");
     }
 
     public bool IsCommander()
@@ -90,7 +89,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator WaitForEnemiesDestroyed()
     {
-        while (transform.childCount - 1 > 0)
+        while (transform.childCount - 2 > 0)
         {
             yield return null;
         }

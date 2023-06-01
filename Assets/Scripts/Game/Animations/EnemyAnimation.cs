@@ -1,74 +1,28 @@
-using System.Xml.Schema;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Security.Cryptography.X509Certificates;
 
 public class EnemyAnimation : MonoBehaviour
 {
-    private Animator anim;
-    public string[] staticDirections = { "Idling N", "Idling NW", "Idling W", "Idling SW", "Idling S", "Idling SE", "Idling E", "Idling NE" };
-    public string[] runDirections = { "Running N", "Running NW", "Running W", "Running SW", "Running S", "Running SE", "Running E", "Running NE" };
-    public string[] AttackDirections = { "Attacking N", "Attacking NW", "Attacking W", "Attacking SW", "Attacking S", "Attacking SE", "Attacking E", "Attacking NE" };
-    public string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
-    private int lastDirection;
-    private Action callBack;
+    private EnemyObject enemy;
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        enemy = gameObject.transform.parent.GetComponent<EnemyObject>();
     }
 
-    public void die(Transform target, Action cb)
+    public void DealDamage()
     {
-        if (cb != null && callBack == null)
-            callBack = cb;
-        lastDirection = DirectionToIndex(target);
-        //string[] DieDirection = { "Dying N", "Dying NW", "Dying W", "Dying SW", "Dying S", "Dying SE", "Dying E", "Dying NE" };
-        anim.Play(DieDirection[lastDirection]);
+        enemy.DealDamage();
+    }
+
+    public void EndAttack()
+    {
+        enemy.EndAttack();
     }
 
     public void EndDeath()
     {
-        callBack();
-    }
-
-    public void idle(Transform target)
-    {
-        lastDirection = DirectionToIndex(target);
-        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
-        anim.Play(staticDirections[lastDirection]);
-    }
-
-    public void moving(Transform target)
-    {
-        lastDirection = DirectionToIndex(target);
-        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
-        anim.Play(runDirections[lastDirection]);
-    }
-
-    public void attacking(Transform target)
-    {
-        lastDirection = DirectionToIndex(target);
-        //lastDirection = DirectionToIndex(_direction);//MARKER Get the index of the slcie from the direction vector
-        anim.Play(staticDirections[lastDirection]);
-    }
-
-    public int DirectionToIndex(Transform target)
-    {
-        float angulo = (float)Math.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg;
-        int index = 0;
-        angulo -= 90.0f;   
-        if(angulo < 0)
-        {
-            angulo += 360;
-        }
-        if(angulo == 0) angulo = 360;
-        
-        
-        index = (int)Mathf.Round(angulo / 45) % 8;
-        //UnityEngine.Debug.Log("x: " + (target.position.x - transform.position.x) + " Y: " + (target.position.y - transform.position.y) + " angulo: " + angulo + " index: " + index);
-        return index;
-        
+        enemy.EndDeath();
     }
 }

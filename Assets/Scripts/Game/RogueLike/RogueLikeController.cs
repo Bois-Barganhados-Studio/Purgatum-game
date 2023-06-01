@@ -12,11 +12,19 @@ public class RogueLikeController : MonoBehaviour
     
     void Start()
     {
+        //Carrega os dados de configurações
+        Settings settings = DataSaver.LoadData<Settings>("settings.boi", createIfNotExists: true);
+        SoundControl soundControl = FindObjectOfType<SoundControl>();
+        soundControl.SetGlobalSoundVolume(settings.Volume);
+
+        //*********************************************//
+
+            
         rogueLogic = new RogueLogic();
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
         rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
-        //Invoke("OnGoingToNextLevel",15f);
+        //Invoke("OnGoingToNextLevel", 70f);
     }
 
     private void Awake()
@@ -40,6 +48,7 @@ public class RogueLikeController : MonoBehaviour
     }
     public void OnGoingToNextLevel()
     {
+        Debug.Log("GOING TO NEXT LEVEL");
         rogueLogic.SetState(RogueLogic.States.NEW_LEVEL);
         rogueLogic.DoAction();
     }

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+[System.Serializable]
 public class WorldData
 {
     public const int MAX_ENEMY_TYPE = 3, MIN_ENEMY_TYPE = 0, NUMBER_OF_INPUTS = 6, NUMBER_OF_BLUEPRINTS = 7, QTD_OF_ENEMYS = 4;
+
     public LevelData levelData;
     public int[] enemyType;
 
@@ -108,4 +111,10 @@ public class WorldData
         return s;
     }
     
+    public static WorldData Default()
+    {
+        return new WorldData();
+    }
+
+
 }

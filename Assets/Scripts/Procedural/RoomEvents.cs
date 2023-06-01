@@ -55,7 +55,6 @@ public class RoomEvents : MonoBehaviour
 
     private void SpawnMobs()
     {
-        Debug.Log("AV spawns: " + avaliableSpawns.Count);
         if (avaliableSpawns != null)
         {
             foreach (Spawner spawn in avaliableSpawns)
@@ -64,12 +63,16 @@ public class RoomEvents : MonoBehaviour
             }
             spawnManager = new SpawnManager(avaliableSpawns);
             spawnManager.OnAllSpawnsFinished += TurnOffDoors;
-            Debug.Log("Spawnou Mobs!");
         }
     }
 
     private void TurnOnLights()
     {
         Debug.Log("Acendeu Luzes!");
+    }
+
+    public bool IsVisited()
+    {
+        return visited;
     }
 }

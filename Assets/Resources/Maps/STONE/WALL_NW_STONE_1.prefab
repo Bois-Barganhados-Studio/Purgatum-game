@@ -596,7 +596,7 @@ TilemapRenderer:
   m_SortOrder: 3
   m_Mode: 1
   m_DetectChunkCullingBounds: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!60 &4421349472690886473
 PolygonCollider2D:
   m_ObjectHideFlags: 0

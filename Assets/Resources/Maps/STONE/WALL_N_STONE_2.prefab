@@ -2062,7 +2062,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 5
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 11
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2201,8 +2201,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -66855783, guid: 1c7031fae158c93498b244c4e227a135, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 13
     m_Data: {fileID: -1512679030, guid: 1c7031fae158c93498b244c4e227a135, type: 3}
   - m_RefCount: 0
@@ -2213,8 +2213,8 @@ Tilemap:
     m_Data: {fileID: -982495453, guid: b33c9841762d8a749a236fb9586b4450, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -66855783, guid: 1c7031fae158c93498b244c4e227a135, type: 3}
   - m_RefCount: 18
     m_Data: {fileID: 901004378, guid: 1c7031fae158c93498b244c4e227a135, type: 3}
   - m_RefCount: 3
@@ -2315,7 +2315,7 @@ TilemapRenderer:
   m_SortOrder: 3
   m_Mode: 1
   m_DetectChunkCullingBounds: 0
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!60 &5239893254431067723
 PolygonCollider2D:
   m_ObjectHideFlags: 0

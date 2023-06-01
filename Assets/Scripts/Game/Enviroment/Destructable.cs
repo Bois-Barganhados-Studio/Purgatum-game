@@ -18,7 +18,7 @@ class Destructable : MonoBehaviour
         StartCoroutine(WaitForAnimation());
     }
 
-    IEnumerator WaitForAnimation()
+    private IEnumerator WaitForAnimation()
     {
         smoke.GetComponent<Animator>().SetTrigger("Run");
         yield return new WaitForSeconds(1.0f);

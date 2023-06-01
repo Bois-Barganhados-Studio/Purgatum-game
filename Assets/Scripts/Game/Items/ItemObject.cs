@@ -11,7 +11,11 @@ public class ItemObject : MonoBehaviour
     {
         item = i;
         sRenderer.sprite = sprite;
-        gameObject.SetActive(true);
+    }
+
+    public void SetActive(bool isActive)
+    {
+        gameObject.SetActive(isActive);
     }
 
     public void Effect(PlayerObject p)

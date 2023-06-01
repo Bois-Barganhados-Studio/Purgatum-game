@@ -44,4 +44,25 @@ public class LoadingScreen : MonoBehaviour
             yield return null;
         }
     }
+
+    public void LoadNextLevel()
+    {
+        StartCoroutine(LoadNextLevelAsync());
+    }
+
+    IEnumerator LoadNextLevelAsync()
+    {
+        LoadingScreenPanel.SetActive(true);
+
+        yield return new WaitForSeconds(delayDuration);
+
+        /*AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+
+        while (!operation.isDone)
+        {
+            yield return null;
+        }*/
+        
+        LoadingScreenPanel.SetActive(false);
+    }
 }
