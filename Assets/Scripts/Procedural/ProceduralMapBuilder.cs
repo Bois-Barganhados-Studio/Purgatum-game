@@ -519,7 +519,6 @@ public class ProceduralMapBuilder : MonoBehaviour
             //Quando por portas first e last adicionar paredes adjacentes (SE,SW,NE,NW)
             if (targets.Count >= DOORS_LIMIT)
             {
-                Debug.Log("First level doors: " + targets.Count);
                 int divider = targets.Count / 3;
                 for (int i = divider; i < targets.Count - divider; i++)
                 {
@@ -541,7 +540,6 @@ public class ProceduralMapBuilder : MonoBehaviour
             }
             else
             {
-                Debug.Log("Second level doors: " + targets.Count);
                 if (targets.Count == 1)
                 {
                     (int, int) block = targets[0];
@@ -562,13 +560,6 @@ public class ProceduralMapBuilder : MonoBehaviour
                     int lastValue = -1;
                     foreach ((int, int) block in targets)
                     {
-                        Debug.Log(block.Item1 + " and " + block.Item2);
-                    }
-                    Debug.Log("HAS ENDED");
-                    foreach ((int, int) block in targets)
-                    {
-                        Debug.Log(block.Item1 + " and " + block.Item2 + " lastValue: " + lastValue);
-
                         if (lastValue != -1)
                         {
                             if (!((block.Item1 == lastValue + 1) || (block.Item1 == lastValue + 20)))
@@ -580,7 +571,6 @@ public class ProceduralMapBuilder : MonoBehaviour
 
                         lastValue = block.Item1;
                     }
-                    Debug.Log("All sequencial: " + allSequencial);
                     if (!allSequencial)
                     {
                         List<int> newTargets = new List<int>();
@@ -629,7 +619,6 @@ public class ProceduralMapBuilder : MonoBehaviour
                         {
                             option = 3;
                         }
-                        //Debug.Log("Option " + option + " for block " + block.Item1 + " and " + block.Item2);
                         UpdateDoors(room1, room2, intersection, block, option, option == -1 ? i : -1);
                     }
                     allSequencial = false;
@@ -641,7 +630,6 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     void ProcessTargets(Room room1, Room room2, int intersection, List<(int, int)> targets, List<int> newTargets, int atIndex)
     {
-        Debug.Log("Targets: " + newTargets.Count);
         if (targets.Count == atIndex ? newTargets.Count == 1 : newTargets.Count == 2)
         {
             int index = newTargets[0];
@@ -651,9 +639,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         }
         else if (targets.Count == atIndex ? newTargets.Count == 2 : newTargets.Count == 3)
         {
-            Debug.Log("PORTA DUPLA: " + targets.Count + " " + atIndex + " " + newTargets.Count);
             int option = -1, sz = targets.Count == atIndex ? newTargets.Count : newTargets.Count - 1;
-            Debug.Log("SZ: " + sz);
             for (int j = 0; j < sz; j++)
             {
                 int index = newTargets[j];
@@ -687,7 +673,6 @@ public class ProceduralMapBuilder : MonoBehaviour
 
     private void UpdateDoors(Room room1, Room room2, int intersection, (int, int) block, int option, int secondIndex = -1)
     {
-        Debug.Log("OPTION " + option);
         if (intersection == 1)
         {
             switch (option)
