@@ -31,7 +31,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void FecharOpcoes()
     {
-        soundController.PlaySoundEffect("click");
+        Settings settings = DataSaver.LoadData<Settings>("settings.boi");
+        settings.Volume = SoundControl.globalSoundVolume;
+        DataSaver.SaveData("settings.boi", settings);
+
+        soundController.PlaySoundEffect("click");        
         painelOpcoes.SetActive(false);
         painelMenuInicial.SetActive(true);
     }

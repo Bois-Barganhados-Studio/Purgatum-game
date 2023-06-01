@@ -12,6 +12,14 @@ public class RogueLikeController : MonoBehaviour
     
     void Start()
     {
+        //Carrega os dados de configurações
+        Settings settings = DataSaver.LoadData<Settings>("settings.boi", createIfNotExists: true);
+        SoundControl soundControl = FindObjectOfType<SoundControl>();
+        soundControl.SetGlobalSoundVolume(settings.Volume);
+
+        //*********************************************//
+
+            
         rogueLogic = new RogueLogic();
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
