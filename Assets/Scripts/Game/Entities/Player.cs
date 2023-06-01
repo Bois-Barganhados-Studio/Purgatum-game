@@ -109,4 +109,11 @@ public class Player : Entity
             Strength = Strength;
         }, duration);
     }
+
+    public void Revive()
+    {
+        Hp = MaxHp;
+        IsDead = false;
+    }   
+
 }

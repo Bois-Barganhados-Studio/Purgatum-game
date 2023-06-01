@@ -175,14 +175,19 @@ public class PlayerObject : MonoBehaviour
     public void EndDeath()
     {
         gameObject.SetActive(false);
-        // TODO - Go back to hub
+        RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
+        player.Revive();
+        rlc.OnGameRestart();
+        rb.simulated = true;
+        isUpdateDisabled = false;
+        animator.SetBool("isDying", false);
+        UpdateHealthBar();
+        gameObject.SetActive(true);
 
-        //player.IsDead = false;
-        //rb.simulated = true;
-        //isUpdateDisabled = false;
-        //animator.SetBool("isDying", false);
-        //gameObject.SetActive(true);
+
+        // TODO - Go back to hub
     }
+
 
     private readonly float WEIGHT_FACTOR = 0.3f;
 
@@ -391,6 +396,8 @@ public class PlayerObject : MonoBehaviour
 
     public void Test()
     {
+        player.Hp = 100;
+        UpdateHealthBar();
         // Working potion spawn test
         //var prefab = Resources.Load<GameObject>("Prefab/Game/Entities/Item");
         //if (prefab != null)
@@ -406,7 +413,7 @@ public class PlayerObject : MonoBehaviour
         //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
         //}
 
-        DropGenerator.GenerateDrop(69, 1);
+        //DropGenerator.GenerateDrop(69, 1);
     }
 
     public int DirectionToIndex(Vector2 _direction)

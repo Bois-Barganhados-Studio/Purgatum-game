@@ -69,7 +69,7 @@ public class RenderLevel
         {
             for (int i = renderLevels.transform.childCount - 1; i >= 0; i--)
             {
-                GameObject.DestroyImmediate(renderLevels.transform.GetChild(i).gameObject);
+                GameObject.Destroy(renderLevels.transform.GetChild(i).gameObject);
             }
         }
         level.Clear();
