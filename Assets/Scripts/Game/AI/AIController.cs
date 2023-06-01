@@ -405,15 +405,13 @@ public class AIController
     private WorldData FilterWorldData(WorldData worldData)
     {
         //Filtra Room Style valor 1 do array
-        int maxRoomStyle = 0;
-        int minRoomStyle = 0;
-        if (worldData.GetLevelData().GetRoomStyle() < minRoomStyle)
+        if (worldData.GetLevelData().GetRoomStyle() < WorldData.MIN_ROOM_STYLE)
         {
-            worldData.GetLevelData().SetRoomStyle(minRoomStyle);
+            worldData.GetLevelData().SetRoomStyle(WorldData.MIN_ROOM_STYLE);
         }
-        else if (worldData.GetLevelData().GetRoomStyle() > maxRoomStyle)
+        else if (worldData.GetLevelData().GetRoomStyle() > WorldData.MAX_ROOM_STYLE)
         {
-            worldData.GetLevelData().SetRoomStyle(maxRoomStyle);
+            worldData.GetLevelData().SetRoomStyle(WorldData.MAX_ROOM_STYLE);
         }
 
         //Filtra o Rand Factor
@@ -444,10 +442,9 @@ public class AIController
 
         //Filtra as blueprints
         int[] blueprints = worldData.GetLevelData().GetBlueprints();
-        int blueprintCount = 7;
         for (int i = 0; i < blueprints.Length; i++)
         {
-            blueprints[i] = blueprints[i] % blueprintCount;
+            blueprints[i] = blueprints[i] % WorldData.NUMBER_OF_BLUEPRINTS;
         }
         worldData.GetLevelData().SetBlueprints(blueprints);
 

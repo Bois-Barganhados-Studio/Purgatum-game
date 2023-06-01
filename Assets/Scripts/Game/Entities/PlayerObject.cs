@@ -47,13 +47,15 @@ public class PlayerObject : MonoBehaviour
         isUpdateDisabled = false;
         mainWeapon = transform.Find("mainWeapon").GetComponent<WeaponObject>();
         subWeapon = transform.Find("subWeapon").GetComponent<WeaponObject>();
+        mainWeapon.gameObject.SetActive(false);
+        subWeapon.gameObject.SetActive(false);
+        mainWeapon.weapon = player.MainWeapon;
+        subWeapon.weapon = player.SubWeapon;
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
         Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         destructibleLayer = LayerMask.GetMask("Destructables");
-        mainWeapon.gameObject.SetActive(false);
-        subWeapon.gameObject.SetActive(false);
         UpdateWeaponVFX(ItemSprites.WEAPON_VFX_BASE);
         attackFactor = 1f;
         if (instance == null)
@@ -181,12 +183,15 @@ public class PlayerObject : MonoBehaviour
     {
         gameObject.SetActive(false);
         // TODO - Go back to hub
-
-        //player.IsDead = false;
-        //rb.simulated = true;
-        //isUpdateDisabled = false;
-        //animator.SetBool("isDying", false);
-        //gameObject.SetActive(true);
+        RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
+        rlc.OnGameRestart();
+        player.IsDead = false;
+        rb.simulated = true;
+        isUpdateDisabled = false;
+        animator.SetBool("isDying", false);
+        player.Hp = player.MaxHp;
+        UpdateHealthBar();
+        gameObject.SetActive(true);
     }
 
     private readonly float WEIGHT_FACTOR = 0.3f;
@@ -203,7 +208,10 @@ public class PlayerObject : MonoBehaviour
             animator.SetFloat("attackSpeed", attackSpeed);
             int idx = DirectionToIndex(player.FacingDirection);
             apAnimator[idx].SetFloat("attackSpeed", attackSpeed);
-            apAnimator[idx].SetTrigger("slash");
+            StartCoroutine(CoolDown(() =>
+            {
+                apAnimator[idx].SetTrigger("slash");
+            }, 0.1f));
         }
     }
 
@@ -342,14 +350,20 @@ public class PlayerObject : MonoBehaviour
 
         UpdateHotBar();
         UpdateWeaponVFX(mainWeapon.VfxSprites);
+        Debug.Log("collect:");
+        Debug.Log("mw: " + player.MainWeapon.GetLevel());
+        Debug.Log("sw: " + player.SubWeapon.GetLevel());
     }
 
     public void SwapWeapon()
     {
-        if (subWeapon == null)
+        if (subWeapon.weapon == null)
             return;
         (mainWeapon, subWeapon) = (subWeapon, mainWeapon);
         (player.MainWeapon, player.SubWeapon) = (mainWeapon.weapon, subWeapon.weapon);
+        Debug.Log("swap:");
+        Debug.Log("mw: " + player.MainWeapon.GetLevel());
+        Debug.Log("sw: " + player.SubWeapon.GetLevel());
         UpdateHotBar();
         UpdateWeaponVFX(mainWeapon.VfxSprites);
     }
@@ -418,10 +432,10 @@ public class PlayerObject : MonoBehaviour
         //}
 
         var items = DropGenerator.GenerateDrop(69, 1);
-        foreach (var i in items)
+        for (int i = 0; i < items.Count; i++)
         {
-            i.gameObject.transform.position = this.transform.position;
-            i.gameObject.SetActive(true);
+            items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
+            items[i].gameObject.SetActive(true);
         }
     }
 

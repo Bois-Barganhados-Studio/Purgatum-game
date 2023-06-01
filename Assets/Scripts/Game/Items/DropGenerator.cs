@@ -9,11 +9,20 @@ public class DropGenerator : MonoBehaviour
 
     private static readonly string SPRITE_PATH = "Sprites/Items/";
 
+    public static readonly int POTION_TYPES = 17;
+
+    // Order: heal, dmg, def, speed
+
+    public static readonly int[] basicPotionIdx = { 0, 2, 4, 6 };
+
     // Order: axe, dagger, hammer, nunchaku, sickle, spear, sword
 
     private static readonly string[] weaponType = { "axes", "daggers", "hammers", "nunchakus", "sickles", "spears", "swords" };
 
     private static readonly int[] wSpriteCount = { 3, 9, 6, 3, 6, 9, 12 };
+
+    private static Sprite[] potionSprites = Resources.LoadAll<Sprite>(SPRITE_PATH + "potions");
+
 
     private static GameObject wPrefab;
     public static GameObject WPrefab
@@ -57,9 +66,11 @@ public class DropGenerator : MonoBehaviour
         return drop;
     }
 
+    
+
     public static MonoBehaviour GenPotion(int luck)
     {
-        int potType = Random.Range(0, 4);
+        int potType = Random.Range(0, basicPotionIdx.Length);
         int rng = Random.Range(0, 200) + luck;
         int potLevel = 0;
         if (rng > 200)
@@ -69,8 +80,8 @@ public class DropGenerator : MonoBehaviour
         {
             potLevel = 1;
         }
-        int potIdx = (potType * 3) + potLevel;
-        Sprite potSprite = ItemSprites.GetPotionSprite(potIdx);
+        int potIdx = (potLevel * POTION_TYPES) + basicPotionIdx[potType];
+        Sprite potSprite = potionSprites[potIdx];
         var potion = Instantiate(ItemPrefab, Vector3.zero, Quaternion.identity);
         var potScript = potion.GetComponent<ItemObject>();
         Potion pot;
