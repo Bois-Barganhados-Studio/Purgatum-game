@@ -50,7 +50,8 @@ public class PlayerObject : MonoBehaviour
         Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
         Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
         sr = GetComponentInChildren<SpriteRenderer>();
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        destructibleLayer = LayerMask.GetMask("Destructables");
         mainWeapon.gameObject.SetActive(false);
         subWeapon.gameObject.SetActive(false);
         UpdateWeaponVFX(ItemSprites.WEAPON_VFX_BASE);
@@ -214,12 +215,11 @@ public class PlayerObject : MonoBehaviour
         {
             e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.FacingDirection);
         }
-        // TODO - Get exact functions to call
-        //Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
-        //foreach (var d in destructibles)
-        //{
-        //    //d.GetComponent<Destructible>().DestroyObject();
-        //}
+        Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
+        foreach (var d in destructibles)
+        {
+            d.GetComponent<Destructable>().DestroyObject();
+        }
     }
 
     // TODO - DELETE THIS ON RELEASE VERSION
