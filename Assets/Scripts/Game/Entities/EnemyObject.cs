@@ -117,7 +117,7 @@ public class EnemyObject : MonoBehaviour
         Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
         if (col != null)
         {
-            p.TakeAttack(enemy.MainWeapon, enemy.FacingDirection);
+            p.TakeAttack(enemy.MainWeapon, direction);
         }
     }
 

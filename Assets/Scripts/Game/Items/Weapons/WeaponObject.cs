@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponObject : MonoBehaviour
@@ -33,8 +32,22 @@ public class WeaponObject : MonoBehaviour
         return weapon.Type;
     }
 
-    public IEnumerator Drop(int seconds)
+    private bool dropCancelled { get; set; }
+
+    public void CancelDrop()
     {
+        dropCancelled = true;
+    }
+
+    public void Drop(int seconds)
+    {
+        dropCancelled = false;
+        StartCoroutine(DropCountDown(seconds));
+    }
+
+    private IEnumerator DropCountDown(int seconds)
+    {
+
         if (seconds > 6)
             yield return new WaitForSeconds(seconds - 6);
         var oneSec = new WaitForSeconds(1);
@@ -47,6 +60,7 @@ public class WeaponObject : MonoBehaviour
                 sRenderer.color = oldColor;
             yield return oneSec;
         }
-        Destroy(gameObject);
+        if (!dropCancelled)
+            Destroy(gameObject);
     }
 }

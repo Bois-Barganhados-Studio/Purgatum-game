@@ -197,8 +197,10 @@ public class PlayerObject : MonoBehaviour
             float attackSpeed = 1f / (player.MainWeapon.Weight * WEIGHT_FACTOR);
             animator.SetFloat("attackSpeed", attackSpeed);
             int idx = DirectionToIndex(player.FacingDirection);
-            apAnimator[idx].SetFloat("attackSpeed", attackSpeed);
+            //apAnimator[idx].SetFloat("slashSpeed", attackSpeed);
+            Debug.Log("spr idx: " + idx);
             apAnimator[idx].SetTrigger("slash");
+            
         }
     }
 
@@ -322,9 +324,10 @@ public class PlayerObject : MonoBehaviour
         mainWeapon.gameObject.transform.parent = null;
         mainWeapon.gameObject.transform.position = this.transform.position;
         mainWeapon.gameObject.SetActive(true);
-        StartCoroutine(mainWeapon.Drop(30));
+        mainWeapon.Drop(30);
 
         // Collect
+        newWeapon.CancelDrop();
         newWeapon.gameObject.transform.SetParent(this.transform);
         mainWeapon = newWeapon;
         player.MainWeapon = mainWeapon.weapon;

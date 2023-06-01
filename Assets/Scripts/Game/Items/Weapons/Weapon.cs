@@ -22,7 +22,7 @@ public class Weapon {
 
     // Order: axe, dagger, hammer, nunchaku, sickle, spear, sword
 
-    private static readonly int[] MAX_DMG = { 50, 25, 40, 15, 45, 30, 35 };
+    private static readonly int[] MAX_DMG = { 100, 50, 80, 30, 90, 60, 70 };
 
     private static readonly int[] MAX_WEIGHT = { 10, 4, 8, 2, 9, 7, 6 };
 
