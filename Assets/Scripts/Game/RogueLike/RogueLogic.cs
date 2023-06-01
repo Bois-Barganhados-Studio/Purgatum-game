@@ -29,7 +29,7 @@ public class RogueLogic
 
     public RogueLogic(RogueData rogueData = null)
     {
-        if(rogueData == null)
+        if (rogueData == null)
         {
             rogueData = new RogueData();
         }
@@ -38,10 +38,15 @@ public class RogueLogic
         this.rogueData = rogueData;
         aiController = new AIController();
         //this.rogueData.CreateSampleData();
-        
+
         //aiController.SetData(this.rogueData);
         //aiController.Train();
         //aiController.TestAI();
+    }
+
+    public int GetLevel()
+    {
+        return level;
     }
 
     #region Acoes do RogueLike
@@ -52,10 +57,10 @@ public class RogueLogic
     {
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
-        
+
         Debug.Log("Contagem death: " + this.rogueData.GetDeathCount() + " contagem Vida: " + this.rogueData.GetSurviveCount());
         //Gera o mundo aleatoriamente ou por IA, dependendo de quantas runs o player já teve
-        if(this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI/2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI/2))
+        if (this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
             Debug.Log("Gerando mundo aleatoriamente....");
             currentWorldData = aiController.GenerateRandomParams();
@@ -64,7 +69,7 @@ public class RogueLogic
         {
             currentWorldData = aiController.GenerateWorldParams();
         }
-        
+
         Debug.Log("Gerando novo level proceduralmente: " + currentWorldData.ToString());
         mapBuilder.SetLevelData(currentWorldData.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
@@ -72,6 +77,9 @@ public class RogueLogic
         {
             state = States.PLAYING;
             level++;
+            if(level > 1){
+                //GameObject.FindObjectOfType<Player>().SetPoints(level);
+            }
         }
     }
 
@@ -86,7 +94,7 @@ public class RogueLogic
             aiController.SetData(this.rogueData);
             aiController.Train();
 
-            
+
             await StartNewProceduralLevel();
         }
     }
@@ -123,7 +131,7 @@ public class RogueLogic
         return await NewLevel();
     }
 
-    
+
     #endregion
 
     #region Metodos do RogueLike
@@ -165,10 +173,10 @@ public class RogueLogic
     private async Task<bool> NewLevel()
     {
         bool status = true;
-        
+
         try
         {
-            if(this.rogueData.GetDeathCount() > (MIN_RUNS_TO_AI/2) && this.rogueData.GetSurviveCount() > (MIN_RUNS_TO_AI/2))
+            if (this.rogueData.GetDeathCount() > (MIN_RUNS_TO_AI / 2) && this.rogueData.GetSurviveCount() > (MIN_RUNS_TO_AI / 2))
             {
                 Debug.Log("Treinando AI...");
                 aiController.SetData(this.rogueData);
@@ -214,7 +222,7 @@ public class RogueLogic
         this.hubScene = hubScene;
     }
     #endregion
-    
+
     #region Metodos do banco de Runs
 
     public void InsertData(RogueData rogueData)
@@ -238,5 +246,5 @@ public class RogueLogic
         this.rogueData.AddPlayerRunData(currentWorldData, playerResult);
     }
     #endregion
-    
+
 }
