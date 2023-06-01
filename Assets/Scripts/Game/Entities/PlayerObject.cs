@@ -208,7 +208,7 @@ public class PlayerObject : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
         foreach (var e in enemies)
         {
-            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon);
+            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.FacingDirection);
         }
         // TODO - Get exact functions to call
         //Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
@@ -239,13 +239,6 @@ public class PlayerObject : MonoBehaviour
             player.AttackingCD = false;
         }, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
     }
-
-    private void FixedUpdate()
-    {
-
-    }
-
-    private static bool teste = false;
 
     public void TakeAttack(Weapon eWeapon, Vector2 enemyFacingDir)
     {
@@ -357,12 +350,12 @@ public class PlayerObject : MonoBehaviour
 
     public void UpdateWeaponVFX(Sprite[] newvfx)
     {
-        if (actionPointsSR[0].sprite == newvfx[0])
-            return;
-        for (int i = 0; i < actionPointsSR.Length; i++)
-        {
-            actionPointsSR[i].sprite = newvfx[i];
-        }
+        //if (actionPointsSR[0].sprite == newvfx[0])
+        //    return;
+        //for (int i = 0; i < actionPointsSR.Length; i++)
+        //{
+        //    actionPointsSR[i].sprite = newvfx[i];
+        //}
     }
 
     private void CollectItem(ItemObject item)
@@ -413,7 +406,12 @@ public class PlayerObject : MonoBehaviour
         //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
         //}
 
-        DropGenerator.GenerateDrop(69, 1);
+        var items = DropGenerator.GenerateDrop(69, 1);
+        foreach (var i in items)
+        {
+            i.gameObject.transform.position = this.transform.position;
+            i.gameObject.SetActive(true);
+        }
     }
 
     public int DirectionToIndex(Vector2 _direction)
