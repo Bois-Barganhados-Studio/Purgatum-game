@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class StairsAnimation : MonoBehaviour
 {
-    public float offsetX = 1.0f;
-    public float offsetY = 1.0f;
-    public float movementSpeed = 1.0f;
+    public GameObject stairs;
+    private float offsetX = -100.0f;
+    private float offsetY = -152.0f;
+    private float movementSpeed = 50.0f;
+    private int count = 0;
 
     private Vector3 originalPosition;
+    private Vector3 lastOriginalPosition;
 
-    private void Start()
+    public void StartAnimation() 
     {
-
-        originalPosition = transform.position;
+        if (count == 0)
+        {
+            lastOriginalPosition = stairs.transform.position;
+            count++;
+        } else{
+            stairs.transform.position = lastOriginalPosition;
+        }
+        originalPosition = stairs.transform.position;
         StartCoroutine(LoopMovement());
     }
 
@@ -24,24 +33,24 @@ public class StairsAnimation : MonoBehaviour
             Vector3 targetPosition = originalPosition + new Vector3(offsetX, offsetY, 0f);
 
             yield return MoveObject(targetPosition);
-            transform.position = originalPosition;
+            stairs.transform.position = originalPosition;
         }
     }
 
     private IEnumerator MoveObject(Vector3 targetPosition)
     {
-        float distance = Vector3.Distance(transform.position, targetPosition);
+        float distance = Vector3.Distance(stairs.transform.position, targetPosition);
         float duration = distance / movementSpeed;
         float startTime = Time.time;
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = stairs.transform.position;
 
         while (Time.time < startTime + duration)
         {
             float t = (Time.time - startTime) / duration;
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            stairs.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
             yield return null;
         }
 
-        transform.position = targetPosition;
+        stairs.transform.position = targetPosition;
     }
 }
