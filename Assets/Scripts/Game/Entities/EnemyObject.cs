@@ -70,7 +70,7 @@ public class EnemyObject : MonoBehaviour
             case Enemy.MachineState.IDLE:
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-                
+                animator.SetFloat("Speed", 0f);
                 enemy.soundController.StopBattleSong();
                 break;
 
