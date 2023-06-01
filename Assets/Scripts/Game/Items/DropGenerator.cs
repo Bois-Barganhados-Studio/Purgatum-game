@@ -1,24 +1,25 @@
 using System.Collections.Generic;
 using System.Net;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class DropGenerator : MonoBehaviour
 {
     private static readonly float LEVEL_FACTOR = 1.66f;
 
-    private static readonly string SPRITE_PATH = "Sprite/Items/";
+    private static readonly string SPRITE_PATH = "Sprites/Items/";
 
     // Order: axe, dagger, hammer, nunchaku, sickle, spear, sword
 
-    private static readonly string[] weaponType = { "axes_", "daggers_", "hammers_", "nunchakus_", "sickles_", "spears_", "swords_" };
+    private static readonly string[] weaponType = { "axes", "daggers", "hammers", "nunchakus", "sickles", "spears", "swords" };
 
     private static readonly int[] wSpriteCount = { 3, 9, 6, 3, 6, 9, 12 };
 
     private static GameObject wPrefab;
     public static GameObject WPrefab
     {
-        get 
-        { 
+        get
+        {
             if (wPrefab == null)
             {
                 wPrefab = Resources.Load<GameObject>("Prefab/Game/Entities/Weapon");
@@ -60,7 +61,7 @@ public class DropGenerator : MonoBehaviour
     {
         int potType = Random.Range(0, 4);
         int rng = Random.Range(0, 200) + luck;
-        int potLevel = 0;  
+        int potLevel = 0;
         if (rng > 200)
         {
             potLevel = 2;
@@ -86,14 +87,33 @@ public class DropGenerator : MonoBehaviour
 
     public static MonoBehaviour GenWeapon(int level)
     {
-        int wLevel = Random.Range(0, 1) + (int)((level - 1) * LEVEL_FACTOR);
+        int wLevel = System.Math.Max(Random.Range(0, 1) + (int)((level - 1) * LEVEL_FACTOR), 1);
         int wType = Random.Range(0, weaponType.Length);
         int idx = (wLevel * wSpriteCount[wType]) + Random.Range(0, wSpriteCount[wType]);
-        Sprite wSprite = Resources.Load<Sprite>(SPRITE_PATH + weaponType[wType] + idx);
+        Sprite wSprite = LoadWeaponType(wType)[idx];
         var weapon = Instantiate(WPrefab, Vector3.zero, Quaternion.identity);
         var wScript = weapon.GetComponent<WeaponObject>();
         wScript.Init(new Weapon(wLevel, wType), wSprite, ItemSprites.WEAPON_VFX_BASE, false);
+        // Debug.Log("new wp dmg: " + wScript.weapon.BaseDmg);
         return wScript;
+    }
+
+    private static List<Sprite[]> wSpritesType = new List<Sprite[]>();
+
+    private static Sprite[] LoadWeaponType(int wType)
+    {
+        if (wSpritesType.Count == 0)
+        {
+            for (int i = 0; i < weaponType.Length; i++)
+            {
+                wSpritesType.Add(null);
+            }
+        }
+        if (wSpritesType[wType] == null)
+        {
+            wSpritesType[wType] = Resources.LoadAll<Sprite>(SPRITE_PATH + weaponType[wType]);
+        }
+        return wSpritesType[wType];
     }
 
     public static int CalculateItems(int luck)

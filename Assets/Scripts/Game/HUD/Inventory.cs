@@ -13,16 +13,19 @@ public class Inventory : MonoBehaviour
     setWeapon(this.slot1, slot1);
     setWeapon(this.slot2, slot2);
 
-    activateSlot(swap ? this.slot1 : this.slot2);
-    desactivateSlot(swap ? this.slot2 : this.slot1);
+    activateSlot(swap ? this.slot2 : this.slot1);
+    desactivateSlot(swap ? this.slot1 : this.slot2);
   }
 
   public void setWeapon(GameObject slot, Sprite sprite)
   {
-    if (sprite != null)
-      slot.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
-    else
-      slot.transform.GetChild(0).GetComponent<Image>().color = Color.clear;
+        if (sprite != null)
+        {
+            slot.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+        }
+        else
+            slot.transform.GetChild(0).GetComponent<Image>().color = Color.clear;
   }
 
   public void activateSlot(GameObject slot)
