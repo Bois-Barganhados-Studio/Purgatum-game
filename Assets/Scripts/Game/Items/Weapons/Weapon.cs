@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Weapon {
 
-    public static readonly float BASE_COOLDOWN = 0.1f;
+    public static readonly float BASE_COOLDOWN = 0.01f;
 
     public static readonly int MAX_LEVEL = 10;
 
@@ -24,9 +24,9 @@ public class Weapon {
 
     private static readonly int[] MAX_DMG = { 100, 50, 80, 30, 90, 60, 70 };
 
-    private static readonly int[] MAX_WEIGHT = { 10, 4, 8, 2, 9, 7, 6 };
+    private static readonly int[] WEIGHT = { 9, 3, 7, 2, 10, 8, 6 };
 
-    private static readonly float[] MAX_RANGE = { 1.5f, 0.25f, 1f, 0.5f, 1.75f, 2f, 1.25f };
+    private static readonly float[] MAX_RANGE = { 0.4f, 0.1f, 0.3f, 0.2f, 0.6f, 0.7f, 0.5f };
 
     private float baseDmg;
     public float BaseDmg
@@ -70,7 +70,8 @@ public class Weapon {
         Level = level;
         BaseDmg = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_DMG[type] + 1, (float)level / MAX_LEVEL * MAX_DMG[type]);
         Range = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_RANGE[type] + 1, (float)level / MAX_LEVEL * MAX_RANGE[type]);
-        Weight = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_WEIGHT[type] + 1, (float)level / MAX_LEVEL * MAX_WEIGHT[type]);
+        Weight = WEIGHT[type];
+        Debug.Log(Weight);
     }
 
     public int GetLevel()

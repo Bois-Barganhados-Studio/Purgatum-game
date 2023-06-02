@@ -1,14 +1,7 @@
+using UnityEngine;
+
 public class BoostPotion : Potion, IItem
 {
-
-
-    private TYPE type;
-    public TYPE Type
-    {
-        get { return type; }
-        set { type = value; }
-    }
-
     private float boostPct;
     public float BoostPct
     {
@@ -27,17 +20,24 @@ public class BoostPotion : Potion, IItem
     {
         BoostPct = Potion.BASE_PCT * ((int)lvl);
         duration = Potion.BASE_DURATION * ((int)lvl);
-        this.type = type;
+        this.Type = type;
     }
 
     public override void Effect(PlayerObject p)
     {
-        if (type.Equals(TYPE.SPEED)) 
+        if (Type.Equals(TYPE.SPEED))
+        {
             p.BoostSpeed(boostPct, duration);
-        else if (type.Equals(TYPE.DAMAGE))
+        }
+        else if (Type.Equals(TYPE.DAMAGE))
+        {
             p.BoostDamage(boostPct, duration);
-        else if (type.Equals(TYPE.DEFENSE))
+
+        }
+        else if (Type.Equals(TYPE.DEFENSE))
+        {
             p.BoostDefense(boostPct, duration);
+        }
     }
 
 }

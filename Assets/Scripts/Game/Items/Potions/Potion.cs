@@ -20,6 +20,13 @@ public abstract class Potion : IItem
         SPEED
     }
 
+    private TYPE type;
+    public TYPE Type
+    {
+        get { return type; }
+        set { type = value; }
+    }
+
     public virtual void Effect(PlayerObject po)
     {
 

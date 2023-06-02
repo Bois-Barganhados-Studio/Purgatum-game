@@ -11,9 +11,9 @@ public class DropGenerator : MonoBehaviour
 
     public static readonly int POTION_TYPES = 17;
 
-    // Order: heal, dmg, def, speed
+    // Order: dmg, def, heal, speed
 
-    public static readonly int[] basicPotionIdx = { 0, 2, 4, 6 };
+    public static readonly int[] basicPotionIdx = { 2, 3, 0, 7 };
 
     // Order: axe, dagger, hammer, nunchaku, sickle, spear, sword
 
@@ -66,8 +66,6 @@ public class DropGenerator : MonoBehaviour
         return drop;
     }
 
-    
-
     public static MonoBehaviour GenPotion(int luck)
     {
         int potType = Random.Range(0, basicPotionIdx.Length);
@@ -87,12 +85,15 @@ public class DropGenerator : MonoBehaviour
         Potion pot;
         if (potType == (int)Potion.TYPE.HEAL)
         {
+            Debug.Log("heal pot lvl " + potLevel);
             pot = new HealPotion((Potion.LEVEL)potLevel);
         } else
         {
-            pot = new BoostPotion((Potion.LEVEL)potLevel, (Potion.TYPE)potType);
+            Debug.Log(potType + " boost pot lvl " + potLevel);
+            pot = new BoostPotion((Potion.LEVEL)(potLevel + 1), (Potion.TYPE)potType);
         }
         potScript.Init(pot, potSprite);
+        Debug.Log((int)pot.Type);
         return potScript;
     }
 

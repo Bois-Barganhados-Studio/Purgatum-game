@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -88,6 +87,17 @@ public abstract class Entity
     {
         set { attackingCD = value; }
         get { return attackingCD; }
+    }
+
+    public int TakeAttack(Weapon weapon, float damageMultiplier)
+    {
+        float rawDmg = weapon.BaseDmg + weapon.BaseDmg * damageMultiplier;
+        int dmg = Random.Range((int)(rawDmg - rawDmg * 0.1f), (int)(rawDmg + rawDmg * 0.1f));
+        if (dmg > 0)
+        {
+            TakeDamage(dmg);
+        }
+        return dmg;
     }
 
     #endregion
@@ -181,7 +191,7 @@ public abstract class Entity
     #endregion
 
     #region Utils
-    public IEnumerator CoolDown(Action func, float time)
+    public IEnumerator CoolDown(System.Action func, float time)
     {
         yield return new WaitForSeconds(time);
         func();
@@ -202,7 +212,7 @@ public abstract class Entity
         IsAttacking = false;
         IsDead = false;
         soundController = GameObject.FindObjectOfType<SoundControl>();
-        FacingDirection = new Vector2(0, 1);
+        FacingDirection = Vector2.down;
         AttackingCD = false;
     }
    

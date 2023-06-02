@@ -20,10 +20,9 @@ public class ItemObject : MonoBehaviour
 
     public void Effect(PlayerObject p)
     {
-        if (item != null)
-            item.Effect(p);
-        else
-            Debug.Log("item is null");
+        if (item == null) 
+            return;
+        item.Effect(p);
     }
 
     // Initializing

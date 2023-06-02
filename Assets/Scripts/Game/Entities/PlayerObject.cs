@@ -19,6 +19,9 @@ public class PlayerObject : MonoBehaviour
     private SpriteRenderer sr;
     public Animator animator;
     private float attackFactor;
+    private int mapLevel;
+    private Color currSpriteColor;
+
 
     private bool isUpdateDisabled;
     public bool IsUpdateDisabled
@@ -33,7 +36,7 @@ public class PlayerObject : MonoBehaviour
     {
         HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
         HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
-
+        mapLevel = 0;
         player = new Player
         {
             Vitality = 20,
@@ -48,6 +51,7 @@ public class PlayerObject : MonoBehaviour
         mainWeapon = transform.Find("mainWeapon").GetComponent<WeaponObject>();
         subWeapon = transform.Find("subWeapon").GetComponent<WeaponObject>();
         mainWeapon.gameObject.SetActive(false);
+        mainWeapon.SetSpriteColor(Color.white);
         subWeapon.gameObject.SetActive(false);
         mainWeapon.weapon = player.MainWeapon;
         subWeapon.weapon = player.SubWeapon;
@@ -58,6 +62,7 @@ public class PlayerObject : MonoBehaviour
         destructibleLayer = LayerMask.GetMask("Destructables");
         UpdateWeaponVFX(ItemSprites.WEAPON_VFX_BASE);
         attackFactor = 1f;
+        currSpriteColor = Color.white;
         if (instance == null)
         {
             instance = this;
@@ -134,6 +139,11 @@ public class PlayerObject : MonoBehaviour
         return player.LockedDir;
     }
 
+    public void SetMapLevel(int level)
+    {
+        mapLevel = level;
+    }
+
     public IEnumerator CoolDown(Action func, float time)
     {
         yield return new WaitForSeconds(time);
@@ -182,7 +192,9 @@ public class PlayerObject : MonoBehaviour
     public void EndDeath()
     {
         gameObject.SetActive(false);
+
         // TODO - Go back to hub
+        player.SkillPoints += mapLevel - 1;
         RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
         rlc.OnGameRestart();
         player.IsDead = false;
@@ -194,7 +206,7 @@ public class PlayerObject : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private readonly float WEIGHT_FACTOR = 0.3f;
+    public static float WEIGHT_FACTOR = 5f;
 
     public void Attack()
     {
@@ -204,7 +216,8 @@ public class PlayerObject : MonoBehaviour
             player.IsAttacking = true;
             player.LockDir();
             animator.SetBool("isAttacking", true);
-            float attackSpeed = 1f / (player.MainWeapon.Weight * WEIGHT_FACTOR);
+            Debug.Log("weight: " +  player.MainWeapon.Weight);
+            float attackSpeed = WEIGHT_FACTOR / player.MainWeapon.Weight;
             animator.SetFloat("attackSpeed", attackSpeed);
             int idx = DirectionToIndex(player.FacingDirection);
             apAnimator[idx].SetFloat("attackSpeed", attackSpeed);
@@ -218,10 +231,10 @@ public class PlayerObject : MonoBehaviour
     public void DealDamage()
     {
         int idx = DirectionToIndex(player.FacingDirection);
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range * 0.5f, enemyLayer);
         foreach (var e in enemies)
         {
-            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.FacingDirection);
+            e.GetComponent<EnemyObject>().TakeAttack(player.MainWeapon, player.DamageMultiplier, player.FacingDirection);
         }
         Collider2D[] destructibles = Physics2D.OverlapCircleAll(actionPoints[idx].transform.position, player.MainWeapon.Range, destructibleLayer);
         foreach (var d in destructibles)
@@ -252,12 +265,12 @@ public class PlayerObject : MonoBehaviour
         }, player.MainWeapon.Weight * Weapon.BASE_COOLDOWN));
     }
 
-    public void TakeAttack(Weapon eWeapon, Vector2 enemyFacingDir)
+    public void TakeAttack(Weapon eWeapon, float eDamageMultiplier, Vector2 enemyFacingDir)
     {
 
         if (player.CurrentMoveState == Entity.MoveState.DODGING || player.IsDead || player.IsInvincible)
             return;
-        int dmg = player.TakeAttack(eWeapon);
+        int dmg = player.TakeAttack(eWeapon, eDamageMultiplier);
         isUpdateDisabled = true;
         rb.AddForce(enemyFacingDir * eWeapon.Weight * 0.1f, ForceMode2D.Impulse);
         StartCoroutine(CoolDown(() =>
@@ -281,7 +294,7 @@ public class PlayerObject : MonoBehaviour
             }
             else
             {
-                StartCoroutine(BlinkSprite());
+                StartCoroutine(BlinkSprite(Color.red));
             }
         }
     }
@@ -291,11 +304,11 @@ public class PlayerObject : MonoBehaviour
         return player.IsDead;
     }
 
-    public IEnumerator BlinkSprite()
+    public IEnumerator BlinkSprite(Color color)
     {
-        sr.color = new Color(255, 0, 0);
+        sr.color = color;
         yield return new WaitForSeconds(.15f);
-        sr.color = Color.white;
+        sr.color = currSpriteColor;
     }
 
     public void UpdateHealthBar()
@@ -350,9 +363,6 @@ public class PlayerObject : MonoBehaviour
 
         UpdateHotBar();
         UpdateWeaponVFX(mainWeapon.VfxSprites);
-        Debug.Log("collect:");
-        Debug.Log("mw: " + player.MainWeapon.GetLevel());
-        Debug.Log("sw: " + player.SubWeapon.GetLevel());
     }
 
     public void SwapWeapon()
@@ -361,9 +371,6 @@ public class PlayerObject : MonoBehaviour
             return;
         (mainWeapon, subWeapon) = (subWeapon, mainWeapon);
         (player.MainWeapon, player.SubWeapon) = (mainWeapon.weapon, subWeapon.weapon);
-        Debug.Log("swap:");
-        Debug.Log("mw: " + player.MainWeapon.GetLevel());
-        Debug.Log("sw: " + player.SubWeapon.GetLevel());
         UpdateHotBar();
         UpdateWeaponVFX(mainWeapon.VfxSprites);
     }
@@ -392,21 +399,43 @@ public class PlayerObject : MonoBehaviour
     public void Heal(float healPct)
     {
         player.Heal(healPct);
+        SetSpriteColor(Color.green, 0.3f);
     }
+
+    private static readonly Color DEFENSE_COLOR = new(180, 0, 141);
+
+    private static readonly Color DAMAGE_COLOR = new(240, 109, 65);
+
+    private static readonly Color SPEED_COLOR = new(0, 168, 177);
 
     public void BoostSpeed(float BoostPct, float duration)
     {
-        player.BoostSpeed(BoostPct, duration);
+        player.BoostSpeed(BoostPct);
+        StartCoroutine(CoolDown(() =>
+        {
+            player.Speed = player.Speed;
+        }, duration));
+        SetSpriteColor(SPEED_COLOR, duration);
     }
 
     public void BoostDamage(float BoostPct, float duration)
     {
-        player.BoostDamage(BoostPct, duration);
+        player.BoostDamage(BoostPct);
+        StartCoroutine(CoolDown(() =>
+        {
+            player.Strength = player.Strength;
+        }, duration));
+        SetSpriteColor(DAMAGE_COLOR, duration);
     }
 
     public void BoostDefense(float BoostPct, float duration)
     {
-        player.BoostDefense(BoostPct, duration);
+        player.BoostDefense(BoostPct);
+        StartCoroutine(CoolDown(() =>
+        {
+            player.Defense = player.Defense;
+        }, duration));
+        SetSpriteColor(DEFENSE_COLOR, duration);
     }
 
     public int GetLuck()
@@ -459,4 +488,11 @@ public class PlayerObject : MonoBehaviour
         return Mathf.FloorToInt(stepCount);
     }
 
+    internal void SetSpriteColor(Color color, float duration)
+    {
+        sr.color = color;
+        StartCoroutine(CoolDown(() => {
+            sr.color = currSpriteColor;
+        }, duration));
+    }
 }

@@ -32,13 +32,4 @@ public class Enemy : Entity
         DYING,
     }
 
-    public int takeAttack(Weapon pWeapon)
-    {
-        int dmg = Random.Range((int)(pWeapon.BaseDmg - pWeapon.BaseDmg * 0.2f), (int)(pWeapon.BaseDmg + pWeapon.BaseDmg * 0.2f));
-        if (dmg > 0)
-        {
-            TakeDamage(dmg);
-        }
-        return dmg;
-    }
 }

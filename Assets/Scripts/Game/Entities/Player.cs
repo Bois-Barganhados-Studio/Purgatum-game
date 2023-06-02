@@ -45,6 +45,13 @@ public class Player : Entity
         set { subWeapon = value; }
     }
 
+    private int skillPoints;
+    public int SkillPoints
+    {
+        get { return skillPoints; }
+        set { skillPoints = value; }
+    }
+
     public bool CanDodge() 
     {
         return (!dodgingCD && CurrentMoveState != Entity.MoveState.DODGING);
@@ -60,47 +67,26 @@ public class Player : Entity
         return (!IsAttacking && CurrentMoveState == Entity.MoveState.IDLE);
     }
 
-    public int TakeAttack(Weapon eWeapon)
-    {
-        int dmg = Random.Range((int)(eWeapon.BaseDmg - eWeapon.BaseDmg * 0.2f), (int)(eWeapon.BaseDmg + eWeapon.BaseDmg * 0.2f));
-        if (dmg > 0)
-        {
-            TakeDamage(dmg);
-        }
-        return dmg;
-    }
-
     public void Heal(float healPct)
     {
         int tmp = Hp + (int)((float)MaxHp * healPct);
-        Hp += System.Math.Min(tmp, MaxHp);
+        Hp = System.Math.Min(tmp, MaxHp);
     }
 
-    internal void BoostSpeed(float boostPct, float duration)
+    internal void BoostSpeed(float boostPct)
     {
-        MoveSpeed *= boostPct;
-        CoolDown(() =>
-        {
-            Speed = Speed;
-        }, duration);
+        MoveSpeed += (MoveSpeed * boostPct);
+        
     }
 
-    internal void BoostDamage(float boostPct, float duration)
+    internal void BoostDamage(float boostPct)
     {
         DamageMultiplier *= boostPct;
-        CoolDown(() =>
-        {
-            Strength = Strength;
-        }, duration);
     }
 
-    internal void BoostDefense(float boostPct, float duration)
+    internal void BoostDefense(float boostPct)
     {
-        DamageMultiplier *= boostPct;
-        CoolDown(() =>
-        {
-            Strength = Strength;
-        }, duration);
+        DamageReduction *= boostPct;
     }
 
     public void Revive()

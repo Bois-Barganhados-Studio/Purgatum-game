@@ -26,7 +26,7 @@ public class EnemyObject : MonoBehaviour
         
         enemy = new Enemy()
         {
-            Vitality = 1,
+            Vitality = 5,
             Strength = 1,
             Agility = 1,
             Defense = 1,
@@ -42,6 +42,7 @@ public class EnemyObject : MonoBehaviour
         textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(Enemy.LAYER, IItem.LAYER);
+        Physics2D.IgnoreLayerCollision(Enemy.LAYER, Destructable.LAYER);
         animator = GetComponentInChildren<Animator>();
         direction = Vector2.down;
     }
@@ -59,6 +60,12 @@ public class EnemyObject : MonoBehaviour
         //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
         //UnityEngine.Debug.Log(enemy.State);
 
+        if (distance <= 2)
+        {
+            direction = new Vector2(p.transform.position.x - transform.position.x, p.transform.position.y - transform.position.y);
+            direction.Normalize();
+        }
+
         animator.SetFloat("Horizontal", direction.x);
         animator.SetFloat("Vertical", direction.y);
         
@@ -75,7 +82,6 @@ public class EnemyObject : MonoBehaviour
                 break;
 
             case Enemy.MachineState.CHASING:
-                direction = Vector2.MoveTowards(direction, p.GetDirection(), Time.deltaTime);
                 animator.SetFloat("Speed", direction.sqrMagnitude);
 
                 pathfinder.canSearch = true;
@@ -117,7 +123,7 @@ public class EnemyObject : MonoBehaviour
         Collider2D col = Physics2D.OverlapCircle(attackPoint.transform.position, 2 * enemy.MainWeapon.Range, playerLayer);
         if (col != null)
         {
-            p.TakeAttack(enemy.MainWeapon, direction);
+            p.TakeAttack(enemy.MainWeapon, enemy.DamageMultiplier, direction);
         }
     }
 
@@ -153,11 +159,11 @@ public class EnemyObject : MonoBehaviour
         updateEnabled = false;
     }
 
-    public void TakeAttack(Weapon pWeapon, Vector2 playerFacingDir)
+    public void TakeAttack(Weapon pWeapon, float damageMultiplier, Vector2 playerFacingDir)
     {
         if (enemy.IsDead)
             return;
-        int dmg = enemy.takeAttack(pWeapon);
+        int dmg = enemy.TakeAttack(pWeapon, damageMultiplier);
         if (dmg != 0) {
             updateEnabled = false;
             rb.AddForce(playerFacingDir * pWeapon.Weight * 0.1f, ForceMode2D.Impulse);
@@ -202,6 +208,5 @@ public class EnemyObject : MonoBehaviour
         yield return new WaitForSeconds(.15f);
         sr.color = Color.white;
     }
-
 
 }

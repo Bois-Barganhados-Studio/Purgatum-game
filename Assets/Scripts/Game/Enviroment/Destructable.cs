@@ -6,6 +6,7 @@ class Destructable : MonoBehaviour
 {
     private GameObject smoke, item;
 
+    public static readonly int LAYER = 10;
     void Awake()
     {
         item = transform.GetChild(0).gameObject;

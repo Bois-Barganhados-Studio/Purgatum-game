@@ -3,34 +3,35 @@ using UnityEngine;
 
 public class WeaponObject : MonoBehaviour
 {
-  public Weapon weapon;
-  private SpriteRenderer sRenderer;
-  private Sprite[] vfxSprites;
-  public Sprite[] VfxSprites { get { return vfxSprites; } }
+    public Weapon weapon;
+    private SpriteRenderer sRenderer;
+    private Sprite[] vfxSprites;
+    public Sprite[] VfxSprites { get { return vfxSprites; } }
 
-  public void Awake()
-  {
-    sRenderer = gameObject.GetComponent<SpriteRenderer>();
-    gameObject.SetActive(false);
-  }
+    public void Awake()
+    {
+        sRenderer = gameObject.GetComponent<SpriteRenderer>();
+        gameObject.SetActive(false);
+    }
 
-  public void Init(Weapon w, Sprite sprite, Sprite[] vfxSprites, bool active)
-  {
-    weapon = w;
-    sRenderer.sprite = sprite;
-    this.vfxSprites = vfxSprites;
-    gameObject.SetActive(active);
-  }
+    public void Init(Weapon w, Sprite sprite, Sprite[] vfxSprites, bool active)
+    {
+        weapon = w;
+        sRenderer.sprite = sprite;
+        this.vfxSprites = vfxSprites;
+        gameObject.SetActive(active);
+        sRenderer.color = Color.white;
+    }
 
-  public void SetActive(bool isActive)
-  {
-    gameObject.SetActive(isActive);
-  }
+    public void SetActive(bool isActive)
+    {
+        gameObject.SetActive(isActive);
+    }
 
-  public Weapon.TYPE GetWeaponType()
-  {
-    return weapon.Type;
-  }
+    public Weapon.TYPE GetWeaponType()
+    {
+        return weapon.Type;
+    }
 
     private bool dropCancelled { get; set; }
 
@@ -64,8 +65,13 @@ public class WeaponObject : MonoBehaviour
             Destroy(gameObject);
     }
 
-  public Sprite getWSprite()
-  {
-    return sRenderer.sprite;
-  }
+    public Sprite getWSprite()
+    {
+        return sRenderer.sprite;
+    }
+
+    public void SetSpriteColor(Color newColor)
+    {
+        sRenderer.color = newColor;
+    }
 }
