@@ -210,10 +210,6 @@ public class SoundControl : MonoBehaviour
         // return song.name;
     }
 
-    private void Update() {
-        Debug.Log(battleSong.name + " " + battleSong.isPlaying);    
-    }
-
     public void SetGlobalSoundVolume(float volume)
     {
         SoundControl.globalSoundVolume = volume;
