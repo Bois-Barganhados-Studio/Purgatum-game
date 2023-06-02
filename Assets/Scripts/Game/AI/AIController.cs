@@ -288,7 +288,7 @@ public class AIController
 
         double[][] input = this.normalizeData(playerRunsDataArray);
 
-        neuralNetwork.train(input, output, log: true);
+        neuralNetwork.train(input, output, log: false);
     }
 
     public void TestAI()
@@ -333,7 +333,7 @@ public class AIController
         LevelData levelData = new LevelData(numOfRooms: 4, roomStyle: 0, origin: 0, randFactor: 0, blueprints: new int[] { 0, 1, 2, 3 });
 
         levelData.SetNumOfRooms(UnityEngine.Random.Range(2, 17));
-        levelData.SetRoomStyle(UnityEngine.Random.Range(0, 1));
+        levelData.SetRoomStyle(UnityEngine.Random.Range(0, 3));
         levelData.SetOrigin(UnityEngine.Random.Range(0, 16));
         levelData.SetRandFactor(UnityEngine.Random.Range(0, 21));
         int[] blueprints = new int[levelData.GetNumOfRooms()];

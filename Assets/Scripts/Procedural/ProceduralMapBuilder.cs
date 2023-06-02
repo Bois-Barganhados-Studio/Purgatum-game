@@ -283,6 +283,7 @@ public class ProceduralMapBuilder : MonoBehaviour
             levelRenderer.RenderChests();
             levelRenderer.RenderColliders(map.GetRoomsCollider());
             player.transform.position = spawnPoint;
+            player.GetComponent<PlayerObject>().ChangeScene();
             status = true;
         }
         catch (System.Exception e)

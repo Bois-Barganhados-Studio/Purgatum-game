@@ -57,7 +57,7 @@ public class RogueLogic
     {
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
-        if (this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
+        if (true || this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
             Debug.Log("Gerando mundo aleatoriamente....");
             currentWorldData = aiController.GenerateRandomParams();
@@ -66,6 +66,7 @@ public class RogueLogic
         {
             currentWorldData = aiController.GenerateWorldParams();
         }
+        Debug.Log("Gerando o mundo com: " + currentWorldData.ToString());
         mapBuilder.SetLevelData(currentWorldData.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
         if (response)
@@ -100,12 +101,15 @@ public class RogueLogic
     //</summary>
     private void StartHubScene()
     {
+        
         level++;
         state = States.PLAYING;
         actualScene = hubScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(hubScene);
+        
+            
     }
 
     //<summary>
@@ -113,12 +117,14 @@ public class RogueLogic
     //</summary>
     private void StartMainScene()
     {
+        
         level++;
         state = States.PLAYING;
         actualScene = mainScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(mainScene, StartLevelsFirstTime);
+        
     }
 
     //<summary>

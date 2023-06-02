@@ -75,6 +75,15 @@ public class PlayerObject : MonoBehaviour
         UpdateHotBar();
     }
 
+    public void ChangeScene()
+    {
+        Debug.Log("CilAGCLSUIASC");
+        HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
+        HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
+        UpdateHotBar();
+        UpdateHealthBar();
+    }
+
     public Vector2 MoveVelocity()
     {
         return player.MoveVelocity();
@@ -302,7 +311,13 @@ public class PlayerObject : MonoBehaviour
 
     public void UpdateHealthBar()
     {
+        
         HealthBarHud.setHealth(player.Hp);
+    }
+
+    void Update()
+    {
+        UpdateHealthBar();
     }
 
     public void UpdateMaxHealthBar()
@@ -455,12 +470,14 @@ public class PlayerObject : MonoBehaviour
         //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
         //}
 
-        //var items = DropGenerator.GenerateDrop(69, 1);
-        //for (int i = 0; i < items.Count; i++)
-        //{
+        // var items = DropGenerator.GenerateDrop(69, 1);
+        // for (int i = 0; i < items.Count; i++)
+        // {
         //    items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
         //    items[i].gameObject.SetActive(true);
-        //}
+        // }
+
+        transform.position = new Vector3(0.9f,1.153f,0);
     }
 
     public int DirectionToIndex(Vector2 _direction)

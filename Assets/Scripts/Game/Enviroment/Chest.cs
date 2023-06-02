@@ -14,6 +14,10 @@ public class Chest : MonoBehaviour
     }
     public void Open(int luck)
     {
+        if(oppened)
+        {
+            return;
+        }
         oppened = true;
         StartCoroutine(DropItems(luck));
     }
