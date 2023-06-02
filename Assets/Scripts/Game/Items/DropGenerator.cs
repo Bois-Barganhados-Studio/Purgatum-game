@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Net;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class DropGenerator : MonoBehaviour

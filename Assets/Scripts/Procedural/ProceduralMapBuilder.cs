@@ -49,17 +49,25 @@ public class ProceduralMapBuilder : MonoBehaviour
     {
         await BootFields();
     }
+    public void Clear()
+    {
+        if (levelRenderer != null)
+        {
+            levelRenderer.UnloadMemory();
+            levelRenderer.ClearGameObject();
+        }
+    }
 
     /**
     * Iniciar o novo nivel e limpar renderizador
     */
     public async Task<bool> NewLevel(bool isBooting = true)
     {
+        Debug.Log("Booting " + isBooting);
         bool status = true;
         if (!isBooting)
         {
-            levelRenderer.UnloadMemory();
-            levelRenderer.ClearGameObject();
+            Clear();
         }
         Debug.Log("NEW LEVEL STARTED");
         ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());

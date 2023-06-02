@@ -33,15 +33,9 @@ public class RogueLogic
         {
             rogueData = new RogueData();
         }
-
         state = States.STARTING;
         this.rogueData = rogueData;
         aiController = new AIController();
-        //this.rogueData.CreateSampleData();
-
-        //aiController.SetData(this.rogueData);
-        //aiController.Train();
-        //aiController.TestAI();
     }
 
     public int GetLevel()
@@ -80,6 +74,14 @@ public class RogueLogic
         }
     }
 
+    public void ClearMap()
+    {
+        if (mapBuilder != null)
+        {
+            mapBuilder.Clear();
+        }
+    }
+
     //<summary>
     //  Cold Boot para iniciar o mapa procedural pela primeira vez
     //</summary>
@@ -87,11 +89,8 @@ public class RogueLogic
     {
         if (mainScene == scene.buildIndex)
         {
-            //Remover isso depois
             aiController.SetData(this.rogueData);
             aiController.Train();
-
-
             await StartNewProceduralLevel();
         }
     }
@@ -101,15 +100,12 @@ public class RogueLogic
     //</summary>
     private void StartHubScene()
     {
-        
         level++;
         state = States.PLAYING;
         actualScene = hubScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(hubScene);
-        
-            
     }
 
     //<summary>
@@ -117,14 +113,13 @@ public class RogueLogic
     //</summary>
     private void StartMainScene()
     {
-        
+        mapBuilder = null;
         level++;
         state = States.PLAYING;
         actualScene = mainScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(mainScene, StartLevelsFirstTime);
-        
     }
 
     //<summary>
@@ -178,6 +173,7 @@ public class RogueLogic
     */
     private async Task<bool> NewLevel()
     {
+        Debug.Log("New map level: " + level);
         bool status = true;
         try
         {
