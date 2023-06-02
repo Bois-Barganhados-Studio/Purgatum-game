@@ -55,6 +55,14 @@ public class RogueLikeController : MonoBehaviour
         rogueLogic.DoAction();
     }
 
+     public void OnFirstRun()
+    {
+        //Adicionar instancias no banco
+        rogueLogic.AddPlayerSuccess();
+        rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
+        rogueLogic.DoAction();
+    }
+
     public void OnGameRestart()
     {
         //Adicionar instancias no banco

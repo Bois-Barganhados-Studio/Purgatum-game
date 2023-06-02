@@ -57,9 +57,6 @@ public class RogueLogic
     {
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
-
-        Debug.Log("Contagem death: " + this.rogueData.GetDeathCount() + " contagem Vida: " + this.rogueData.GetSurviveCount());
-        //Gera o mundo aleatoriamente ou por IA, dependendo de quantas runs o player já teve
         if (this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
             Debug.Log("Gerando mundo aleatoriamente....");
@@ -69,8 +66,6 @@ public class RogueLogic
         {
             currentWorldData = aiController.GenerateWorldParams();
         }
-
-        Debug.Log("Gerando novo level proceduralmente: " + currentWorldData.ToString());
         mapBuilder.SetLevelData(currentWorldData.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
         if (response)
@@ -79,7 +74,7 @@ public class RogueLogic
             level++;
             if (level > 1)
             {
-                //GameObject.FindObjectOfType<PlayerObject>().SetMapLevel(level);
+                GameObject.FindObjectOfType<PlayerObject>().SetMapLevel(level);
             }
         }
     }
@@ -105,6 +100,8 @@ public class RogueLogic
     //</summary>
     private void StartHubScene()
     {
+        level++;
+        state = States.PLAYING;
         actualScene = hubScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
@@ -116,6 +113,8 @@ public class RogueLogic
     //</summary>
     private void StartMainScene()
     {
+        level++;
+        state = States.PLAYING;
         actualScene = mainScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
@@ -127,7 +126,7 @@ public class RogueLogic
     //</summary>
     private async Task<bool> ResetLevel()
     {
-        level = 1;
+        level = 0;
         state = States.RESTART;
         return await NewLevel();
     }
@@ -174,7 +173,6 @@ public class RogueLogic
     private async Task<bool> NewLevel()
     {
         bool status = true;
-
         try
         {
             if (this.rogueData.GetDeathCount() > (MIN_RUNS_TO_AI / 2) && this.rogueData.GetSurviveCount() > (MIN_RUNS_TO_AI / 2))
@@ -195,7 +193,8 @@ public class RogueLogic
             }
             else if (level == BOSS_INDEX)
             {
-                //StartBossBattle();
+                //era pra ser o BOSS
+                StartHubScene();
             }
         }
         catch (System.Exception e)

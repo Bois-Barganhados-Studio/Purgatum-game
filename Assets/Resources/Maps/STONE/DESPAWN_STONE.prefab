@@ -787,10 +787,8 @@ GameObject:
   - component: {fileID: 4116133085236419381}
   - component: {fileID: 467171640905251148}
   - component: {fileID: 1990342511253396418}
-  - component: {fileID: 2352300380865188152}
-  - component: {fileID: 51393713268583282}
-  - component: {fileID: 5529857107002249148}
   - component: {fileID: 7598954621307685359}
+  - component: {fileID: 1312015243480353975}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -1278,96 +1276,6 @@ TilemapRenderer:
   m_Mode: 1
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!60 &2352300380865188152
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312591305702444126}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.8290439, y: -0.34504235}
-      - {x: -0.9684832, y: -0.40221328}
-      - {x: -1.2451091, y: -0.4835378}
-      - {x: -0.4737394, y: -0.8788606}
-      - {x: -0.22006407, y: -0.64321554}
---- !u!50 &51393713268583282
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312591305702444126}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &5529857107002249148
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312591305702444126}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 2352300380865188152}
-    m_ColliderPaths:
-    - - X: -8290439
-        Y: -3450423
-      - X: -9684832
-        Y: -4022132
-      - X: -12451091
-        Y: -4835378
-      - X: -4737394
-        Y: -8788606
-      - X: -2200640
-        Y: -6432155
-  m_CompositePaths:
-    m_Paths:
-    - - {x: -0.4737566, y: -0.87885183}
-      - {x: -0.2201059, y: -0.6431951}
-      - {x: -0.82905483, y: -0.34504682}
-      - {x: -0.9684837, y: -0.4022133}
-      - {x: -1.2450278, y: -0.4835794}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
 --- !u!114 &7598954621307685359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1380,6 +1288,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea6ad74122e8f429278f7f0f90fe63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &1312015243480353975
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312591305702444126}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.7238406, y: -0.45608085}
+  serializedVersion: 2
+  m_Radius: 0.36974224
 --- !u!1 &2758945948941887065
 GameObject:
   m_ObjectHideFlags: 0
@@ -3267,7 +3191,7 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -0.3178342, y: 0.39505282}
       - {x: 0.3060971, y: 0.07258126}
-      - {x: -0.15978189, y: -0.63974637}
+      - {x: -0.81956667, y: -0.63696283}
       - {x: -0.48491773, y: -0.79905236}
       - {x: -0.32014278, y: -0.8808415}
       - {x: 0.9553714, y: -0.24291869}
@@ -3279,7 +3203,7 @@ PolygonCollider2D:
       - {x: -0.9581928, y: -0.23984419}
       - {x: -1.2870095, y: -0.39929786}
       - {x: -1.1206483, y: -0.4824362}
-      - {x: -0.8021284, y: -0.31897256}
+      - {x: -0.8325476, y: -0.6288599}
 --- !u!50 &5149063050182081292
 Rigidbody2D:
   serializedVersion: 4
@@ -3325,8 +3249,8 @@ CompositeCollider2D:
         Y: 3950528
       - X: 3060971
         Y: 725812
-      - X: -1597818
-        Y: -6397463
+      - X: -8195666
+        Y: -6369628
       - X: -4849177
         Y: -7990523
       - X: -3201427
@@ -3349,8 +3273,8 @@ CompositeCollider2D:
         Y: -3992978
       - X: -11206483
         Y: -4824362
-      - X: -8021283
-        Y: -3189725
+      - X: -8325476
+        Y: -6288599
   m_CompositePaths:
     m_Paths:
     - - {x: -0.3201544, y: -0.8808356}
@@ -3362,12 +3286,12 @@ CompositeCollider2D:
       - {x: -0.5925072, y: 0.060905702}
       - {x: -0.9581954, y: -0.2398455}
       - {x: -1.2869464, y: -0.3993293}
-      - {x: -1.1206365, y: -0.48243}
-      - {x: -0.80212474, y: -0.3189671}
-      - {x: -0.3178115, y: 0.3950411}
-      - {x: 0.306079, y: 0.0725534}
-      - {x: -0.1597881, y: -0.6397494}
-      - {x: -0.4848547, y: -0.7990836}
+      - {x: -1.1206498, y: -0.4824355}
+      - {x: -0.83253443, y: -0.6288336}
+      - {x: -0.3178077, y: 0.3950391}
+      - {x: 0.30604762, y: 0.07255}
+      - {x: -0.8195121, y: -0.6369893}
+      - {x: -0.4849176, y: -0.7990524}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!114 &4176568575389824201
@@ -3396,7 +3320,7 @@ MonoBehaviour:
   - {x: -0.3085969, y: -0.8893045, z: 0}
   m_ShapePathHash: -892921076
   m_Mesh: {fileID: 0}
-  m_InstanceId: 42286
+  m_InstanceId: 113410
 --- !u!1 &6161273081866168499
 GameObject:
   m_ObjectHideFlags: 0

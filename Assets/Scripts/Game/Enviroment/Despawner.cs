@@ -8,20 +8,22 @@ public class Despawner : MonoBehaviour
 
     void Awake()
     {
-        this.timeToDespawn = 2f;
+        this.timeToDespawn = 1f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        foreach(RoomEvents room in GameObject.FindObjectsOfType<RoomEvents>()){
-            if(!room.IsVisited()){
-                Debug.Log("Sala não completa ainda!");
-                return;
-            }
-        }
-        Debug.Log("Todas as salas foram completas!");
         if (other.gameObject.CompareTag("Player"))
         {
+            foreach (RoomEvents room in GameObject.FindObjectsOfType<RoomEvents>())
+            {
+                if (!room.IsVisited())
+                {
+                    Debug.Log("Sala não completa ainda!");
+                    return;
+                }
+            }
+            Debug.Log("Todas as salas foram completas!");
             //todo: perguntar se o player quer sair
             Debug.Log("GOING TO NEXT LEVEL");
             StartCoroutine(DespawnPlayer());

@@ -19,6 +19,6 @@ public class HubExit : MonoBehaviour
     IEnumerator DespawnPlayer()
     {
         yield return new WaitForSeconds(this.timeToDespawn);
-        GameObject.FindObjectOfType<RogueLikeController>().OnGoingToNextLevel();
+        GameObject.FindObjectOfType<RogueLikeController>().OnFirstRun();
     }
 }
