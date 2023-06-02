@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SoundControl : MonoBehaviour
 {
     public static float globalSoundVolume = 0.0f;
@@ -14,10 +15,12 @@ public class SoundControl : MonoBehaviour
 
     public AudioClip[] songs;    
     public string[] songNames;
+    public List<AudioClip> battleSongs = null;
 
     private AudioSource audioSource  = null;
     private AudioSource ambience  = null;
     private AudioSource battleSong  = null;
+
     public void Start() {
         audioSource = gameObject.AddComponent<AudioSource>();
         ambience = gameObject.AddComponent<AudioSource>();
@@ -30,6 +33,17 @@ public class SoundControl : MonoBehaviour
         {
             audioSources[i] = gameObject.AddComponent<AudioSource>();
             audioSources[i].clip = soundEffects[i];
+        }
+
+        int qtdBattleSongs = 9;
+        battleSongs = new List<AudioClip>();
+        for (int i = 0; i < qtdBattleSongs; i++)
+        {
+            battleSongs.Add(Resources.Load<AudioClip>("Sounds/Songs/Battle_song_" + i));
+            if(battleSongs[i] == null)
+            {
+                Debug.LogError("Battle song not found: " + i);
+            }
         }
     }
 
@@ -150,27 +164,54 @@ public class SoundControl : MonoBehaviour
         ambience.Stop();
     }
 
-    public void PlayBattleSong(bool loop = true)
+    public void PlayBattleSong(bool replaceSong = false,bool loop = true)
     {
-        AudioClip battle = songs[1];
+        Debug.Log("Play battle song");
+        AudioClip battle = battleSongs[Random.Range(0, battleSongs.Count)];
         if (battle == null)
         {
             Debug.LogError("BattleSong clip not found");
             return;
         }
-        if(!battleSong.isPlaying){
+        if(!battleSong.isPlaying || replaceSong){
             battleSong.clip = battle;
-            battleSong.volume = 0.0f;
+            battleSong.volume = globalSongVolume;
             battleSong.loop = loop;
             battleSong.Play();
-            StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, globalSongVolume));
+            //StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, globalSongVolume));
         }
+        // else if(replaceSong && battleSong.isPlaying)
+        // {
+        //     Debug.Log("Entrando na ChangeBattleSong");
+        //     ChangeBattleSong(battle, loop);
+            
+        // }
+        
         
     }
     public void StopBattleSong()
     {
         StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, 0.0f));
-        //battleSong.Stop();
+    }
+
+    public void ChangeBattleSong(AudioClip song, bool loop = true)
+    {
+        Debug.Log("Change battle song");
+        StartCoroutine(FadeChangeAudioSource.StartChange(battleSong, song , 1.0f));
+        // StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, 0.0f));
+        // Debug.Log("tmp: " + audioSource + " battleSong: " + battleSong + " song: " + song);
+        // audioSource.clip = song;
+        // audioSource.volume = 0.0f;;
+        // audioSource.loop = loop;
+        // //audioSource.Play();
+        // StartCoroutine(FadeAudioSource.StartFade(battleSong, 1.0f, globalSongVolume));
+        // battleSong = audioSource;
+
+        // return song.name;
+    }
+
+    private void Update() {
+        Debug.Log(battleSong.name + " " + battleSong.isPlaying);    
     }
 
     public void SetGlobalSoundVolume(float volume)
@@ -195,8 +236,29 @@ public static class FadeAudioSource {
             audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
-        if(targetVolume == 0.0f)
+        if(targetVolume == 0.01f)
             audioSource.Stop();
+        yield break;
+    }
+}
+
+public static class FadeChangeAudioSource {
+    public static IEnumerator StartChange(AudioSource audioSource, AudioClip changeAudio, float duration)
+    {
+        float currentTime = 0;
+        float start = audioSource.volume;
+        float targetVolume = 0.0f;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        audioSource.clip = changeAudio;
+        audioSource.volume = start;
+        audioSource.loop = true;
+        audioSource.Play();
         yield break;
     }
 }
