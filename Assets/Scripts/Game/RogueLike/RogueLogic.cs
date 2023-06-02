@@ -77,7 +77,8 @@ public class RogueLogic
         {
             state = States.PLAYING;
             level++;
-            if(level > 1){
+            if (level > 1)
+            {
                 //GameObject.FindObjectOfType<PlayerObject>().SetMapLevel(level);
             }
         }
@@ -233,7 +234,10 @@ public class RogueLogic
 
     public void AddPlayerSuccess()
     {
-        this.AddRunData(true);
+        if (level != HUB_INDEX && level != BOSS_INDEX && level > 1)
+        {
+            this.AddRunData(true);
+        }
     }
 
     public void AddPlayerDeath()

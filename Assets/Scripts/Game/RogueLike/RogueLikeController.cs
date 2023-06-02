@@ -24,7 +24,7 @@ public class RogueLikeController : MonoBehaviour
         rogueLogic.rogueData.CreateSampleData();
         rogueLogic.SetMainScene(mainScene);
         rogueLogic.SetHubScene(hubScene);
-        rogueLogic.SetState(RogueLogic.States.BOOT_PROCEDURAL);
+        rogueLogic.SetState(RogueLogic.States.STARTING);
         //Invoke("OnGoingToNextLevel",15f);
     }
 
