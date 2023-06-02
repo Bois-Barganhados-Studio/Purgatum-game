@@ -26,9 +26,9 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
     private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
     private const string DIVIDER = "_";
-    private const float G_NODE_SIZE = 0.5f;
+    private const float G_NODE_SIZE = 0.32f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 22, SPAWN_CHANCE = 2;
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 20, SPAWN_CHANCE = 2;
     private static readonly string[] styles = { "STONE", "FIRE", "GRASS" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", PLAIN = "PLAIN_GROUND";
     private static readonly string[] DOORS = new string[8] { "DOOR_LEFT_BOTH", "DOOR_LEFT_FIRST", "DOOR_LEFT_LAST", "DOOR_LEFT_MIDDLE", "DOOR_RIGHT_BOTH", "DOOR_RIGHT_FIRST", "DOOR_RIGHT_LAST", "DOOR_RIGHT_MIDDLE" };
