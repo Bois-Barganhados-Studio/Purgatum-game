@@ -15,6 +15,13 @@ public class Skillpoints : MonoBehaviour
     public TextMeshProUGUI luckText;
     public TextMeshProUGUI speedText;
 
+    public /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        Debug.Log("Starting UI");
+    }
     public void open()
     {
         player = GameObject.FindObjectOfType<PlayerObject>();

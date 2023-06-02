@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6334031931094269465}
   - component: {fileID: 3601962969558455191}
-  - component: {fileID: 7775186821039510994}
   m_Layer: 10
   m_Name: Desk
   m_TagString: Untagged
@@ -62,18 +61,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.54290015, y: 0.46607208}
   m_EdgeRadius: 0
---- !u!114 &7775186821039510994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697858459660904294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7c494c325585145b5a19bf5741c8cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2439473436294128617
 GameObject:
   m_ObjectHideFlags: 0

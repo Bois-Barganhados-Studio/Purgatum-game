@@ -73,10 +73,10 @@ public class PlayerObject : MonoBehaviour
 
     void Update()
     {
-        if (player.CurrentMoveState == Entity.MoveState.MOVING)
-        {
-            player.soundController.PlaySoundEffect("player_step");
-        }
+        // if (player.CurrentMoveState == Entity.MoveState.MOVING)
+        // {
+        //     player.soundController.PlaySoundEffect("player_step");
+        // }
     }
 
     public Vector2 MoveVelocity()

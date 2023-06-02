@@ -6,7 +6,7 @@ public class HubExit : MonoBehaviour
     private float timeToDespawn = 0f;
     void Awake()
     {
-        this.timeToDespawn = 2f;
+        this.timeToDespawn = 0.5f;
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
