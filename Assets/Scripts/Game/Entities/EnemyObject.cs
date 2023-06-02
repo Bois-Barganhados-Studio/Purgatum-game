@@ -71,7 +71,6 @@ public class EnemyObject : MonoBehaviour
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
                 animator.SetFloat("Speed", 0f);
-                enemy.soundController.StopBattleSong();
                 break;
 
             case Enemy.MachineState.CHASING:
@@ -81,8 +80,6 @@ public class EnemyObject : MonoBehaviour
                 pathfinder.canSearch = true;
                 pathfinder.canMove = true;
                 pathfinder.destination = target.position;
-                
-                enemy.soundController.PlayBattleSong();
                 break;
 
             case Enemy.MachineState.ATTACKING:
@@ -98,10 +95,7 @@ public class EnemyObject : MonoBehaviour
             case Enemy.MachineState.DYING:
                 pathfinder.canSearch = false;
                 pathfinder.canMove = false;
-                enemy.soundController.StopBattleSong();
                 Die();
-                
-                
                 break;
 
         }
