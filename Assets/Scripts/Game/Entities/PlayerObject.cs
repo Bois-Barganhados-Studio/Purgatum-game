@@ -338,6 +338,10 @@ public class PlayerObject : MonoBehaviour
             {
                 CollectWeapon(weapon);
             }
+            else if (col.TryGetComponent<Chest>(out var chest))
+            {
+                chest.Open(player.Luck);
+            }
         }
     }
 

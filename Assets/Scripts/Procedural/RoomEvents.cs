@@ -29,6 +29,7 @@ public class RoomEvents : MonoBehaviour
         TurnOnDoors();
         SpawnMobs();
         TurnOnLights();
+        PlayBattleSong();
         yield return null;
     }
 
@@ -78,5 +79,11 @@ public class RoomEvents : MonoBehaviour
     public bool IsVisited()
     {
         return visited;
+    }
+
+    public void PlayBattleSong()
+    {
+        SoundControl soundControl = GameObject.FindObjectOfType<SoundControl>();
+        soundControl.PlayBattleSong(replaceSong: true);
     }
 }

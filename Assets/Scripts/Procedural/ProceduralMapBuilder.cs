@@ -26,9 +26,9 @@ public class ProceduralMapBuilder : MonoBehaviour
     private static readonly List<int> MATRIX_LEFT_ELEMENTS = new List<int> { 0, 4, 8, 12 };
     private static readonly List<int> MATRIX_RIGHT_ELEMENTS = new List<int> { 3, 7, 11, 15 };
     private const string DIVIDER = "_";
-    private const float G_NODE_SIZE = 0.5f;
+    private const float G_NODE_SIZE = 0.32f;
     private const string FOLDER = "Maps/";
-    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 22, SPAWN_CHANCE = 2;
+    private const int DOORS_LIMIT = 10, DELAY_SPAWN = 18, SPAWN_CHANCE = 2;
     private static readonly string[] styles = { "STONE", "FIRE", "GRASS" };
     private static readonly string SPAWN = "SPAWN", DESPAWN = "DESPAWN", GROUND = "GROUND", WALL = "WALL", PLAIN = "PLAIN_GROUND";
     private static readonly string[] DOORS = new string[8] { "DOOR_LEFT_BOTH", "DOOR_LEFT_FIRST", "DOOR_LEFT_LAST", "DOOR_LEFT_MIDDLE", "DOOR_RIGHT_BOTH", "DOOR_RIGHT_FIRST", "DOOR_RIGHT_LAST", "DOOR_RIGHT_MIDDLE" };
@@ -171,16 +171,23 @@ public class ProceduralMapBuilder : MonoBehaviour
             Dictionary<int, List<int>> spawnsPerRoom = new Dictionary<int, List<int>>();
             List<string> chunkPaths = new List<string>();
             List<Vector3> chunkPositions = new List<Vector3>();
-            List<int> spawnPoints = new List<int>();
+            List<int> spawnPoints = new List<int>(), chestPoints = new List<int>();
             blueprintsReader.SetNumOfRooms(numOfRooms);
             blueprintsReader.DefineBp(blueprints);
             Map map = new Map(blueprintsReader.RoomsLoaded(), matrixIndexes);
             GenerateGlobalDoors(map);
+            int numberOfChests = Random.Range(1, numOfRooms);
             foreach (Room room in map.GetRooms())
             {
+                bool haveChest = false, chested = false;
                 if (roomsCounter == map.GetSizeOfRooms() - 1)
                 {
                     createDespawn = true;
+                }
+                if (numberOfChests > 0)
+                {
+                    numberOfChests--;
+                    haveChest = true;
                 }
                 int numberOfSpawns = Random.Range(Room.MIN_SPAWNS, Room.MAX_SPAWNS), delaySpawn = DELAY_SPAWN;
                 for (int i = 0; i < room.SizeOf(); i++)
@@ -212,6 +219,11 @@ public class ProceduralMapBuilder : MonoBehaviour
                             path = structure + DIVIDER + styles[roomStyle];
                             if (structure.Equals(GROUND))
                             {
+                                if (haveChest && Random.Range(0, 2) == 1)
+                                {
+                                    haveChest = false;
+                                    chested = true;
+                                }
                                 (bool, int) groundChoice = NextGroundEnumerate();
                                 if (delaySpawn > 0)
                                     delaySpawn--;
@@ -244,7 +256,12 @@ public class ProceduralMapBuilder : MonoBehaviour
                         }
                         if (stylesIni.Contains(path))
                         {
-                            if (isSpawnPoint)
+                            if (chested)
+                            {
+                                chestPoints.Add(chunkPaths.Count);
+                                chested = false;
+                            }
+                            else if (isSpawnPoint)
                             {
                                 spawnPoints.Add(chunkPaths.Count);
                                 isSpawnPoint = false;
@@ -260,8 +277,10 @@ public class ProceduralMapBuilder : MonoBehaviour
             }
             levelRenderer.AddChunks(chunkPaths, chunkPositions);
             levelRenderer.SetSpawnsPerRoom(spawnsPerRoom);
+            levelRenderer.SetChestSpawns(chestPoints);
             levelRenderer.RenderElements();
             levelRenderer.RenderSpawns(new List<int>() { 0 });
+            levelRenderer.RenderChests();
             levelRenderer.RenderColliders(map.GetRoomsCollider());
             player.transform.position = spawnPoint;
             status = true;

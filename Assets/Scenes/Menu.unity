@@ -637,7 +637,7 @@ PrefabInstance:
       objectReference: {fileID: 1478660538}
     - target: {fileID: 1020762960353246007, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: offsetY
-      value: -350
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 1020762960353246007, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: movementSpeed
@@ -741,7 +741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1020762961076279886, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -31.15091
+      value: -31.150879
       objectReference: {fileID: 0}
     - target: {fileID: 1020762961355917227, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -749,7 +749,7 @@ PrefabInstance:
       objectReference: {fileID: 1648454436}
     - target: {fileID: 1020762961405649848, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24.999908
+      value: -24.999878
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}

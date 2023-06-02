@@ -13,8 +13,8 @@ public class RenderLevel
     private Dictionary<int, List<int>> spawnsPerRoom;
     private Dictionary<int, List<Spawner>> spawnsCreatedPerRoom = new Dictionary<int, List<Spawner>>();
     private List<Spawner> spawnsCreated = new List<Spawner>();
-    private List<int> commanderSpawns = new List<int>();
-    public static GameObject ROOM_COLLIDER_PREFAB = null, COMMANDER_PREFAB, DEFAULT_PREFAB;
+    private List<int> commanderSpawns = new List<int>(), chestSpawns = new List<int>();
+    public static GameObject ROOM_COLLIDER_PREFAB = null, COMMANDER_PREFAB, DEFAULT_PREFAB, CHEST_SPAWN;
     private const string ROOM_COLLIDER = "RoomCollider";
     public static GameObject renderLevels = null;
     public float x_min = 9999999, y_min = 9999999, x_max = -9999999, y_max = -9999999;
@@ -27,11 +27,17 @@ public class RenderLevel
         ROOM_COLLIDER_PREFAB = Resources.Load<GameObject>("Maps/" + ROOM_COLLIDER);
         COMMANDER_PREFAB = Resources.Load<GameObject>("Maps/COMMANDER");
         DEFAULT_PREFAB = Resources.Load<GameObject>("Maps/DEFAULT");
+        CHEST_SPAWN = Resources.Load<GameObject>("Maps/CHEST_SPAWN");
     }
 
     public void SetSpawnsPerRoom(Dictionary<int, List<int>> spawnsPerRoom)
     {
         this.spawnsPerRoom = spawnsPerRoom;
+    }
+
+    public void SetChestSpawns(List<int> chestSpawns)
+    {
+        this.chestSpawns = chestSpawns;
     }
 
     /**
@@ -122,6 +128,12 @@ public class RenderLevel
             }
             spawnsCreatedPerRoom.Add(entry.Key, spawnsCreated);
             spawnsCreated = new List<Spawner>();
+        }
+    }
+    
+    public void RenderChests(){
+        foreach(int spawnPoint in chestSpawns){
+            GameObject.Instantiate(CHEST_SPAWN, level[spawnPoint].transform.position, Quaternion.identity, level[spawnPoint].transform);
         }
     }
     private void GetCommanders(int index)
