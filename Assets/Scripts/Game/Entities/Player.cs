@@ -76,7 +76,7 @@ public class Player : Entity
     internal void BoostSpeed(float boostPct)
     {
         MoveSpeed += (MoveSpeed * boostPct);
-        
+        DodgeSpeed += (DodgeSpeed * boostPct);
     }
 
     internal void BoostDamage(float boostPct)

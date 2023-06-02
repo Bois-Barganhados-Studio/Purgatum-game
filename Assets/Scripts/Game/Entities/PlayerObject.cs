@@ -22,7 +22,6 @@ public class PlayerObject : MonoBehaviour
     private int mapLevel;
     private Color currSpriteColor;
 
-
     private bool isUpdateDisabled;
     public bool IsUpdateDisabled
     {
@@ -74,14 +73,6 @@ public class PlayerObject : MonoBehaviour
             Destroy(gameObject);
         }
         UpdateHotBar();
-    }
-
-    void Update()
-    {
-        // if (player.CurrentMoveState == Entity.MoveState.MOVING)
-        // {
-        //     player.soundController.PlaySoundEffect("player_step");
-        // }
     }
 
     public Vector2 MoveVelocity()
@@ -182,18 +173,15 @@ public class PlayerObject : MonoBehaviour
         player.UnlockDir();
         animator.SetBool("isRolling", false);
 
-        // TODO - COOLDOWN SCALE LOGIC
         StartCoroutine(player.CoolDown(() =>
         {
             player.DodgingCD = false;
-        }, Player.BASE_COOLDOWN));
+        }, Player.BASE_COOLDOWN * player.Agility));
     }
 
     public void EndDeath()
     {
         gameObject.SetActive(false);
-
-        // TODO - Go back to hub
         player.SkillPoints += mapLevel - 1;
         RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
         rlc.OnGameRestart();
@@ -201,6 +189,7 @@ public class PlayerObject : MonoBehaviour
         rb.simulated = true;
         isUpdateDisabled = false;
         animator.SetBool("isDying", false);
+        player.Hp = player.MaxHp;
         player.Hp = player.MaxHp;
         UpdateHealthBar();
         gameObject.SetActive(true);
@@ -244,13 +233,13 @@ public class PlayerObject : MonoBehaviour
     }
 
     // TODO - DELETE THIS ON RELEASE VERSION
-    private void OnDrawGizmosSelected()
-    {
-        foreach (var it in actionPoints)
-        {
-            Gizmos.DrawWireSphere(it.transform.position, 0.1f);
-        }
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    foreach (var it in actionPoints)
+    //    {
+    //        Gizmos.DrawWireSphere(it.transform.position, 0.1f);
+    //    }
+    //}
 
     public void EndAttack()
     {
@@ -326,7 +315,6 @@ public class PlayerObject : MonoBehaviour
         if (!player.CanCollect())
             return;
         int idx = DirectionToIndex(player.FacingDirection);
-        // TODO - Call player collection animation
         var col = Physics2D.OverlapCircle(actionPoints[idx].transform.position, 0.05f, itemLayer);
         if (col != null)
         {
@@ -404,6 +392,7 @@ public class PlayerObject : MonoBehaviour
     {
         player.Heal(healPct);
         SetSpriteColor(Color.green, 0.3f);
+        UpdateHealthBar();
     }
 
     private static readonly Color DEFENSE_COLOR = new(180, 0, 141);
@@ -418,6 +407,7 @@ public class PlayerObject : MonoBehaviour
         StartCoroutine(CoolDown(() =>
         {
             player.Speed = player.Speed;
+            player.Agility = player.Agility;
         }, duration));
         SetSpriteColor(SPEED_COLOR, duration);
     }
@@ -447,6 +437,7 @@ public class PlayerObject : MonoBehaviour
         return player.Luck;
     }
 
+    // TODO - REMOVE/MAKE THIS EMPTY
     public void Test()
     {
         // Working potion spawn test
@@ -464,12 +455,12 @@ public class PlayerObject : MonoBehaviour
         //    weapon.GetComponent<WeaponObject>().Init(new DefaultWeapon(), weapon.GetComponent<SpriteRenderer>().sprite, true);
         //}
 
-        var items = DropGenerator.GenerateDrop(69, 1);
-        for (int i = 0; i < items.Count; i++)
-        {
-            items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
-            items[i].gameObject.SetActive(true);
-        }
+        //var items = DropGenerator.GenerateDrop(69, 1);
+        //for (int i = 0; i < items.Count; i++)
+        //{
+        //    items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
+        //    items[i].gameObject.SetActive(true);
+        //}
     }
 
     public int DirectionToIndex(Vector2 _direction)

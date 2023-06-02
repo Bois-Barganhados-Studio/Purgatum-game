@@ -53,12 +53,10 @@ public class EnemyObject : MonoBehaviour
             return;
 
         double distance = Math.Sqrt(Math.Pow(transform.position.x - target.position.x, 2) + Math.Pow(transform.position.y - target.position.y, 2));
-        //UnityEngine.Debug.Log(distance);
 
         //Atualiza a máquina de estados
         UpdateMachineState(distance);
-        //FindObjectOfType<EnemyAnimation>().SetMoveDirection(enemy.Direction);
-        //UnityEngine.Debug.Log(enemy.State);
+
 
         if (distance <= 2)
         {

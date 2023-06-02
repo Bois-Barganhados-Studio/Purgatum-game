@@ -24,9 +24,9 @@ public class Weapon {
 
     private static readonly int[] MAX_DMG = { 100, 50, 80, 30, 90, 60, 70 };
 
-    private static readonly int[] WEIGHT = { 9, 3, 7, 2, 10, 8, 6 };
+    private static readonly int[] WEIGHT = { 8, 3, 6, 2, 8, 7, 5 };
 
-    private static readonly float[] MAX_RANGE = { 0.4f, 0.1f, 0.3f, 0.2f, 0.6f, 0.7f, 0.5f };
+    private static readonly float[] RANGE = { 0.15f, 0.075f, 0.125f, 0.1f, 0.20f, 0.25f, 0.175f };
 
     private float baseDmg;
     public float BaseDmg
@@ -69,7 +69,7 @@ public class Weapon {
     {
         Level = level;
         BaseDmg = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_DMG[type] + 1, (float)level / MAX_LEVEL * MAX_DMG[type]);
-        Range = Random.Range((float)(level - 1) / MAX_LEVEL * MAX_RANGE[type] + 1, (float)level / MAX_LEVEL * MAX_RANGE[type]);
+        Range = RANGE[type]; ;
         Weight = WEIGHT[type];
         Debug.Log(Weight);
     }

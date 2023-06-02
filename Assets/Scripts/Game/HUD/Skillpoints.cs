@@ -85,7 +85,7 @@ public class Skillpoints : MonoBehaviour
     }
 
     public void addVitalityPoint() {
-        if (player == null && player.SkillPoints < 1) 
+        if (player == null || player.SkillPoints < 1) 
             return;
 
         player.Vitality += 1;
@@ -94,7 +94,7 @@ public class Skillpoints : MonoBehaviour
     }
 
     public void addStrengthPoint() {
-        if (player == null && player.SkillPoints < 1)
+        if (player == null || player.SkillPoints < 1)
             return;
 
         player.Strength += 1;
@@ -104,7 +104,7 @@ public class Skillpoints : MonoBehaviour
 
     public void addAgilityPoint()
     {
-        if (player == null && player.SkillPoints < 1)
+        if (player == null || player.SkillPoints < 1)
             return;
 
         player.Agility += 1;
@@ -114,7 +114,7 @@ public class Skillpoints : MonoBehaviour
 
     public void addDefensePoint()
     {
-        if (player == null && player.SkillPoints < 1)
+        if (player == null || player.SkillPoints < 1)
             return;
 
         player.Defense += 1;
@@ -124,7 +124,7 @@ public class Skillpoints : MonoBehaviour
 
     public void addLuckPoint()
     {
-        if (player == null && player.SkillPoints < 1)
+        if (player == null || player.SkillPoints < 1)
             return;
 
         player.Luck += 1;
@@ -134,7 +134,7 @@ public class Skillpoints : MonoBehaviour
 
     public void addSpeedPoint()
     {
-        if (player == null && player.SkillPoints < 1)
+        if (player == null || player.SkillPoints < 1)
             return;
 
         player.Speed += 1;

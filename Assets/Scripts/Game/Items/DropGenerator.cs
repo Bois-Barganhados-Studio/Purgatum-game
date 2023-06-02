@@ -13,7 +13,7 @@ public class DropGenerator : MonoBehaviour
 
     // Order: dmg, def, heal, speed
 
-    public static readonly int[] basicPotionIdx = { 2, 3, 0, 7 };
+    public static readonly int[] basicPotionIdx = { 12, 3, 0, 7 };
 
     // Order: axe, dagger, hammer, nunchaku, sickle, spear, sword
 
