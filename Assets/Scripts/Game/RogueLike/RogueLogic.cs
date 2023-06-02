@@ -78,7 +78,7 @@ public class RogueLogic
             state = States.PLAYING;
             level++;
             if(level > 1){
-                //GameObject.FindObjectOfType<Player>().SetPoints(level);
+                //GameObject.FindObjectOfType<PlayerObject>().SetMapLevel(level);
             }
         }
     }

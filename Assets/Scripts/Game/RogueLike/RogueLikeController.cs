@@ -69,6 +69,10 @@ public class RogueLikeController : MonoBehaviour
         rogueLogic.DoAction();
     }
 
+    public int GetActualLevel(){
+        return rogueLogic.GetLevel();
+    }
+
     #endregion
 
 }
