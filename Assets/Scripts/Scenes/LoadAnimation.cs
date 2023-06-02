@@ -15,6 +15,12 @@ public class LoadAnimation : MonoBehaviour
     private int m_IndexSprite;
     Coroutine m_CorotineAnim;
     bool IsDone;
+
+    public void Start()
+    {
+        Func_PlayUIAnim();
+    }
+
     public void Func_PlayUIAnim()
     {
         if (count == 0)

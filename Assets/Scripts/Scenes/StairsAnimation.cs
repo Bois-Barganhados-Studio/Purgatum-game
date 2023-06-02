@@ -13,6 +13,11 @@ public class StairsAnimation : MonoBehaviour
     private Vector3 originalPosition;
     private Vector3 lastOriginalPosition;
 
+    public void Start()
+    {
+        StartAnimation();
+    }
+
     public void StartAnimation() 
     {
         if (count == 0)
