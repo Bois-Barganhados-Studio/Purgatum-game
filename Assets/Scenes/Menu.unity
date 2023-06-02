@@ -243,6 +243,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 298578997, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
   m_PrefabInstance: {fileID: 1020762960353246003}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &344212505 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2593508661238120548, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+  m_PrefabInstance: {fileID: 1020762960353246003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &427560265 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 427560265, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
@@ -611,18 +616,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 298578997, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 427560264, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -198.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 427560264, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 50.094
-      objectReference: {fileID: 0}
     - target: {fileID: 661222866, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: gameObjWithAudio
       value: 
@@ -635,13 +628,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1478660538}
-    - target: {fileID: 1020762960353246007, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: offsetY
-      value: -300
+    - target: {fileID: 1020762960146627676, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1020762960353246007, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: movementSpeed
-      value: 500
+    - target: {fileID: 1020762960146627676, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1020762960476698309, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -739,18 +732,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1020762961076279886, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -31.150879
-      objectReference: {fileID: 0}
     - target: {fileID: 1020762961355917227, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1648454436}
-    - target: {fileID: 1020762961405649848, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -24.999878
-      objectReference: {fileID: 0}
+    - target: {fileID: 1509525958129196852, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1648454436}
+    - target: {fileID: 4801518108392580632, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1648454436}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01264e0004c70ce4d90f892f66aa3875, type: 3}
 --- !u!1001 &5414773514023622047
@@ -824,6 +817,10 @@ PrefabInstance:
       propertyPath: painelOpcoes
       value: 
       objectReference: {fileID: 2139937162}
+    - target: {fileID: 5414773515604934331, guid: 35a6b77b25883ba42be1f7146604378a, type: 3}
+      propertyPath: painelCreditos
+      value: 
+      objectReference: {fileID: 344212505}
     - target: {fileID: 5414773515604934331, guid: 35a6b77b25883ba42be1f7146604378a, type: 3}
       propertyPath: painelMenuInicial
       value: 
