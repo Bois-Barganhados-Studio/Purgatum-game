@@ -6,7 +6,7 @@ using TMPro;
 public class Skillpoints : MonoBehaviour
 {
     public GameObject container;
-    private PlayerObject player;
+    private Player player;
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI vitText;
     public TextMeshProUGUI strText;
@@ -17,16 +17,16 @@ public class Skillpoints : MonoBehaviour
 
     public void open()
     {
-        player = GameObject.FindObjectOfType<PlayerObject>();
+        player = GameObject.FindObjectOfType<PlayerObject>().player;
         container.SetActive(true);
 
-        //setUIPoints(pontos disponiveis)
-        setVitalityUiPoints(player.player.Vitality, 100);
-        setStrengthUiPoints(player.player.Strength, 100);
-        setAgilityUiPoints(player.player.Agility, 100);
-        setDefenseUiPoints(player.player.Defense, 100);
-        setLuckUiPoints(player.player.Luck, 100);
-        setSpeedUiPoints(player.player.Speed, 100);
+        setUIPoints(player.SkillPoints);
+        setVitalityUiPoints(player.Vitality, 100);
+        setStrengthUiPoints(player.Strength, 100);
+        setAgilityUiPoints(player.Agility, 100);
+        setDefenseUiPoints(player.Defense, 100);
+        setLuckUiPoints(player.Luck, 100);
+        setSpeedUiPoints(player.Speed, 100);
     }
 
     public void close()
@@ -78,59 +78,61 @@ public class Skillpoints : MonoBehaviour
     }
 
     public void addVitalityPoint() {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1) 
+            return;
 
-        //checar se tem ponto
-        player.player.Vitality += 1;
+        player.Vitality += 1;
+        setUIPoints(--player.SkillPoints);
+        setVitalityUiPoints(player.Vitality, 100);
     }
 
     public void addStrengthPoint() {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1)
+            return;
 
-        //checar se tem ponto
-        player.player.Strength += 1;
-
-        //setUIPoints(novos pontos)
+        player.Strength += 1;
+        setUIPoints(--player.SkillPoints);
+        setStrengthUiPoints(player.Strength, 100);
     }
 
     public void addAgilityPoint()
     {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1)
+            return;
 
-        //checar se tem ponto
-        player.player.Agility += 1;
-
-        //setUIPoints(novos pontos)
+        player.Agility += 1;
+        setUIPoints(--player.SkillPoints);
+        setAgilityUiPoints(player.Agility, 100);
     }
 
     public void addDefensePoint()
     {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1)
+            return;
 
-        //checar se tem ponto
-        player.player.Defense += 1;
-
-        //setUIPoints(novos pontos)
+        player.Defense += 1;
+        setUIPoints(--player.SkillPoints);
+        setDefenseUiPoints(player.Defense, 100);
     }
 
     public void addLuckPoint()
     {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1)
+            return;
 
-        //checar se tem ponto
-        player.player.Luck += 1;
-
-        //setUIPoints(novos pontos)
+        player.Luck += 1;
+        setUIPoints(--player.SkillPoints);
+        setLuckUiPoints(player.Luck, 100);
     }
 
     public void addSpeedPoint()
     {
-        if (!player) return;
+        if (player == null && player.SkillPoints < 1)
+            return;
 
-        //checar se tem ponto
-        player.player.Speed += 1;
-
-        //setUIPoints(novos pontos)
+        player.Speed += 1;
+        setUIPoints(--player.SkillPoints);
+        setSpeedUiPoints(player.Speed, 100);
     }
 
 }
