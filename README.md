@@ -1,4 +1,5 @@
 # Purgatum & Purgatum-game
+Gameplay do DEMO Alpha 1.0: https://www.youtube.com/watch?v=IZDh3Thddsk
 # Trabalho Interdisciplinar 4 - PUC Minas
 # Arthur Ruiz, Daniel Benevides, Edmar Melandes, Felipe Moura, Gustavo Gomes, Leon Júnio, Pedro Pampolini, Vinicius Gabriel
 # COMO JOGAR:
