@@ -41,5 +41,7 @@ public class Chest : MonoBehaviour
             item.gameObject.transform.position = new Vector3(gameObject.transform.position.x + pos, gameObject.transform.position.y - 0.1f, gameObject.transform.position.z);
             pos += 0.2f;
         }
+        items.Clear();
+        items = null;
     }
 }

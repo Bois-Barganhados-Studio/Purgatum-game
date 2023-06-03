@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Net;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class DropGenerator : MonoBehaviour
@@ -50,9 +48,11 @@ public class DropGenerator : MonoBehaviour
         }
     }
 
+    public static List<MonoBehaviour> drop;
+
     public static List<MonoBehaviour> GenerateDrop(int pLuck, int level)
     {
-        List<MonoBehaviour> drop = new List<MonoBehaviour>();
+        drop = new List<MonoBehaviour>();
         drop.Add(GenWeapon(level));
         int n = CalculateItems(pLuck);
         for (int i = 0; i < n; i++)

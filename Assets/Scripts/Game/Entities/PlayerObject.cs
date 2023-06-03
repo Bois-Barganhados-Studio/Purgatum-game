@@ -42,20 +42,17 @@ public class PlayerObject : MonoBehaviour
             Strength = 1,
             Agility = 1,
             Defense = 1,
-            Speed = 1,
+            Speed = 2,
             Luck = 1
         };
         idleDir = Vector2.zero;
         isUpdateDisabled = false;
-        mainWeapon = transform.Find("mainWeapon").GetComponent<WeaponObject>();
-        subWeapon = transform.Find("subWeapon").GetComponent<WeaponObject>();
+        mainWeapon = transform.Find("dfWeapon").GetComponent<WeaponObject>();
         mainWeapon.gameObject.SetActive(false);
         mainWeapon.SetSpriteColor(Color.white);
-        subWeapon.gameObject.SetActive(false);
         mainWeapon.weapon = player.MainWeapon;
-        subWeapon.weapon = player.SubWeapon;
-        Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
-        Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
+        subWeapon = transform.Find("swPlaceholder").GetComponent<WeaponObject>();
+        subWeapon.gameObject.SetActive(false);
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         destructibleLayer = LayerMask.GetMask("Destructables");
@@ -72,12 +69,24 @@ public class PlayerObject : MonoBehaviour
             //Caso duplique os gameobjects mantem apenas o original
             Destroy(gameObject);
         }
+        Debug.Log("awake - mainW s: " + mainWeapon.getWSprite() + "\n awake - subW s: " + subWeapon.getWSprite());
         UpdateHotBar();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == Enemy.LAYER)
+        {
+            Physics2D.IgnoreLayerCollision(Player.LAYER, Enemy.LAYER);
+            
+        } else if (collision.gameObject.layer == IItem.LAYER)
+        {
+            Physics2D.IgnoreLayerCollision(Player.LAYER, IItem.LAYER);
+        }
     }
 
     public void ChangeScene()
     {
-        Debug.Log("CilAGCLSUIASC");
         HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
         HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
         UpdateHotBar();
@@ -191,7 +200,7 @@ public class PlayerObject : MonoBehaviour
     public void EndDeath()
     {
         gameObject.SetActive(false);
-        player.SkillPoints += mapLevel - 1;
+        player.SkillPoints += mapLevel;
         RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
         rlc.OnGameRestart();
         player.IsDead = false;
@@ -200,7 +209,13 @@ public class PlayerObject : MonoBehaviour
         animator.SetBool("isDying", false);
         player.Hp = player.MaxHp;
         player.Hp = player.MaxHp;
+        HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
+        HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
+        mainWeapon = transform.Find("defaultWeapon").GetComponent<WeaponObject>();
+        subWeapon = transform.Find("swPlaceholder").GetComponent<WeaponObject>();
         UpdateHealthBar();
+        UpdateHotBar();
+        transform.position = new Vector3(0.9f, 1.153f, 0);
         gameObject.SetActive(true);
     }
 
@@ -350,26 +365,41 @@ public class PlayerObject : MonoBehaviour
 
     private void CollectWeapon(WeaponObject newWeapon)
     {
-        newWeapon.gameObject.transform.SetParent(this.transform);
-        if (subWeapon.weapon != null)
+        try
         {
-            mainWeapon.gameObject.transform.parent = null;
-            mainWeapon.gameObject.transform.position = this.transform.position;
-            mainWeapon.gameObject.SetActive(true);
-            mainWeapon.Drop(30);
-            mainWeapon = newWeapon;
-            player.MainWeapon = mainWeapon.weapon;
-            mainWeapon.gameObject.SetActive(false);
-        }
-        else
-        {
-            subWeapon = newWeapon;
-            player.SubWeapon = subWeapon.weapon;
-            subWeapon.gameObject.SetActive(false);
-        }
+            Debug.Log(newWeapon);
+            newWeapon.gameObject.transform.parent = this.gameObject.transform;
+            if (subWeapon.weapon != null)
+            {
+                if (mainWeapon.gameObject.name != "defaultWeapon")
+                {
+                    mainWeapon.gameObject.transform.parent = null;
+                    mainWeapon.gameObject.transform.position = this.transform.position;
+                    mainWeapon.gameObject.SetActive(true);
+                }
+                mainWeapon.Drop(30);
+                mainWeapon = newWeapon;
+                mainWeapon.CancelDrop();
+                player.MainWeapon = mainWeapon.weapon;
+                mainWeapon.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log(subWeapon);
+                subWeapon = newWeapon;
+                subWeapon.CancelDrop();
+                subWeapon.gameObject.SetActive(false);
+                subWeapon.gameObject.transform.position = this.transform.position;
+                player.SubWeapon = subWeapon.weapon;
+            }
 
-        UpdateHotBar();
-        UpdateWeaponVFX(mainWeapon.VfxSprites);
+            UpdateHotBar();
+            UpdateWeaponVFX(mainWeapon.VfxSprites);
+
+        } catch (Exception e)
+        {
+            ErrorLogger.LogError(e.StackTrace);
+        }
     }
 
     public void SwapWeapon()
@@ -399,8 +429,15 @@ public class PlayerObject : MonoBehaviour
 
     private void CollectItem(ItemObject item)
     {
-        item.Effect(this);
-        Destroy(item.gameObject);
+
+        try
+        {
+            item.Effect(this);
+            Destroy(item.gameObject);
+        } catch (Exception e)
+        {
+            ErrorLogger.LogError(e.StackTrace);
+        }
     }
 
     public void Heal(float healPct)
@@ -410,11 +447,11 @@ public class PlayerObject : MonoBehaviour
         UpdateHealthBar();
     }
 
-    private static readonly Color DEFENSE_COLOR = new(180, 0, 141);
+    private static readonly Color DEFENSE_COLOR = new(180/255f, 0, 141 / 255f);
 
-    private static readonly Color DAMAGE_COLOR = new(240, 109, 65);
+    private static readonly Color DAMAGE_COLOR = new(240 / 255f, 109 / 255f, 65 / 255f);
 
-    private static readonly Color SPEED_COLOR = new(0, 168, 177);
+    private static readonly Color SPEED_COLOR = new(0, 168 / 255f, 177 / 255f);
 
     public void BoostSpeed(float BoostPct, float duration)
     {
@@ -453,6 +490,9 @@ public class PlayerObject : MonoBehaviour
     }
 
     // TODO - REMOVE/MAKE THIS EMPTY
+
+    private static bool fds = true;
+
     public void Test()
     {
         // Working potion spawn test
@@ -476,8 +516,15 @@ public class PlayerObject : MonoBehaviour
         //    items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
         //    items[i].gameObject.SetActive(true);
         // }
-
-        transform.position = new Vector3(0.9f,1.153f,0);
+        if (fds)
+        {
+            player.MoveSpeed *= 3;
+            fds = !fds;
+        } else
+        {
+            player.MoveSpeed /= 3;
+            fds = !fds;
+        }
     }
 
     public int DirectionToIndex(Vector2 _direction)
@@ -500,10 +547,11 @@ public class PlayerObject : MonoBehaviour
         return Mathf.FloorToInt(stepCount);
     }
 
-    internal void SetSpriteColor(Color color, float duration)
+    public void SetSpriteColor(Color color, float duration)
     {
         sr.color = color;
-        StartCoroutine(CoolDown(() => {
+        StartCoroutine(CoolDown(() =>
+        {
             sr.color = currSpriteColor;
         }, duration));
     }

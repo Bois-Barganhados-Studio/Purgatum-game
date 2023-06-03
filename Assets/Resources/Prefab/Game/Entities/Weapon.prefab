@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 959772042065268213}
   - component: {fileID: 959772042065268212}
   - component: {fileID: 5085455955478456915}
+  - component: {fileID: 6178299014120292421}
+  - component: {fileID: -1103796228944480342}
   m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
@@ -46,7 +48,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,3 +126,60 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &6178299014120292421
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959772042065268211}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &-1103796228944480342
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959772042065268211}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 959772042065268213}
+    m_ColliderPaths:
+    - - X: 1000000
+        Y: 1000000
+      - X: -1000000
+        Y: 1000000
+      - X: -1000000
+        Y: -1000000
+      - X: 1000000
+        Y: -1000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 0.0999707, y: -0.1}
+      - {x: 0.0999707, y: 0.1}
+      - {x: -0.1, y: 0.0999707}
+      - {x: -0.0999707, y: -0.1}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

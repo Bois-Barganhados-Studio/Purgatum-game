@@ -41,10 +41,21 @@ public class EnemyObject : MonoBehaviour
         p = FindObjectOfType <PlayerObject>();
         textMesh = DamageIndicator.GetComponentInChildren<TextMesh>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(Enemy.LAYER, IItem.LAYER);
-        Physics2D.IgnoreLayerCollision(Enemy.LAYER, Destructable.LAYER);
         animator = GetComponentInChildren<Animator>();
         direction = Vector2.down;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == Destructable.LAYER)
+        {
+            Physics2D.IgnoreLayerCollision(Enemy.LAYER, Destructable.LAYER);
+
+        }
+        else if (collision.gameObject.layer == IItem.LAYER)
+        {
+            Physics2D.IgnoreLayerCollision(Enemy.LAYER, IItem.LAYER);
+        }
     }
 
     public void FixedUpdate()
