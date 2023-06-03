@@ -19,7 +19,11 @@ public class Camera : MonoBehaviour
         }
         else
         {
-            player = GameObject.FindObjectOfType<PlayerObject>().transform;
+            var obj = GameObject.FindObjectOfType<PlayerObject>();
+            if (obj != null)
+            {
+                player = obj.transform;
+            }
         }
     }
 }

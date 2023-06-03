@@ -16,6 +16,8 @@ public class PlayerObject : MonoBehaviour
     private Vector2 idleDir;
     private WeaponObject mainWeapon;
     private WeaponObject subWeapon;
+    private WeaponObject dfmWeapon;
+    private WeaponObject dfsWeapon;
     private SpriteRenderer sr;
     public Animator animator;
     private float attackFactor;
@@ -47,11 +49,13 @@ public class PlayerObject : MonoBehaviour
         };
         idleDir = Vector2.zero;
         isUpdateDisabled = false;
-        mainWeapon = transform.Find("dfWeapon").GetComponent<WeaponObject>();
+        dfmWeapon = transform.Find("dfWeapon").GetComponent<WeaponObject>();
+        mainWeapon = dfmWeapon;
         mainWeapon.gameObject.SetActive(false);
         mainWeapon.SetSpriteColor(Color.white);
         mainWeapon.weapon = player.MainWeapon;
-        subWeapon = transform.Find("swPlaceholder").GetComponent<WeaponObject>();
+        dfsWeapon = transform.Find("swPlaceholder").GetComponent<WeaponObject>();
+        subWeapon = dfsWeapon;
         subWeapon.gameObject.SetActive(false);
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -200,7 +204,9 @@ public class PlayerObject : MonoBehaviour
     public void EndDeath()
     {
         gameObject.SetActive(false);
-        player.SkillPoints += mapLevel;
+        if (mapLevel > 0)
+            player.SkillPoints += mapLevel;
+        Debug.Log("mapLevel: " + mapLevel);
         RogueLikeController rlc = FindObjectOfType<RogueLikeController>();
         rlc.OnGameRestart();
         player.IsDead = false;
@@ -209,14 +215,14 @@ public class PlayerObject : MonoBehaviour
         animator.SetBool("isDying", false);
         player.Hp = player.MaxHp;
         player.Hp = player.MaxHp;
-        HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
-        HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
-        mainWeapon = transform.Find("defaultWeapon").GetComponent<WeaponObject>();
-        subWeapon = transform.Find("swPlaceholder").GetComponent<WeaponObject>();
-        UpdateHealthBar();
-        UpdateHotBar();
         transform.position = new Vector3(0.9f, 1.153f, 0);
         gameObject.SetActive(true);
+        HealthBarHud = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(0).GetComponent<HealthBar>();
+        HotBar = GameObject.FindGameObjectWithTag("HUD").transform.GetChild(1).GetComponent<Inventory>();
+        mainWeapon = dfmWeapon;
+        subWeapon = dfsWeapon;
+        UpdateHealthBar();
+        UpdateHotBar();
     }
 
     public static float WEIGHT_FACTOR = 5f;
