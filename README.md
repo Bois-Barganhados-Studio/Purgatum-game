@@ -12,7 +12,7 @@
 # Descrição
 RogueLike com mapas procedurais, sistema de acampamentos, IA adaptativa, arte isométrica e muito mais! Desenvolvido na Unity, purgatum é a proposta de um jogo rogue like isometrico com mapas gerados proceduralmente, salas aleatórias, IA que aprende com suas runs, inimigos e mecanicas de RPG, sistema de upgrades e muitos outros sistemas internos.
 # GRAFO
-O algoritmo de grafos implementado foi o de corte de arestas e o de caminhamento/Busca em largura na geração de mundos. Cada sala é gerada individualmente e modelada como nodo em um grafo, após todas as salas serem geradas caminhos são criados entre as mesmas. Cada sala tem uma estrutura diferente e uma possibilidade nova em uma grid de 16 salas por andar. Logo o total de mapas possiveis para o jogo são: 16 salas * (20*(10)20*(10) tamanho de cada sala vezes o tamanho de cada bloco)*20*4  (total de portas por lado) = +/- 5.120.000 De mapas diferentes!
+O algoritmo de grafos implementado foi o de corte de arestas e o de caminhamento/Busca em largura na geração de mundos. Cada sala é gerada individualmente e modelada como nodo em um grafo, após todas as salas serem geradas caminhos são criados entre as mesmas. Cada sala tem uma estrutura diferente e uma possibilidade nova em uma grid de 16 salas por andar. Logo o total de mapas possiveis para o jogo são: 16 salas x (20x(10)x20x(10) tamanho de cada sala vezes o tamanho de cada bloco) x 20x4  (total de portas por lado) = +/- 5.120.000 De mapas diferentes!
 # Inteligência Artificial
 Título: Explorando o Backpropagation e o Algoritmo A* no Desenvolvimento do jogo Purgatum
 # Introdução:
