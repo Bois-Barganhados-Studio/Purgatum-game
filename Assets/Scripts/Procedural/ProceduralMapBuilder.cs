@@ -41,7 +41,6 @@ public class ProceduralMapBuilder : MonoBehaviour
     #region Funcoes de configuracao
     public ProceduralMapBuilder()
     {
-        Debug.Log("Procedural Map Builder Started (Geração de mapas procedurais)");
         blueprintsReader = new BluePrintReader();
     }
 
@@ -63,7 +62,6 @@ public class ProceduralMapBuilder : MonoBehaviour
     */
     public async Task<bool> NewLevel(bool isBooting = true)
     {
-        Debug.Log("Booting " + isBooting);
         bool status = true;
         if (!isBooting)
         {

@@ -51,16 +51,14 @@ public class RogueLogic
     {
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
-        if (this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
+        if (true || this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
-            Debug.Log("Gerando mundo aleatoriamente....");
             currentWorldData = aiController.GenerateRandomParams();
         }
         else
         {
             currentWorldData = aiController.GenerateWorldParams();
         }
-        Debug.Log("Gerando o mundo com: " + currentWorldData.ToString());
         mapBuilder.SetLevelData(currentWorldData.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
         if (response)
