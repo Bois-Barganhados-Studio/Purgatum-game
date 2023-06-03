@@ -522,15 +522,15 @@ public class PlayerObject : MonoBehaviour
         //    items[i].gameObject.transform.position = this.transform.position + new Vector3(i, 1);
         //    items[i].gameObject.SetActive(true);
         // }
-        if (fds)
-        {
-            player.MoveSpeed *= 3;
-            fds = !fds;
-        } else
-        {
-            player.MoveSpeed /= 3;
-            fds = !fds;
-        }
+        //if (fds)
+        //{
+        //    player.MoveSpeed *= 3;
+        //    fds = !fds;
+        //} else
+        //{
+        //    player.MoveSpeed /= 3;
+        //    fds = !fds;
+        //}
     }
 
     public int DirectionToIndex(Vector2 _direction)
