@@ -51,7 +51,7 @@ public class RogueLogic
     {
         if (mapBuilder == null)
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
-        if (true || this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
+        if (this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
             Debug.Log("Gerando mundo aleatoriamente....");
             currentWorldData = aiController.GenerateRandomParams();
