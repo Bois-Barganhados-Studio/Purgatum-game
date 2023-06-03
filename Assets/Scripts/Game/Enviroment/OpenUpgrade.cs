@@ -23,7 +23,7 @@ public class OpenUpgrade : MonoBehaviour
     private IEnumerator ChangeUi(bool open)
     {
         yield return new WaitForSeconds(0.2f);
-        GameObject skillpointsObject = GameObject.Find("CanvasHUD").transform.GetChild(5).gameObject;
+        GameObject skillpointsObject = GameObject.Find("CanvasHUD").transform.GetChild(4).gameObject;
         if (skillpointsObject != null)
         {
             Skillpoints skillpoints = skillpointsObject.GetComponent<Skillpoints>();

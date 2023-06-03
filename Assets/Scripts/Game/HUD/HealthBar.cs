@@ -11,7 +11,6 @@ public class HealthBar : MonoBehaviour
     private void Awake() {
         
         slider = GetComponent<Slider>();
-        Debug.Log("AWAQKE DO HEALTH BAR "  + slider);
     }
 
     public void setMaxHealth(int health)

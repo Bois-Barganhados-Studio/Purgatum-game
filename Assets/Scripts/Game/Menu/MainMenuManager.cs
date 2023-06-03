@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private string nomeCenaJogo;
     [SerializeField] private GameObject painelMenuInicial;
     [SerializeField] private GameObject painelOpcoes;
+    [SerializeField] private GameObject painelCreditos;
 
     public void Start()
     {
@@ -37,6 +38,24 @@ public class MainMenuManager : MonoBehaviour
 
         soundController.PlaySoundEffect("click");        
         painelOpcoes.SetActive(false);
+        painelMenuInicial.SetActive(true);
+    }
+
+    public void AbrirCreditos()
+    {
+        soundController.PlaySoundEffect("click");
+        painelMenuInicial.SetActive(false);
+        painelCreditos.SetActive(true);
+    }
+
+    public void FecharCreditos()
+    {
+        Settings settings = DataSaver.LoadData<Settings>("settings.boi");
+        settings.Volume = SoundControl.globalSoundVolume;
+        DataSaver.SaveData("settings.boi", settings);
+
+        soundController.PlaySoundEffect("click");        
+        painelCreditos.SetActive(false);
         painelMenuInicial.SetActive(true);
     }
 

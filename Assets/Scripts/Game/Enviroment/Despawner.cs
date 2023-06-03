@@ -23,9 +23,6 @@ public class Despawner : MonoBehaviour
                     return;
                 }
             }
-            Debug.Log("Todas as salas foram completas!");
-            //todo: perguntar se o player quer sair
-            Debug.Log("GOING TO NEXT LEVEL");
             StartCoroutine(DespawnPlayer());
         }
     }

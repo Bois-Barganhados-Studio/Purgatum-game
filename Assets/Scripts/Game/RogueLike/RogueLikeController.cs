@@ -66,6 +66,7 @@ public class RogueLikeController : MonoBehaviour
     public void OnGameRestart()
     {
         //Adicionar instancias no banco
+        rogueLogic.ClearMap();
         rogueLogic.AddPlayerDeath();
         rogueLogic.SetState(RogueLogic.States.RESTART);
         rogueLogic.DoAction();

@@ -41,13 +41,20 @@ public class ProceduralMapBuilder : MonoBehaviour
     #region Funcoes de configuracao
     public ProceduralMapBuilder()
     {
-        Debug.Log("Procedural Map Builder Started (Geração de mapas procedurais)");
         blueprintsReader = new BluePrintReader();
     }
 
     async void Awake()
     {
         await BootFields();
+    }
+    public void Clear()
+    {
+        if (levelRenderer != null)
+        {
+            levelRenderer.UnloadMemory();
+            levelRenderer.ClearGameObject();
+        }
     }
 
     /**
@@ -58,8 +65,7 @@ public class ProceduralMapBuilder : MonoBehaviour
         bool status = true;
         if (!isBooting)
         {
-            levelRenderer.UnloadMemory();
-            levelRenderer.ClearGameObject();
+            Clear();
         }
         Debug.Log("NEW LEVEL STARTED");
         ReadTilesRegistred(styles[roomStyle] + "/" + styles[roomStyle].ToLower());

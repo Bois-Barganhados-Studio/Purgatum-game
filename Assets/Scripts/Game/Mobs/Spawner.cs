@@ -76,7 +76,6 @@ public class Spawner : MonoBehaviour
             }
             yield return StartCoroutine(WaitForEnemiesDestroyed());
             counter++;
-            Debug.Log("SPAWNING MORE ENEMIES. WAVES: " + counter + " / " + waves);
         }
         if (isCommander)
         {
@@ -96,7 +95,6 @@ public class Spawner : MonoBehaviour
                 spotlight.intensity = 0;
             }
         }
-        Debug.Log("SPAWN ENDED");
         Destroy(this);
     }
 
@@ -106,7 +104,6 @@ public class Spawner : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("ALL ENEMIES DESTROYED");
     }
 
     //<sumary>
@@ -115,7 +112,11 @@ public class Spawner : MonoBehaviour
     private void RenderEnemy(GameObject enemy)
     {
         rangeEnemyPos = new Vector2((Random.Range(MIN_SPAWN_RANGE, MAX_SPAWN_RANGE) / 10), (Random.Range(MIN_SPAWN_RANGE, MAX_SPAWN_RANGE) / 10));
-        GameObject.Instantiate(enemy, spawnPosition + rangeEnemyPos, Quaternion.identity, transform);
+        GameObject goblin = GameObject.Instantiate(enemy, spawnPosition + rangeEnemyPos, Quaternion.identity, transform);
+        if (isCommander)
+        {
+            goblin.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+        }
     }
     #endregion
 

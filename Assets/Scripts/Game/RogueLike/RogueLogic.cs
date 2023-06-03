@@ -33,15 +33,9 @@ public class RogueLogic
         {
             rogueData = new RogueData();
         }
-
         state = States.STARTING;
         this.rogueData = rogueData;
         aiController = new AIController();
-        //this.rogueData.CreateSampleData();
-
-        //aiController.SetData(this.rogueData);
-        //aiController.Train();
-        //aiController.TestAI();
     }
 
     public int GetLevel()
@@ -59,14 +53,12 @@ public class RogueLogic
             mapBuilder = GameObject.FindObjectOfType<ProceduralMapBuilder>();
         if (true || this.rogueData.GetDeathCount() <= (MIN_RUNS_TO_AI / 2) || this.rogueData.GetSurviveCount() <= (MIN_RUNS_TO_AI / 2))
         {
-            Debug.Log("Gerando mundo aleatoriamente....");
             currentWorldData = aiController.GenerateRandomParams();
         }
         else
         {
             currentWorldData = aiController.GenerateWorldParams();
         }
-        Debug.Log("Gerando o mundo com: " + currentWorldData.ToString());
         mapBuilder.SetLevelData(currentWorldData.GetLevelData());
         bool response = await mapBuilder.NewLevel(boot);
         if (response)
@@ -80,6 +72,14 @@ public class RogueLogic
         }
     }
 
+    public void ClearMap()
+    {
+        if (mapBuilder != null)
+        {
+            mapBuilder.Clear();
+        }
+    }
+
     //<summary>
     //  Cold Boot para iniciar o mapa procedural pela primeira vez
     //</summary>
@@ -87,11 +87,8 @@ public class RogueLogic
     {
         if (mainScene == scene.buildIndex)
         {
-            //Remover isso depois
             aiController.SetData(this.rogueData);
             aiController.Train();
-
-
             await StartNewProceduralLevel();
         }
     }
@@ -101,15 +98,12 @@ public class RogueLogic
     //</summary>
     private void StartHubScene()
     {
-        
         level++;
         state = States.PLAYING;
         actualScene = hubScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(hubScene);
-        
-            
     }
 
     //<summary>
@@ -117,14 +111,13 @@ public class RogueLogic
     //</summary>
     private void StartMainScene()
     {
-        
+        mapBuilder = null;
         level++;
         state = States.PLAYING;
         actualScene = mainScene;
         if (loading == null)
             loading = GameObject.FindObjectOfType<LoadingScreen>();
         loading.LoadScene(mainScene, StartLevelsFirstTime);
-        
     }
 
     //<summary>
@@ -178,6 +171,7 @@ public class RogueLogic
     */
     private async Task<bool> NewLevel()
     {
+        Debug.Log("New map level: " + level);
         bool status = true;
         try
         {
